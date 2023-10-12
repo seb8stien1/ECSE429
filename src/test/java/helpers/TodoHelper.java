@@ -35,11 +35,10 @@ public class TodoHelper {
     }
 
     public static HttpResponse modifyTodo(String id, String title, Boolean doneStatus, String description, HttpClient httpClient) throws IOException {
-        String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":\"%s\", \"description\":\"%s\"}",
+        String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
                 title, doneStatus.toString(), description);
-        System.out.println(bodyString);
         StringEntity body = new StringEntity(bodyString);
         body.setContentType("application/json");
-        return sendHttpRequest("post", String.format("%s/%s", baseUrl, id), body, httpClient);
+        return sendHttpRequest("put", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 }
