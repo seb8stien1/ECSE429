@@ -1,12 +1,15 @@
-package todos;
+package tests;
 
+import config.RandomOrderTestRunner;
+import helpers.ApiHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.conn.HttpHostConnectException;
+import org.apache.http.impl.client.HttpClients;
+import org.junit.AfterClass;
+import org.junit.runner.RunWith;
 import response.Todo;
 import response.TodoResponse;
-import org.apache.http.impl.client.HttpClients;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -18,9 +21,20 @@ import static helpers.TodoHelper.*;
 import static helpers.ApiHelper.*;
 import static org.junit.Assert.*;
 
+@RunWith(RandomOrderTestRunner.class)
 public class TodoTest {
 
     CloseableHttpClient httpClient;
+
+    @AfterClass
+    public static void teardown() throws IOException {
+        CloseableHttpClient httpClient= HttpClients.createDefault();
+        try {
+            ApiHelper.sendHttpRequest("get", "http://localhost:4567/shutdown", null, httpClient);
+        } catch (Exception e) {
+            assertEquals(HttpHostConnectException.class, e.getClass());
+        }
+    }
 
     @Test
     public void testCreateAndDeleteTodo() throws IOException {
@@ -58,5 +72,11 @@ public class TodoTest {
             }
         });
     }
+
+    @Test
+    public void testEmpty() throws IOException {}
+
+    @Test
+    public void testBlank() throws IOException {}
 
 }
