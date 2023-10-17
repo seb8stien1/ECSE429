@@ -26,19 +26,27 @@ public class TodoHelper {
         return sendHttpRequest("get", String.format("%s/%s", baseUrl, id), null, httpClient);
     }
 
-    public static HttpResponse createTodo(String title, Boolean doneStatus, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse createTodo(String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
-                title, doneStatus.toString(), description);
+                title.toString(), doneStatus.toString(), description.toString());
         StringEntity body = new StringEntity(bodyString);
         body.setContentType("application/json");
         return sendHttpRequest("post", baseUrl, body, httpClient);
     }
 
-    public static HttpResponse modifyTodo(String id, String title, Boolean doneStatus, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse modifyTodo1(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
                 title, doneStatus.toString(), description);
         StringEntity body = new StringEntity(bodyString);
         body.setContentType("application/json");
         return sendHttpRequest("put", String.format("%s/%s", baseUrl, id), body, httpClient);
+    }
+
+    public static HttpResponse modifyTodo2(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
+        String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
+                title, doneStatus.toString(), description);
+        StringEntity body = new StringEntity(bodyString);
+        body.setContentType("application/json");
+        return sendHttpRequest("post", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 }
