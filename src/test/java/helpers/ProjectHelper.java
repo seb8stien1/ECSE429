@@ -45,4 +45,18 @@ public class ProjectHelper {
         body.setContentType("application/json");
         return sendHttpRequest("post", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
+
+    public static HttpResponse createCategoryAssociation(String projectId, String categoryId, HttpClient httpClient) throws IOException {
+        String bodyString = String.format("{\"id\":\"%s\"}", categoryId);
+        StringEntity body = new StringEntity(bodyString);
+        body.setContentType("application/json");
+        return sendHttpRequest("post", String.format("%s/%s/categories", baseUrl, projectId), body, httpClient);
+    }
+
+    public static HttpResponse getCategoryAssociation(String projectId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("get", String.format("%s/%s/categories", baseUrl, projectId), null, httpClient);
+    }
+    public static HttpResponse deleteCategoryAssociation(String projectId, String categoryId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("delete", String.format("%s/%s/categories/%s", baseUrl, projectId, categoryId), null, httpClient);
+    }
 }

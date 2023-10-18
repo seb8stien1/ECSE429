@@ -55,8 +55,8 @@ public class TodoTest {
         List<Todo> todoList = todos.getTodos()
                 .stream()
                 .filter(todo -> title.equals(todo.getTitle())
-                        && doneStatus.equals(todo.getDoneStatus()
-                        && description.equals(todo.getDescription())))
+                        && doneStatus.equals(todo.getDoneStatus())
+                        && description.equals(todo.getDescription()))
                 .collect(Collectors.toList());
         assertFalse(CollectionUtils.isEmpty(todoList));
 
@@ -88,8 +88,8 @@ public class TodoTest {
         List<Todo> todoList = todos.getTodos()
                 .stream()
                 .filter(todo -> title.equals(todo.getTitle())
-                        && doneStatus.equals(todo.getDoneStatus()
-                        && description.equals(todo.getDescription())))
+                        && doneStatus.equals(todo.getDoneStatus())
+                        && description.equals(todo.getDescription()))
                 .toList();
         String id = todoList.get(0).getId();
 
@@ -171,8 +171,8 @@ public class TodoTest {
         List<Todo> todoList = todos.getTodos()
                 .stream()
                 .filter(todo -> title.equals(todo.getTitle())
-                        && doneStatus.equals(todo.getDoneStatus()
-                        && description.equals(todo.getDescription())))
+                        && doneStatus.equals(todo.getDoneStatus())
+                        && description.equals(todo.getDescription()))
                 .toList();
         String id = todoList.get(0).getId();
 
@@ -211,8 +211,8 @@ public class TodoTest {
         List<Todo> todoList = todos.getTodos()
                 .stream()
                 .filter(todo -> title.equals(todo.getTitle())
-                        && doneStatus.equals(todo.getDoneStatus()
-                        && description.equals(todo.getDescription())))
+                        && doneStatus.equals(todo.getDoneStatus())
+                        && description.equals(todo.getDescription()))
                 .toList();
         String id = todoList.get(0).getId();
 

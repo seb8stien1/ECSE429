@@ -37,24 +37,24 @@ public class ProjectTest {
 
 //        check Project object was created
         response = getAllProjects(httpClient);
-        ProjectResponse Projects = deserialize(response, ProjectResponse.class);
+        ProjectResponse projects = deserialize(response, ProjectResponse.class);
 
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(200, statusCode);
 
-        List<Project> ProjectList = Projects.getProjects()
+        List<Project> projectList = projects.getProjects()
                 .stream()
-                .filter(Project -> title.equals(Project.getTitle())
-                        && completed.equals(Project.getCompleted()
-                        && active.equals(Project.getActive())
-                        && description.equals(Project.getDescription())))
+                .filter(project -> title.equals(project.getTitle())
+                        && completed.equals(project.getCompleted())
+                        && active.equals(project.getActive())
+                        && description.equals(project.getDescription()))
                 .toList();
-        assertFalse(CollectionUtils.isEmpty(ProjectList));
+        assertFalse(CollectionUtils.isEmpty(projectList));
 
 //        delete each Project created, should be just one
-        ProjectList.forEach(Project-> {
+        projectList.forEach(project-> {
             try {
-                deleteProject(Project.getId(), httpClient);
+                deleteProject(project.getId(), httpClient);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -75,14 +75,14 @@ public class ProjectTest {
 
 //        get Project objects and match to the one we just created
         response = getAllProjects(httpClient);
-        ProjectResponse Projects = deserialize(response, ProjectResponse.class);
+        ProjectResponse projects = deserialize(response, ProjectResponse.class);
 
-        List<Project> ProjectList = Projects.getProjects()
+        List<Project> ProjectList = projects.getProjects()
                 .stream()
-                .filter(Project -> title.equals(Project.getTitle())
-                        && completed.equals(Project.getCompleted()
-                        && active.equals(Project.getActive())
-                        && description.equals(Project.getDescription())))
+                .filter(project -> title.equals(project.getTitle())
+                        && completed.equals(project.getCompleted())
+                        && active.equals(project.getActive())
+                        && description.equals(project.getDescription()))
                 .toList();
         String id = ProjectList.get(0).getId();
 
@@ -94,12 +94,12 @@ public class ProjectTest {
 
 //        get the created Project by id
         response = getProject(id, httpClient);
-        Projects = deserialize(response, ProjectResponse.class);
-        Project Project = Projects.getProjects().get(0);
-        assertEquals(title, Project.getTitle());
-        assertEquals(completed, Project.getCompleted());
-        assertEquals(active, Project.getActive());
-        assertEquals(newDescription, Project.getDescription());
+        projects = deserialize(response, ProjectResponse.class);
+        Project project = projects.getProjects().get(0);
+        assertEquals(title, project.getTitle());
+        assertEquals(completed, project.getCompleted());
+        assertEquals(active, project.getActive());
+        assertEquals(newDescription, project.getDescription());
 
 //        modify the created Project using post
         Boolean newActive = Boolean.TRUE;
@@ -109,15 +109,15 @@ public class ProjectTest {
 
 //        get the created Project by id
         response = getProject(id, httpClient);
-        Projects = deserialize(response, ProjectResponse.class);
-        Project = Projects.getProjects().get(0);
-        assertEquals(title, Project.getTitle());
-        assertEquals(completed, Project.getCompleted());
-        assertEquals(newActive, Project.getActive());
-        assertEquals(description, Project.getDescription());
+        projects = deserialize(response, ProjectResponse.class);
+        project = projects.getProjects().get(0);
+        assertEquals(title, project.getTitle());
+        assertEquals(completed, project.getCompleted());
+        assertEquals(newActive, project.getActive());
+        assertEquals(description, project.getDescription());
 
 //        delete the created Project
-        response = deleteProject(Project.getId(), httpClient);
+        response = deleteProject(project.getId(), httpClient);
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(200, statusCode);
     }
@@ -164,16 +164,16 @@ public class ProjectTest {
 
         createProject(title, completed, active, description, httpClient);
         HttpResponse response = getAllProjects(httpClient);
-        ProjectResponse Projects = deserialize(response, ProjectResponse.class);
+        ProjectResponse projects = deserialize(response, ProjectResponse.class);
 
-        List<Project> ProjectList = Projects.getProjects()
+        List<Project> projectList = projects.getProjects()
                 .stream()
-                .filter(Project -> title.equals(Project.getTitle())
-                        && active.equals(Project.getActive()
-                        && completed.equals(Project.getCompleted())
-                        && description.equals(Project.getDescription())))
+                .filter(project -> title.equals(project.getTitle())
+                        && active.equals(project.getActive())
+                        && completed.equals(project.getCompleted())
+                        && description.equals(project.getDescription()))
                 .toList();
-        String id = ProjectList.get(0).getId();
+        String id = projectList.get(0).getId();
 
         String invalidActive = "fals";
 
@@ -207,16 +207,16 @@ public class ProjectTest {
 
         createProject(title, completed, active, description, httpClient);
         HttpResponse response = getAllProjects(httpClient);
-        ProjectResponse Projects = deserialize(response, ProjectResponse.class);
+        ProjectResponse projects = deserialize(response, ProjectResponse.class);
 
-        List<Project> ProjectList = Projects.getProjects()
+        List<Project> projectList = projects.getProjects()
                 .stream()
-                .filter(Project -> title.equals(Project.getTitle())
-                        && active.equals(Project.getActive()
-                        && completed.equals(Project.getCompleted())
-                        && description.equals(Project.getDescription())))
+                .filter(project -> title.equals(project.getTitle())
+                        && active.equals(project.getActive())
+                        && completed.equals(project.getCompleted())
+                        && description.equals(project.getDescription()))
                 .toList();
-        String id = ProjectList.get(0).getId();
+        String id = projectList.get(0).getId();
 
         String invalidActive = "fals";
 
