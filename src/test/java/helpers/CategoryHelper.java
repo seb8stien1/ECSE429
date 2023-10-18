@@ -30,7 +30,7 @@ public class CategoryHelper {
         return sendHttpRequest("post", baseUrl, body, httpClient);
     }
 
-    public static HttpResponse modifyCategory1(String id, String title, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse modifyCategoryPut(String id, String title, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"description\":\"%s\"}",
                 title, description);
         StringEntity body = new StringEntity(bodyString);
@@ -38,7 +38,7 @@ public class CategoryHelper {
         return sendHttpRequest("put", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 
-    public static HttpResponse modifyCategory2(String id, String title, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse modifyCategoryPost(String id, String title, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"description\":\"%s\"}",
                 title, description);
         StringEntity body = new StringEntity(bodyString);

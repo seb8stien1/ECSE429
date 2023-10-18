@@ -3,6 +3,7 @@ package tests;
 import config.RandomOrderTestRunner;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,14 +34,14 @@ public class ProjectTest {
         HttpResponse response = createProject(title, completed, active, description, httpClient);
 
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
 //        check Project object was created
         response = getAllProjects(httpClient);
         ProjectResponse projects = deserialize(response, ProjectResponse.class);
 
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
         List<Project> projectList = projects.getProjects()
                 .stream()
@@ -62,7 +63,7 @@ public class ProjectTest {
     }
 
     @Test
-    public void testGetPostPutById() throws IOException {
+    public void testCreateAndModify() throws IOException {
         String title = "testProject";
         Boolean active = Boolean.FALSE;
         Boolean completed = Boolean.FALSE;
@@ -71,7 +72,7 @@ public class ProjectTest {
 //        create Project object
         HttpResponse response = createProject(title, completed, active, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
 //        get Project objects and match to the one we just created
         response = getAllProjects(httpClient);
@@ -88,9 +89,9 @@ public class ProjectTest {
 
 //        modify the created Project using put
         String newDescription = "new test description";
-        response = modifyProject1(id, title, completed, active, newDescription, httpClient);
+        response = modifyProjectPut(id, title, completed, active, newDescription, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
 //        get the created Project by id
         response = getProject(id, httpClient);
@@ -103,9 +104,9 @@ public class ProjectTest {
 
 //        modify the created Project using post
         Boolean newActive = Boolean.TRUE;
-        response = modifyProject1(id, title, completed, newActive, description, httpClient);
+        response = modifyProjectPut(id, title, completed, newActive, description, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
 //        get the created Project by id
         response = getProject(id, httpClient);
@@ -119,7 +120,7 @@ public class ProjectTest {
 //        delete the created Project
         response = deleteProject(project.getId(), httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
@@ -134,29 +135,29 @@ public class ProjectTest {
 
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: active should be BOOLEAN", e.getErrorMessages().get(0));
     }
 
     @Test
-    public void test404GetById() throws IOException {
+    public void testGetByNonexistentId() throws IOException {
         HttpResponse response = getProject("-1", httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     @Test
-    public void test404Put() throws IOException {
+    public void testPutNonexistentID() throws IOException {
         String title = "testProject";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
-        HttpResponse response = modifyProject1("-1", title, doneStatus, doneStatus, description, httpClient);
+        HttpResponse response = modifyProjectPut("-1", title, doneStatus, doneStatus, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     @Test
-    public void test400Put() throws IOException {
+    public void testPutError() throws IOException {
         String title = "testProject";
         Boolean active = false;
         Boolean completed = false;
@@ -177,29 +178,31 @@ public class ProjectTest {
 
         String invalidActive = "fals";
 
-        response = modifyProject1(id, title, completed, invalidActive
+        response = modifyProjectPut(id, title, completed, invalidActive
                 , description, httpClient);
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: active should be BOOLEAN", e.getErrorMessages().get(0));
 
-        deleteProject(id, httpClient);
+        response = deleteProject(id, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
-    public void test404Post() throws IOException {
+    public void testPostInvalidID() throws IOException {
         String title = "testProject";
         Boolean completed = Boolean.FALSE;
         Boolean active = Boolean.FALSE;
         String description = "test description";
-        HttpResponse response = modifyProject2("-1", title, completed, active, description, httpClient);
+        HttpResponse response = modifyProjectPost("-1", title, completed, active, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     @Test
-    public void test400Post() throws IOException {
+    public void testPostInvalidActive() throws IOException {
         String title = "testProject";
         Boolean active = false;
         Boolean completed = false;
@@ -220,20 +223,22 @@ public class ProjectTest {
 
         String invalidActive = "fals";
 
-        response = modifyProject2(id, title, completed, invalidActive
+        response = modifyProjectPost(id, title, completed, invalidActive
                 , description, httpClient);
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: active should be BOOLEAN", e.getErrorMessages().get(0));
 
-        deleteProject(id, httpClient);
+        response = deleteProject(id, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
-    public void test404Delete() throws IOException {
+    public void testDeleteNonexistentID() throws IOException {
         HttpResponse response = deleteProject("-1", httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 }

@@ -3,6 +3,7 @@ package tests;
 import config.RandomOrderTestRunner;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.junit.runner.RunWith;
 import response.ResponseError;
 import response.Todo;
@@ -43,14 +44,14 @@ public class TodoTest {
         HttpResponse response = createTodo(title, doneStatus, description, httpClient);
 
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
 //        check todo object was created
         response = getAllTodos(httpClient);
         TodoResponse todos = deserialize(response, TodoResponse.class);
 
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
         List<Todo> todoList = todos.getTodos()
                 .stream()
@@ -71,7 +72,7 @@ public class TodoTest {
     }
 
     @Test
-    public void testGetPostPutById() throws IOException {
+    public void testCreateAndModify() throws IOException {
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
@@ -79,7 +80,7 @@ public class TodoTest {
 //        create Todo object
         HttpResponse response = createTodo(title, doneStatus, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
 //        get todo objects and match to the one we just created
         response = getAllTodos(httpClient);
@@ -95,9 +96,9 @@ public class TodoTest {
 
 //        modify the created todo using put
         String newDescription = "new test description";
-        response = modifyTodo1(id, title, doneStatus, newDescription, httpClient);
+        response = modifyTodoPut(id, title, doneStatus, newDescription, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
 //        get the created todo by id
         response = getTodo(id, httpClient);
@@ -109,9 +110,9 @@ public class TodoTest {
 
 //        modify the created todo using post
         Boolean newDoneStatus = Boolean.TRUE;
-        response = modifyTodo1(id, title, newDoneStatus, description, httpClient);
+        response = modifyTodoPost(id, title, newDoneStatus, description, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
 //        get the created todo by id
         response = getTodo(id, httpClient);
@@ -123,7 +124,7 @@ public class TodoTest {
 //        delete the created todo
         response = deleteTodo(todo.getId(), httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
@@ -137,69 +138,29 @@ public class TodoTest {
 
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: doneStatus should be BOOLEAN", e.getErrorMessages().get(0));
     }
 
     @Test
-    public void test404GetById() throws IOException {
+    public void testGetByIdNonexistent() throws IOException {
         HttpResponse response = getTodo("-1", httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     @Test
-    public void test404Put() throws IOException {
+    public void testPutByNonexistentID() throws IOException {
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
-        HttpResponse response = modifyTodo1("-1", title, doneStatus, description, httpClient);
+        HttpResponse response = modifyTodoPut("-1", title, doneStatus, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     @Test
-    public void test400Put() throws IOException {
-        String title = "testTodo";
-        Boolean doneStatus = Boolean.FALSE;
-        String description = "test description";
-
-        createTodo(title, doneStatus, description, httpClient);
-        HttpResponse response = getAllTodos(httpClient);
-        TodoResponse todos = deserialize(response, TodoResponse.class);
-
-        List<Todo> todoList = todos.getTodos()
-                .stream()
-                .filter(todo -> title.equals(todo.getTitle())
-                        && doneStatus.equals(todo.getDoneStatus())
-                        && description.equals(todo.getDescription()))
-                .toList();
-        String id = todoList.get(0).getId();
-
-        String invalidDoneStatus = "fals";
-
-        response = modifyTodo1(id, title, invalidDoneStatus
-                , description, httpClient);
-        ResponseError e = deserialize(response, ResponseError.class);
-        int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
-        assertEquals("Failed Validation: doneStatus should be BOOLEAN", e.getErrorMessages().get(0));
-
-        deleteTodo(id, httpClient);
-    }
-
-    @Test
-    public void test404Post() throws IOException {
-        String title = "testTodo";
-        Boolean doneStatus = Boolean.FALSE;
-        String description = "test description";
-        HttpResponse response = modifyTodo2("-1", title, doneStatus, description, httpClient);
-        int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
-    }
-
-    @Test
-    public void test400Post() throws IOException {
+    public void testPutInvalidDoneStatus() throws IOException {
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
@@ -218,20 +179,64 @@ public class TodoTest {
 
         String invalidDoneStatus = "fals";
 
-        response = modifyTodo2(id, title, invalidDoneStatus
+        response = modifyTodoPut(id, title, invalidDoneStatus
                 , description, httpClient);
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: doneStatus should be BOOLEAN", e.getErrorMessages().get(0));
 
-        deleteTodo(id, httpClient);
+        response = deleteTodo(id, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
-    public void test404Delete() throws IOException {
+    public void testPostNonexistentID() throws IOException {
+        String title = "testTodo";
+        Boolean doneStatus = Boolean.FALSE;
+        String description = "test description";
+        HttpResponse response = modifyTodoPost("-1", title, doneStatus, description, httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
+    }
+
+    @Test
+    public void testPostInvalidDoneStatus() throws IOException {
+        String title = "testTodo";
+        Boolean doneStatus = Boolean.FALSE;
+        String description = "test description";
+
+        createTodo(title, doneStatus, description, httpClient);
+        HttpResponse response = getAllTodos(httpClient);
+        TodoResponse todos = deserialize(response, TodoResponse.class);
+
+        List<Todo> todoList = todos.getTodos()
+                .stream()
+                .filter(todo -> title.equals(todo.getTitle())
+                        && doneStatus.equals(todo.getDoneStatus())
+                        && description.equals(todo.getDescription()))
+                .toList();
+        String id = todoList.get(0).getId();
+
+        String invalidDoneStatus = "fals";
+
+        response = modifyTodoPost(id, title, invalidDoneStatus
+                , description, httpClient);
+        ResponseError e = deserialize(response, ResponseError.class);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
+        assertEquals("Failed Validation: doneStatus should be BOOLEAN", e.getErrorMessages().get(0));
+
+        response = deleteTodo(id, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
+    }
+
+    @Test
+    public void testDeleteNonexistentID() throws IOException {
         HttpResponse response = deleteTodo("-1", httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 }

@@ -1,11 +1,8 @@
 package helpers;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
@@ -28,13 +25,13 @@ public class TodoHelper {
 
     public static HttpResponse createTodo(String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
-                title.toString(), doneStatus.toString(), description.toString());
+                title, doneStatus.toString(), description);
         StringEntity body = new StringEntity(bodyString);
         body.setContentType("application/json");
         return sendHttpRequest("post", baseUrl, body, httpClient);
     }
 
-    public static HttpResponse modifyTodo1(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse modifyTodoPut(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
                 title, doneStatus.toString(), description);
         StringEntity body = new StringEntity(bodyString);
@@ -42,7 +39,7 @@ public class TodoHelper {
         return sendHttpRequest("put", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 
-    public static HttpResponse modifyTodo2(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse modifyTodoPost(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
                 title, doneStatus.toString(), description);
         StringEntity body = new StringEntity(bodyString);

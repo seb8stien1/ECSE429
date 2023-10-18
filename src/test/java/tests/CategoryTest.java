@@ -3,6 +3,7 @@ package tests;
 import config.RandomOrderTestRunner;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,14 +33,14 @@ public class CategoryTest {
         HttpResponse response = createCategory(title, description, httpClient);
 
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
 //        check Category object was created
         response = getAllCategories(httpClient);
         CategoryResponse categories = deserialize(response, CategoryResponse.class);
 
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
         List<Category> categoryList = categories.getCategories()
                 .stream()
@@ -66,7 +67,7 @@ public class CategoryTest {
 //        create Category object
         HttpResponse response = createCategory(title, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
 //        get category objects and match to the one we just created
         response = getAllCategories(httpClient);
@@ -81,9 +82,9 @@ public class CategoryTest {
 
 //        modify the created category using put
         String newDescription = "new test description";
-        response = modifyCategory1(id, title, newDescription, httpClient);
+        response = modifyCategoryPut(id, title, newDescription, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
 //        get the created Category by id
         response = getCategory(id, httpClient);
@@ -94,9 +95,9 @@ public class CategoryTest {
 
         String newTitle = "new title";
 //        modify the created Category using post
-        response = modifyCategory2(id, newTitle, description, httpClient);
+        response = modifyCategoryPost(id, newTitle, description, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
 //        get the created Category by id
         response = getCategory(id, httpClient);
@@ -108,11 +109,11 @@ public class CategoryTest {
 //        delete the created Category
         response = deleteCategory(category.getId(), httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
-    public void testErrorCreate() throws IOException {
+    public void testCreateEmptyTitle() throws IOException {
         String title = "";
         String description = "test description";
 
@@ -121,64 +122,28 @@ public class CategoryTest {
 
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0));
     }
 
     @Test
-    public void test404GetById() throws IOException {
+    public void testGetByIdNonExistent() throws IOException {
         HttpResponse response = getCategory("-1", httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     @Test
-    public void test404Put() throws IOException {
+    public void testPutByIdNonExistent() throws IOException {
         String title = "testCategory";
         String description = "test description";
-        HttpResponse response = modifyCategory1("-1", title, description, httpClient);
+        HttpResponse response = modifyCategoryPut("-1", title, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     @Test
-    public void test400Put() throws IOException {
-        String title = "testCategory";
-        String description = "test description";
-
-        createCategory(title, description, httpClient);
-        HttpResponse response = getAllCategories(httpClient);
-        CategoryResponse categories = deserialize(response, CategoryResponse.class);
-
-        List<Category> categoryList = categories.getCategories()
-                .stream()
-                .filter(category -> title.equals(category.getTitle())
-                        && description.equals(category.getDescription()))
-                .toList();
-        String id = categoryList.get(0).getId();
-
-        String invalidTitle = "";
-
-        response = modifyCategory1(id, invalidTitle, description, httpClient);
-        ResponseError e = deserialize(response, ResponseError.class);
-        int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
-        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0));
-
-        deleteCategory(id, httpClient);
-    }
-
-    @Test
-    public void test404Post() throws IOException {
-        String title = "testCategory";
-        String description = "test description";
-        HttpResponse response = modifyCategory2("-1", title, description, httpClient);
-        int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
-    }
-
-    @Test
-    public void test400Post() throws IOException {
+    public void testPutEmptyTitle() throws IOException {
         String title = "testCategory";
         String description = "test description";
 
@@ -194,19 +159,59 @@ public class CategoryTest {
         String id = categoryList.get(0).getId();
 
         String invalidTitle = "";
-        response = modifyCategory2(id, invalidTitle, description, httpClient);
+
+        response = modifyCategoryPut(id, invalidTitle, description, httpClient);
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0));
 
-        deleteCategory(id, httpClient);
+        response = deleteCategory(id, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
-    public void test404Delete() throws IOException {
+    public void testPostModifyNonExistentID() throws IOException {
+        String title = "testCategory";
+        String description = "test description";
+        HttpResponse response = modifyCategoryPost("-1", title, description, httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
+    }
+
+    @Test
+    public void testPostModifyEmptyTitle() throws IOException {
+        String title = "testCategory";
+        String description = "test description";
+
+        createCategory(title, description, httpClient);
+        HttpResponse response = getAllCategories(httpClient);
+        CategoryResponse categories = deserialize(response, CategoryResponse.class);
+
+        List<Category> categoryList = categories.getCategories()
+                .stream()
+                .filter(category -> title.equals(category.getTitle())
+                        && description.equals(category.getDescription()))
+                .toList();
+        String id = categoryList.get(0).getId();
+
+        String invalidTitle = "";
+        response = modifyCategoryPost(id, invalidTitle, description, httpClient);
+        ResponseError e = deserialize(response, ResponseError.class);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
+        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0));
+
+        response = deleteCategory(id, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
+    }
+
+    @Test
+    public void testDeleteNonExistentID() throws IOException {
         HttpResponse response = deleteCategory("-1", httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(404, statusCode);
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 }

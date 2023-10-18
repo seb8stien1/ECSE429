@@ -30,7 +30,7 @@ public class ProjectHelper {
         return sendHttpRequest("post", baseUrl, body, httpClient);
     }
 
-    public static HttpResponse modifyProject1(String id, String title, Object completed, Object active, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse modifyProjectPut(String id, String title, Object completed, Object active, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"completed\":%s, \"active\": %s, \"description\":\"%s\"}",
                 title, completed.toString(), active.toString(), description);
         StringEntity body = new StringEntity(bodyString);
@@ -38,7 +38,7 @@ public class ProjectHelper {
         return sendHttpRequest("put", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 
-    public static HttpResponse modifyProject2(String id, String title, Object completed, Object active, String description, HttpClient httpClient) throws IOException {
+    public static HttpResponse modifyProjectPost(String id, String title, Object completed, Object active, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"completed\":%s, \"active\": %s, \"description\":\"%s\"}",
                 title, completed.toString(), active.toString(), description);
         StringEntity body = new StringEntity(bodyString);

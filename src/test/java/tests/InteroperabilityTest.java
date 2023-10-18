@@ -4,6 +4,7 @@ import config.RandomOrderTestRunner;
 import helpers.ApiHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.BeforeClass;
@@ -24,18 +25,18 @@ import static helpers.ProjectHelper.*;
 import static org.junit.Assert.*;
 
 @RunWith(RandomOrderTestRunner.class)
-public class AssociationTest {
+public class InteroperabilityTest {
     CloseableHttpClient httpClient;
     @BeforeClass
     public static void testOn() throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpResponse response = ApiHelper.sendHttpRequest("get", "http://localhost:4567/", null, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
-    public void testCreateGetDeleteProjectsRelationship() throws IOException {
+    public void testCreateGetDeleteProjectsOfCategoryRelationship() throws IOException {
         String categoryTitle = "category title";
         String categoryDescription = "category description";
         String projectTitle = "project title";
@@ -72,7 +73,7 @@ public class AssociationTest {
 
         response = createProjectAssociation(categoryId, projectId, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
         response = getProjectAssociation(categoryId, httpClient);
         projectAssociations = deserialize(response, ProjectResponse.class);
@@ -90,18 +91,23 @@ public class AssociationTest {
 
         response = deleteProjectAssociation(categoryId, projectId, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
         response = getProjectAssociation(categoryId, httpClient);
         projectAssociations = deserialize(response, ProjectResponse.class);
         assertTrue(CollectionUtils.isEmpty(projectAssociations.getProjects()));
 
-        deleteCategory(categoryId, httpClient);
-        deleteProject(projectId, httpClient);
+        response = deleteCategory(categoryId, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
+
+        response = deleteProject(projectId, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
     @Test
-    public void testCreateGetDeleteCategoriesRelationship() throws IOException {
+    public void testCreateGetDeleteCategoriesOfProjectRelationship() throws IOException {
         String categoryTitle = "category title";
         String categoryDescription = "category description";
         String projectTitle = "project title";
@@ -140,7 +146,7 @@ public class AssociationTest {
 
         response = createCategoryAssociation(projectId, categoryId, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(201, statusCode);
+        assertEquals(HttpStatus.SC_CREATED, statusCode);
 
         response = getCategoryAssociation(projectId, httpClient);
         categoryAssociations = deserialize(response, CategoryResponse.class);
@@ -156,13 +162,18 @@ public class AssociationTest {
 
         response = deleteCategoryAssociation(projectId, categoryId, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
 
         response = getCategoryAssociation(projectId, httpClient);
         categoryAssociations = deserialize(response, CategoryResponse.class);
-        assertTrue(CollectionUtils.isEmpty(categoryAssociation.getProjects()));
+        assertTrue(CollectionUtils.isEmpty(categoryAssociations.getCategories()));
 
-        deleteCategory(categoryId, httpClient);
-        deleteProject(projectId, httpClient);
+        response = deleteCategory(categoryId, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
+
+        response = deleteProject(projectId, httpClient);
+        statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_OK, statusCode);
     }
 }
