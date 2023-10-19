@@ -107,6 +107,83 @@ public class InteroperabilityTest {
     }
 
     @Test
+    public void test404CreateProjectsOfCategoriesNoProject() throws IOException {
+        String categoryTitle = "category title";
+        String categoryDescription = "category description";
+        createCategory(categoryTitle, categoryDescription, httpClient);
+
+        HttpResponse response = getAllCategories(httpClient);
+        CategoryResponse categories = deserialize(response, CategoryResponse.class);
+
+        List<Category> categoryList = categories.getCategories()
+                .stream()
+                .filter(category -> categoryTitle.equals(category.getTitle())
+                        && categoryDescription.equals(category.getDescription()))
+                .toList();
+        String categoryId = categoryList.get(0).getId();
+
+        response = createProjectAssociation(categoryId, "-1", httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(404, statusCode);
+
+        deleteCategory(categoryId, httpClient);
+    }
+
+    @Test
+    public void test404CreateProjectsOfCategoriesNoCategory() throws IOException {
+        String projectTitle = "project title";
+        String projectDescription = "project description";
+
+        createProject(projectTitle, false, false, projectDescription, httpClient);
+
+        HttpResponse response = getAllProjects(httpClient);
+        ProjectResponse projects = deserialize(response, ProjectResponse.class);
+
+        List<Project> projectList = projects.getProjects()
+                .stream()
+                .filter(project -> projectTitle.equals(project.getTitle())
+                        && Boolean.FALSE.equals(project.getActive()
+                        && Boolean.FALSE.equals(project.getCompleted())
+                        && projectDescription.equals(project.getDescription())))
+                .toList();
+        String projectId = projectList.get(0).getId();
+
+        response = createProjectAssociation("-1", projectId, httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(404, statusCode);
+
+        deleteProject(projectId, httpClient);
+    }
+
+    @Test
+    public void test404GetProjectsOfCategoryExpectedResult() throws IOException {
+        HttpResponse response = getProjectAssociation("-1", httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(404, statusCode);
+    }
+
+    @Test
+    public void test404GetCategoriesOfProjectExpectedResult() throws IOException {
+        HttpResponse response = getCategoryAssociation("-1", httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(404, statusCode);
+    }
+
+    @Test
+    public void test404GetProjectsOfCategoryWorks() throws IOException {
+        HttpResponse response = getProjectAssociation("-1", httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(200, statusCode);
+    }
+
+    @Test
+    public void test404GetCategoriesOfProjectWorks() throws IOException {
+        HttpResponse response = getCategoryAssociation("-1", httpClient);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(200, statusCode);
+    }
+
+    @Test
     public void testCreateGetDeleteCategoriesOfProjectRelationship() throws IOException {
         String categoryTitle = "category title";
         String categoryDescription = "category description";
