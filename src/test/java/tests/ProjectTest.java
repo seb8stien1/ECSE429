@@ -63,6 +63,57 @@ public class ProjectTest {
     }
 
     @Test
+    public void testHeadAllProjects() throws IOException {
+        HttpResponse headResponse = headAllProjects(httpClient);
+        HttpResponse getResponse = getAllProjects(httpClient);
+
+        // check the head response does not return anything in the body
+        assertNull(headResponse.getEntity());
+
+        // we will now check that all the headers returned are the same as the ones returned for the get request
+        // except for the date attribute
+        assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
+
+        for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
+            if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
+                assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
+            }
+        }
+
+    }
+
+    @Test
+    public void testHeadProjectById() throws IOException {
+        String title = "testProject";
+        Boolean active = Boolean.FALSE;
+        Boolean completed = Boolean.FALSE;
+        String description = "test description";
+
+//        create Category object to fetch ID that will be used in the head request
+        createProject(title,completed,active,description,httpClient);
+        HttpResponse getAllResponse = getAllProjects(httpClient);
+        ProjectResponse projects = deserialize(getAllResponse, ProjectResponse.class);
+        String projectID = projects.getProjects().get(0).getId();
+
+        // making requests
+        HttpResponse headResponse = headProject(projectID, httpClient);
+        HttpResponse getResponse = getProject(projectID, httpClient);
+
+        // check the head response does not return anything in the body
+        assertNull(headResponse.getEntity());
+
+        // we will now check that all the headers returned are the same as the ones returned for the get request
+        // except for the date attribute
+        assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
+
+        for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
+            if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
+                assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
+            }
+        }
+    }
+
+    @Test
     public void testCreateAndModify() throws IOException {
         String title = "testProject";
         Boolean active = Boolean.FALSE;

@@ -30,6 +30,14 @@ public class ProjectHelper {
         return sendHttpRequest("post", baseUrl, body, httpClient);
     }
 
+    public static HttpResponse headAllProjects(HttpClient httpClient) throws IOException {
+        return sendHttpRequest("head", baseUrl, null, httpClient);
+    }
+
+    public static HttpResponse headProject(String id, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("head", String.format("%s/%s", baseUrl, id), null, httpClient);
+    }
+
     public static HttpResponse modifyProjectPut(String id, String title, Object completed, Object active, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"completed\":%s, \"active\": %s, \"description\":\"%s\"}",
                 title, completed.toString(), active.toString(), description);

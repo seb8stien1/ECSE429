@@ -67,4 +67,18 @@ public class TodoHelper {
         body.setContentType("application/xml");
         return sendHttpRequest("post", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
+
+    public static HttpResponse createAssociation(String associationType, String todoId, String objectId, HttpClient httpClient) throws IOException {
+        String bodyString = String.format("{\"id\":\"%s\"}", objectId);
+        StringEntity body = new StringEntity(bodyString);
+        body.setContentType("application/json");
+        return sendHttpRequest("post", String.format("%s/%s/%s", baseUrl, todoId, associationType), body, httpClient);
+    }
+
+    public static HttpResponse getAssociation(String associationType, String todoId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("get", String.format("%s/%s/%s", baseUrl, todoId, associationType), null, httpClient);
+    }
+    public static HttpResponse deleteAssociation(String associationType, String todoId, String objectId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("delete", String.format("%s/%s/%s/%s", baseUrl, todoId, associationType, objectId), null, httpClient);
+    }
 }

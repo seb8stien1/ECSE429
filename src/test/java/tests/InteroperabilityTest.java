@@ -17,6 +17,8 @@ import response.Category;
 import response.CategoryResponse;
 import response.Project;
 import response.ProjectResponse;
+import response.Todo;
+import response.TodoResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.Optional;
 
 import static helpers.ApiHelper.deserialize;
 import static helpers.CategoryHelper.*;
+import static helpers.TodoHelper.*;
 import static helpers.ProjectHelper.*;
 import static org.junit.Assert.*;
 
