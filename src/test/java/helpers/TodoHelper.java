@@ -24,26 +24,47 @@ public class TodoHelper {
     }
 
     public static HttpResponse createTodo(String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
-        String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
-                title, doneStatus.toString(), description);
+        String bodyString = String.format("<todo>" +
+                        "  <doneStatus>%s</doneStatus>" +
+                        "  <description>%s</description>" +
+                        "  <title>%s</title>" +
+                        "</todo>",
+                doneStatus.toString(), description, title);
+
         StringEntity body = new StringEntity(bodyString);
-        body.setContentType("application/json");
+        body.setContentType("application/xml");
         return sendHttpRequest("post", baseUrl, body, httpClient);
     }
 
+    public static HttpResponse headAllTodos(HttpClient httpClient) throws IOException {
+        return sendHttpRequest("head", baseUrl, null, httpClient);
+    }
+
+    public static HttpResponse headTodo(String id, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("head", String.format("%s/%s", baseUrl, id), null, httpClient);
+    }
+
     public static HttpResponse modifyTodoPut(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
-        String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
-                title, doneStatus.toString(), description);
+        String bodyString = String.format("<todo>" +
+                        "  <doneStatus>%s</doneStatus>" +
+                        "  <description>%s</description>" +
+                        "  <title>%s</title>" +
+                        "</todo>",
+                doneStatus.toString(), description, title);
         StringEntity body = new StringEntity(bodyString);
-        body.setContentType("application/json");
+        body.setContentType("application/xml");
         return sendHttpRequest("put", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 
     public static HttpResponse modifyTodoPost(String id, String title, Object doneStatus, String description, HttpClient httpClient) throws IOException {
-        String bodyString = String.format("{\"title\":\"%s\", \"doneStatus\":%s, \"description\":\"%s\"}",
-                title, doneStatus.toString(), description);
+        String bodyString = String.format("<todo>" +
+                        "  <doneStatus>%s</doneStatus>" +
+                        "  <description>%s</description>" +
+                        "  <title>%s</title>" +
+                        "</todo>",
+                doneStatus.toString(), description, title);
         StringEntity body = new StringEntity(bodyString);
-        body.setContentType("application/json");
+        body.setContentType("application/xml");
         return sendHttpRequest("post", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 }

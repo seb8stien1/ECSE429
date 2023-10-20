@@ -7,9 +7,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import response.ResponseError;
-import response.Category;
-import response.CategoryResponse;
+import response.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +15,8 @@ import java.util.stream.Collectors;
 
 import static helpers.ApiHelper.deserialize;
 import static helpers.CategoryHelper.*;
+import static helpers.TodoHelper.getAllTodos;
+import static helpers.ProjectHelper.getAllProjects;
 import static helpers.CategoryHelper.deleteCategory;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -28,6 +28,13 @@ public class CategoryTest {
     public void testCreateGetAllAndDeleteByIdCategory() throws IOException {
         String title = "testCategory";
         String description = "test description";
+
+        HttpResponse todosResponse = getAllTodos(httpClient);
+        TodoResponse todos = deserialize(todosResponse, TodoResponse.class);
+        List<Todo> allTodosBefore = todos.getTodos();
+        HttpResponse projectResponse = getAllProjects(httpClient);
+        ProjectResponse projects = deserialize(projectResponse, ProjectResponse.class);
+        List<Project> allProjectsBefore = projects.getProjects();
 
 //        create Category object
         HttpResponse response = createCategory(title, description, httpClient);
@@ -57,6 +64,65 @@ public class CategoryTest {
                 throw new RuntimeException(e);
             }
         });
+
+        todosResponse = getAllTodos(httpClient);
+        todos = deserialize(todosResponse, TodoResponse.class);
+        List<Todo> allTodosAfter = todos.getTodos();
+        projectResponse = getAllProjects(httpClient);
+        projects = deserialize(projectResponse, ProjectResponse.class);
+        List<Project> allProjectsAfter = projects.getProjects();
+
+        assertEquals(allTodosBefore, allTodosAfter);
+        assertEquals(allProjectsBefore, allProjectsAfter);
+    }
+
+    @Test
+    public void testHeadAllCategories() throws IOException {
+        HttpResponse headResponse = headAllCategories(httpClient);
+        HttpResponse getResponse = getAllCategories(httpClient);
+
+        // check the head response does not return anything in the body
+        assertNull(headResponse.getEntity());
+
+        // we will now check that all the headers returned are the same as the ones returned for the get request
+        // except for the date attribute
+        assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
+
+        for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
+            if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
+                assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
+            }
+        }
+
+    }
+
+    @Test
+    public void testHeadCategoryById() throws IOException {
+        String title = "testCategory";
+        String description = "test description";
+
+//        create Category object to fetch ID that will be used in the head request
+        createCategory(title, description, httpClient);
+        HttpResponse getAllResponse = getAllCategories(httpClient);
+        CategoryResponse categories = deserialize(getAllResponse, CategoryResponse.class);
+        String categoryID = categories.getCategories().get(0).getId();
+
+        // making requests
+        HttpResponse headResponse = headCategory(categoryID, httpClient);
+        HttpResponse getResponse = getCategory(categoryID, httpClient);
+
+        // check the head response does not return anything in the body
+        assertNull(headResponse.getEntity());
+
+        // we will now check that all the headers returned are the same as the ones returned for the get request
+        // except for the date attribute
+        assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
+
+        for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
+            if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
+                assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
+            }
+        }
     }
 
     @Test

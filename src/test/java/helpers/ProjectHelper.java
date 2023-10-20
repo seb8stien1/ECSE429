@@ -46,17 +46,17 @@ public class ProjectHelper {
         return sendHttpRequest("post", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 
-    public static HttpResponse createCategoryAssociation(String projectId, String categoryId, HttpClient httpClient) throws IOException {
-        String bodyString = String.format("{\"id\":\"%s\"}", categoryId);
+    public static HttpResponse createAssociation(String associationType, String projectId, String objectId, HttpClient httpClient) throws IOException {
+        String bodyString = String.format("{\"id\":\"%s\"}", objectId);
         StringEntity body = new StringEntity(bodyString);
         body.setContentType("application/json");
-        return sendHttpRequest("post", String.format("%s/%s/categories", baseUrl, projectId), body, httpClient);
+        return sendHttpRequest("post", String.format("%s/%s/%s", baseUrl, projectId, associationType), body, httpClient);
     }
 
-    public static HttpResponse getCategoryAssociation(String projectId, HttpClient httpClient) throws IOException {
-        return sendHttpRequest("get", String.format("%s/%s/categories", baseUrl, projectId), null, httpClient);
+    public static HttpResponse getAssociation(String associationType, String projectId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("get", String.format("%s/%s/%s", baseUrl, projectId, associationType), null, httpClient);
     }
-    public static HttpResponse deleteCategoryAssociation(String projectId, String categoryId, HttpClient httpClient) throws IOException {
-        return sendHttpRequest("delete", String.format("%s/%s/categories/%s", baseUrl, projectId, categoryId), null, httpClient);
+    public static HttpResponse deleteAssociation(String associationType, String projectId, String objectId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("delete", String.format("%s/%s/%s/%s", baseUrl, projectId, associationType, objectId), null, httpClient);
     }
 }

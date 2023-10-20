@@ -72,6 +72,56 @@ public class TodoTest {
     }
 
     @Test
+    public void testHeadAllTodos() throws IOException {
+        HttpResponse headResponse = headAllTodos(httpClient);
+        HttpResponse getResponse = getAllTodos(httpClient);
+
+        // check the head response does not return anything in the body
+        assertNull(headResponse.getEntity());
+
+        // we will now check that all the headers returned are the same as the ones returned for the get request
+        // except for the date attribute
+        assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
+
+        for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
+            if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
+                assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
+            }
+        }
+
+    }
+
+    @Test
+    public void testHeadTodoById() throws IOException {
+        String title = "testTodo";
+        Boolean doneStatus = Boolean.FALSE;
+        String description = "test description";
+
+//        create Category object to fetch ID that will be used in the head request
+        createTodo(title,doneStatus,description,httpClient);
+        HttpResponse getAllResponse = getAllTodos(httpClient);
+        TodoResponse projects = deserialize(getAllResponse, TodoResponse.class);
+        String projectID = projects.getTodos().get(0).getId();
+
+        // making requests
+        HttpResponse headResponse = headTodo(projectID, httpClient);
+        HttpResponse getResponse = getTodo(projectID, httpClient);
+
+        // check the head response does not return anything in the body
+        assertNull(headResponse.getEntity());
+
+        // we will now check that all the headers returned are the same as the ones returned for the get request
+        // except for the date attribute
+        assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
+
+        for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
+            if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
+                assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
+            }
+        }
+    }
+
+    @Test
     public void testCreateAndModify() throws IOException {
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;

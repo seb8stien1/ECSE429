@@ -22,6 +22,14 @@ public class CategoryHelper {
         return sendHttpRequest("get", String.format("%s/%s", baseUrl, id), null, httpClient);
     }
 
+    public static HttpResponse headAllCategories(HttpClient httpClient) throws IOException {
+        return sendHttpRequest("head", baseUrl, null, httpClient);
+    }
+
+    public static HttpResponse headCategory(String id, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("head", String.format("%s/%s", baseUrl, id), null, httpClient);
+    }
+
     public static HttpResponse createCategory(String title, String description, HttpClient httpClient) throws IOException {
         String bodyString = String.format("{\"title\":\"%s\", \"description\":\"%s\"}",
                 title, description);
@@ -46,17 +54,17 @@ public class CategoryHelper {
         return sendHttpRequest("post", String.format("%s/%s", baseUrl, id), body, httpClient);
     }
 
-    public static HttpResponse createProjectAssociation(String categoryId, String projectId, HttpClient httpClient) throws IOException {
-        String bodyString = String.format("{\"id\":\"%s\"}", projectId);
+    public static HttpResponse createAssociation(String associationType, String categoryId, String objectId, HttpClient httpClient) throws IOException {
+        String bodyString = String.format("{\"id\":\"%s\"}", objectId);
         StringEntity body = new StringEntity(bodyString);
         body.setContentType("application/json");
-        return sendHttpRequest("post", String.format("%s/%s/projects", baseUrl, categoryId), body, httpClient);
+        return sendHttpRequest("post", String.format("%s/%s/%s", baseUrl, categoryId, associationType), body, httpClient);
     }
 
-    public static HttpResponse getProjectAssociation(String categoryId, HttpClient httpClient) throws IOException {
-        return sendHttpRequest("get", String.format("%s/%s/projects", baseUrl, categoryId), null, httpClient);
+    public static HttpResponse getAssociation(String associationType, String categoryId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("get", String.format("%s/%s/%s", baseUrl, categoryId, associationType), null, httpClient);
     }
-    public static HttpResponse deleteProjectAssociation(String categoryId, String projectId, HttpClient httpClient) throws IOException {
-        return sendHttpRequest("delete", String.format("%s/%s/projects/%s", baseUrl, categoryId, projectId), null, httpClient);
+    public static HttpResponse deleteAssociation(String associationType, String categoryId, String objectId, HttpClient httpClient) throws IOException {
+        return sendHttpRequest("delete", String.format("%s/%s/%s/%s", baseUrl, categoryId, associationType, objectId), null, httpClient);
     }
 }
