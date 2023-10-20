@@ -1,0 +1,4160 @@
+{
+	"info": {
+		"_postman_id": "1b08b577-66bb-4e64-bfb4-d223d9210f10",
+		"name": "ECSE 429 Exploratory Testing Sessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13491331",
+		"_collection_link": "https://solar-capsule-68566.postman.co/workspace/ECSE-429-Exploratory-Testing~f01f3658-5e47-4060-8e82-c3dbb87d6f16/collection/13491331-1b08b577-66bb-4e64-bfb4-d223d9210f10?action=share&source=collection_link&creator=13491331"
+	},
+	"item": [
+		{
+			"name": "Categories and Its Interoperability (Session 1) - Sebastien",
+			"item": [
+				{
+					"name": "Get Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 16:58:19 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": [\n        {\n            \"id\": \"5\",\n            \"title\": \"personal\",\n            \"description\": \"\"\n        },\n        {\n            \"id\": \"1\",\n            \"title\": \"Office\",\n            \"description\": \"\"\n        },\n        {\n            \"id\": \"2\",\n            \"title\": \"Home\",\n            \"description\": \"\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Post Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"title\",\n    \"description\": \"A brief description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"personal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 16:58:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Location",
+									"value": "categories/5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"5\",\n    \"title\": \"personal\",\n    \"description\": \"\"\n}"
+						},
+						{
+							"name": "400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:02:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessages\": [\n        \"title : field is mandatory\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Category by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:15:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office\",\n            \"description\": \"\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"3"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:21:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessages\": [\n        \"Could not find an instance with categories/3\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "delete category by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:22:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"5"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:23:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessages\": [\n        \"Could not find any instances with categories/5\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Category get todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/2/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"2",
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/2/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"2",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:36:31 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"todos\": [\n        {\n            \"id\": \"2\",\n            \"title\": \"file paperwork\",\n            \"doneStatus\": \"false\",\n            \"description\": \"\",\n            \"tasksof\": [\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        }\n    ]\n}"
+						},
+						{
+							"name": "200 Empty",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/1/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:36:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"todos\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create relationship todo-category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories/2/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"2",
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\":\"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories/2/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"2",
+										"todos"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:34:25 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete relationship category-todo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/2/todos/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"2",
+								"todos",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/2/todos/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"2",
+										"todos",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:34:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/2/todos/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"2",
+										"todos",
+										"2"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:34:14 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessages\": [\n        \"Could not find any instances with categories/2/todos/2\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "category get projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/7/projects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"7",
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 empty",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/1/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1",
+										"projects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:39:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": []\n}"
+						},
+						{
+							"name": "200 category doesnt exist",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/4/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"4",
+										"projects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:39:30 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": []\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/7/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"7",
+										"projects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:46:59 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office Work\",\n            \"completed\": \"false\",\n            \"active\": \"false\",\n            \"description\": \"\",\n            \"tasks\": [\n                {\n                    \"id\": \"1\"\n                },\n                {\n                    \"id\": \"2\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "create relationship category-project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories/7/projects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"7",
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404 non existant category",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories/4/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"4",
+										"projects"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:42:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessages\": [\n        \"Could not find parent thing for relationship categories/4/projects\"\n    ]\n}"
+						},
+						{
+							"name": "404 non existant project id",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories/7/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"7",
+										"projects"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:43:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessages\": [\n        \"Could not find thing matching value for id\"\n    ]\n}"
+						},
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories/7/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"7",
+										"projects"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 17:46:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "delete relationship category-project",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/7/projects/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"7",
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/7/projects/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"7",
+										"projects",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Oct 2023 18:03:30 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:06:53 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Post with ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"personall\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"personall\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:08:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1\",\n    \"title\": \"personall\",\n    \"description\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Amend",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"personally\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"personally\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:09:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1\",\n    \"title\": \"personally\",\n    \"description\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Category with ID",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:12:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Category project header",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/1/projects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"1",
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/1/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1",
+										"projects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:13:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Category todo header",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/1/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"1",
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/1/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:13:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Todos and Its Interoperability (Session 2) - Abhijeet",
+			"item": [
+				{
+					"name": "Todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:25:34 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"todos\": [\n        {\n            \"id\": \"2\",\n            \"title\": \"file paperwork\",\n            \"doneStatus\": \"false\",\n            \"description\": \"\",\n            \"tasksof\": [\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        },\n        {\n            \"id\": \"1\",\n            \"title\": \"scan paperwork\",\n            \"doneStatus\": \"false\",\n            \"description\": \"\",\n            \"tasksof\": [\n                {\n                    \"id\": \"1\"\n                }\n            ],\n            \"categories\": [\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Todo",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:27:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Todos",
+					"request": {
+						"method": "OPTIONS",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "OPTIONS",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:26:57 GMT"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, GET, HEAD, POST"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html;charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Todo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Abhijeet's Todo\",\n    \"doneStatus\": false,\n    \"description\": \"Perform exploratory testing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Abhijeet's Todo\",\n    \"doneStatus\": false,\n    \"description\": \"Perform exploratory testing\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:26:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Location",
+									"value": "todos/3"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3\",\n    \"title\": \"Abhijeet's Todo\",\n    \"doneStatus\": \"false\",\n    \"description\": \"Perform exploratory testing\"\n}"
+						},
+						{
+							"name": "Post Another (201)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Abhijeet's Todo\",\n    \"doneStatus\": false,\n    \"description\": \"Perform exploratory testing\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/todos",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:31:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Location",
+									"value": "todos/4"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"4\",\n    \"title\": \"Abhijeet's Todo\",\n    \"doneStatus\": \"false\",\n    \"description\": \"Perform exploratory testing\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Specific Todo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:26:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"todos\": [\n        {\n            \"id\": \"3\",\n            \"title\": \"Abhijeet's Todo\",\n            \"doneStatus\": \"false\",\n            \"description\": \"Perform exploratory testing\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Specific Todo",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:29:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Specific Todo",
+					"request": {
+						"method": "OPTIONS",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "OPTIONS",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:29:00 GMT"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, GET, HEAD, POST, PUT, DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html;charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Todo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Jeet's Exploratory Testing\",\n    \"doneStatus\": true,\n    \"description\": \"ECSE 429 Project Part A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Jeet's Exploratory Testing\",\n    \"doneStatus\": true,\n    \"description\": \"ECSE 429 Project Part A\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/todos/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:28:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3\",\n    \"title\": \"Jeet's Exploratory Testing\",\n    \"doneStatus\": \"true\",\n    \"description\": \"ECSE 429 Project Part A\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Todo with ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Jeet's Exploratory Testing\",\n    \"doneStatus\": false,\n    \"description\": \"ECSE 429 Project Part A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Jeet's Exploratory Testing\",\n    \"doneStatus\": false,\n    \"description\": \"ECSE 429 Project Part A\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/todos/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:17:42 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3\",\n    \"title\": \"Jeet's Exploratory Testing\",\n    \"doneStatus\": \"false\",\n    \"description\": \"ECSE 429 Project Part A\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Todo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:28:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Tasksof",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/3/tasksof",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3",
+								"tasksof"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/3/tasksof",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3",
+										"tasksof"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:29:40 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office Work\",\n            \"completed\": \"false\",\n            \"active\": \"false\",\n            \"description\": \"\",\n            \"tasks\": [\n                {\n                    \"id\": \"2\"\n                },\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        },\n        {\n            \"id\": \"1\",\n            \"title\": \"Office Work\",\n            \"completed\": \"false\",\n            \"active\": \"false\",\n            \"description\": \"\",\n            \"tasks\": [\n                {\n                    \"id\": \"2\"\n                },\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Tasksof Header",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/3/tasksof",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3",
+								"tasksof"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/3/tasksof",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3",
+										"tasksof"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:20:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Tasksof Relationship",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/4/tasksof",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"4",
+								"tasksof"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/todos/3/tasksof",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3",
+										"tasksof"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:30:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessages\": [\n        \"Could not find parent thing for relationship todos/3/tasksof\"\n    ]\n}"
+						},
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/todos/4/tasksof",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"4",
+										"tasksof"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:31:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Project (Check Relationship)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:31:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office Work\",\n            \"completed\": \"false\",\n            \"active\": \"false\",\n            \"description\": \"\",\n            \"tasks\": [\n                {\n                    \"id\": \"4\"\n                },\n                {\n                    \"id\": \"2\"\n                },\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Tasksof",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/4/tasksof/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"4",
+								"tasksof",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/4/tasksof/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"4",
+										"tasksof",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:32:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Categories Before",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/1/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"1",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/1/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"1",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:32:19 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office\",\n            \"description\": \"\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Todo Category Header",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/3/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/3/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:26:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/3/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/todos/3/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3",
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:32:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Categories After Creation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/3/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"3",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/4/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"4",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:32:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office\",\n            \"description\": \"\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/4/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"4",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/3/categories/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"3",
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 04:24:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Categories After Deletion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos/4/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"4",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/todos/4/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"todos",
+										"4",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:33:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": []\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Projects and Its Interoperability (Session 3) - Rooshnie and Abhigyan",
+			"item": [
+				{
+					"name": "Projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:38:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office Work\",\n            \"completed\": \"false\",\n            \"active\": \"false\",\n            \"description\": \"\",\n            \"tasks\": [\n                {\n                    \"id\": \"2\"\n                },\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Header Projects",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:38:53 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Create Project w/o id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"\",\r\n    \"completed\": true,\r\n    \"active\": false,\r\n    \"description\": \"welcome\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/projects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"\",\r\n    \"completed\": true,\r\n    \"active\": false,\r\n    \"description\": \"welcome\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/projects",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:39:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Location",
+									"value": "projects/2"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"2\",\n    \"title\": \"\",\n    \"completed\": \"true\",\n    \"active\": \"false\",\n    \"description\": \"welcome\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Specific Project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:40:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": [\n        {\n            \"id\": \"2\",\n            \"title\": \"\",\n            \"completed\": \"true\",\n            \"active\": \"false\",\n            \"description\": \"welcome\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Header Project",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:41:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Create Project with Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:42:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"2\",\n    \"title\": \"\",\n    \"completed\": \"true\",\n    \"active\": \"false\",\n    \"description\": \"welcome\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Amend",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"New project\",\r\n    \"completed\": true,\r\n    \"active\": false,\r\n    \"description\": \"work\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/projects/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"New project\",\r\n    \"completed\": true,\r\n    \"active\": false,\r\n    \"description\": \"work\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/projects/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:42:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1\",\n    \"title\": \"New project\",\n    \"completed\": \"true\",\n    \"active\": \"false\",\n    \"description\": \"work\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Project",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:43:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Tasks Before",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/2/tasks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"2",
+								"tasks"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/2/tasks",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"2",
+										"tasks"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:44:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"todos\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Tasks",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/1/tasks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1",
+								"tasks"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/1/tasks",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1",
+										"tasks"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:45:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Tasks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/projects/2/tasks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"2",
+								"tasks"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/projects/2/tasks",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"2",
+										"tasks"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:46:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Tasks After",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/2/tasks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"2",
+								"tasks"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/2/tasks",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"2",
+										"tasks"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:47:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"todos\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"scan paperwork\",\n            \"doneStatus\": \"false\",\n            \"description\": \"\",\n            \"tasksof\": [\n                {\n                    \"id\": \"2\"\n                }\n            ],\n            \"categories\": [\n                {\n                    \"id\": \"1\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Tasks",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/2/tasks/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"2",
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/2/tasks/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"2",
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:47:30 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Categories Before",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/1/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/1/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:53:47 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/1/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/1/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:54:21 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/projects/1/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/projects/1/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1",
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:54:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Categories After",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/1/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/1/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:55:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"categories\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Office\",\n            \"description\": \"\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/projects/1/categories/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"projects",
+								"1",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/projects/1/categories/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"projects",
+										"1",
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 03:56:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.z-SNAPSHOT)"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Shutdown",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/shutdown",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"shutdown"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Docs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/docs",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"docs"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/docs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"docs"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 19 Oct 2023 03:59:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(9.4.z-SNAPSHOT)"
+						}
+					],
+					"cookie": [],
+					"body": "<html>\n    <head>\n        <meta http-equiv='content-language' content='en-us'>\n        <title>API Documentation</title>\n        <link rel='stylesheet' href='/css/default.css'>\n    </head>\n    <body>\n        <div class='content'>\n            <div class='rootmenu menu'>\n                <ul>\n                    <li>\n                        <a href='/gui'>Home</a>\n                    </li>\n                    <li>\n                        <a href='/gui/entities'>Entities Explorer</a>\n                    </li>\n                    <li>\n                        <a href='/docs'>API documentation</a>\n                    </li>\n                </ul>\n            </div>\n            <h1>Todo Manager</h1>\n            <div class='headertextblock'>\n                <p>A Simple todo manager with categories and projects.</p>\n                <p>Will accept json by default.</p>\n                <p>\n                    <i>Content-Type: application/json</i>\n                </p>\n                <p>Set Content-Type header to application/xml if you want to send in XML.</p>\n                <p>\n                    <i>Content-Type: application/xml</i>\n                </p>\n                <p>You can control the returned data format by setting the Accept header</p>\n                <p>You can request XML response by setting the Accept header.</p>\n                <p>i.e. for XML use</p>\n                <p>\n                    <i>Accept: application/xml</i>\n                    <br/>\n                    <br/>\n                </p>\n                <p>You can request JSON response by setting the Accept header.</p>\n                <p>i.e. for JSON use</p>\n                <p>\n                    <i>Accept: application/json</i>\n                    <br/>\n                    <br/>\n                </p>\n                <p>Some requests can be filtered by adding query params of fieldname=value. Where only matching items will be returned.</p>\n                <p>e.g. \n                    <i>/items?size=2&status=true</i>\n                    <br/>\n                    <br/>\n                </p>\n                <p>All data lives in memory and is not persisted so the application is cleared everytime you start it. It does have some test data in here when you start</p>\n            </div>\n            <h2>Model</h2>\n            <h3>Things</h3>\n            <h4>todo</h4>\nFields:\n            <ul>\n                <table>\n                    <thead>\n                        <tr>\n                            <td>Fieldname</td>\n                            <td>Type</td>\n                            <td>Validation</td>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <tr>\n                                <td>id</td>\n                                <td>ID</td>\n                                <td>\n                                    <ul>\n                                        <li>Mandatory?: false</li>\n                                    </ul>\n                                </td>\n                            </tr>\n                            <tr>\n                                <td colspan='3' class='examplevalue'>Example: \"54\"</td>\n                            </tr>\n                            <tr>\n                                <td>title</td>\n                                <td>STRING</td>\n                                <td>\n                                    <ul>\n                                        <li> : can not be empty</li>\n                                        <li>Mandatory?: true</li>\n                                    </ul>\n                                </td>\n                            </tr>\n                            <tr>\n                                <td colspan='3' class='examplevalue'>Example: \"lla pariatur. Except\"</td>\n                            </tr>\n                            <tr>\n                                <td>doneStatus</td>\n                                <td>BOOLEAN</td>\n                                <td>\n                                    <ul>\n                                        <li>Mandatory?: false</li>\n                                    </ul>\n                                </td>\n                            </tr>\n                            <tr>\n                                <td colspan='3' class='examplevalue'>Example: \"false\"</td>\n                            </tr>\n                            <tr>\n                                <td>description</td>\n                                <td>STRING</td>\n                                <td>\n                                    <ul>\n                                        <li>Mandatory?: false</li>\n                                    </ul>\n                                </td>\n                            </tr>\n                            <tr>\n                                <td colspan='3' class='examplevalue'>Example: \"t ut labore et dolor\"</td>\n                            </tr>\n                        </tbody>\n                    </table>\n                    <p>Example JSON Output from API calls</p>\n                    <pre class='json'>\n                        <code class='json'>\n{\n  \"id\": \"54\",\n  \"title\": \"lla pariatur. Except\",\n  \"doneStatus\": \"false\",\n  \"description\": \"t ut labore et dolor\"\n}</code>\n                    </pre>\n                    <p>Example XML Output from API calls</p>\n                    <pre class='xml'>\n                        <code class='xml'>\n&lt;todo&gt;\n  &lt;doneStatus&gt;false&lt;/doneStatus&gt;\n  &lt;description&gt;t ut labore et dolor&lt;/description&gt;\n  &lt;id&gt;54&lt;/id&gt;\n  &lt;title&gt;lla pariatur. Except&lt;/title&gt;\n&lt;/todo&gt;</code>\n                    </pre>\n                    <p>Example JSON Input to API calls</p>\n                    <pre class='json'>\n                        <code class='json'>\n{\n  \"title\": \"lla pariatur. Except\",\n  \"doneStatus\": \"false\",\n  \"description\": \"t ut labore et dolor\"\n}</code>\n                    </pre>\n                    <p>Example XML Input to API calls</p>\n                    <pre class='xml'>\n                        <code class='xml'>\n&lt;todo&gt;\n  &lt;doneStatus&gt;false&lt;/doneStatus&gt;\n  &lt;description&gt;t ut labore et dolor&lt;/description&gt;\n  &lt;id&gt;null&lt;/id&gt;\n  &lt;title&gt;lla pariatur. Except&lt;/title&gt;\n&lt;/todo&gt;</code>\n                    </pre>\n                    <h4>project</h4>\nFields:\n                    <ul>\n                        <table>\n                            <thead>\n                                <tr>\n                                    <td>Fieldname</td>\n                                    <td>Type</td>\n                                    <td>Validation</td>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr>\n                                    <tr>\n                                        <td>id</td>\n                                        <td>ID</td>\n                                        <td>\n                                            <ul>\n                                                <li>Mandatory?: false</li>\n                                            </ul>\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td colspan='3' class='examplevalue'>Example: \"14\"</td>\n                                    </tr>\n                                    <tr>\n                                        <td>title</td>\n                                        <td>STRING</td>\n                                        <td>\n                                            <ul>\n                                                <li>Mandatory?: false</li>\n                                            </ul>\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td colspan='3' class='examplevalue'>Example: \"or sit amet, consect\"</td>\n                                    </tr>\n                                    <tr>\n                                        <td>completed</td>\n                                        <td>BOOLEAN</td>\n                                        <td>\n                                            <ul>\n                                                <li>Mandatory?: false</li>\n                                            </ul>\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td colspan='3' class='examplevalue'>Example: \"false\"</td>\n                                    </tr>\n                                    <tr>\n                                        <td>active</td>\n                                        <td>BOOLEAN</td>\n                                        <td>\n                                            <ul>\n                                                <li>Mandatory?: false</li>\n                                            </ul>\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td colspan='3' class='examplevalue'>Example: \"true\"</td>\n                                    </tr>\n                                    <tr>\n                                        <td>description</td>\n                                        <td>STRING</td>\n                                        <td>\n                                            <ul>\n                                                <li>Mandatory?: false</li>\n                                            </ul>\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td colspan='3' class='examplevalue'>Example: \"tate velit esse cill\"</td>\n                                    </tr>\n                                </tbody>\n                            </table>\n                            <p>Example JSON Output from API calls</p>\n                            <pre class='json'>\n                                <code class='json'>\n{\n  \"id\": \"14\",\n  \"title\": \"or sit amet, consect\",\n  \"completed\": \"false\",\n  \"active\": \"true\",\n  \"description\": \"tate velit esse cill\"\n}</code>\n                            </pre>\n                            <p>Example XML Output from API calls</p>\n                            <pre class='xml'>\n                                <code class='xml'>\n&lt;project&gt;\n  &lt;active&gt;true&lt;/active&gt;\n  &lt;description&gt;tate velit esse cill&lt;/description&gt;\n  &lt;id&gt;14&lt;/id&gt;\n  &lt;completed&gt;false&lt;/completed&gt;\n  &lt;title&gt;or sit amet, consect&lt;/title&gt;\n&lt;/project&gt;</code>\n                            </pre>\n                            <p>Example JSON Input to API calls</p>\n                            <pre class='json'>\n                                <code class='json'>\n{\n  \"title\": \"or sit amet, consect\",\n  \"completed\": \"false\",\n  \"active\": \"true\",\n  \"description\": \"tate velit esse cill\"\n}</code>\n                            </pre>\n                            <p>Example XML Input to API calls</p>\n                            <pre class='xml'>\n                                <code class='xml'>\n&lt;project&gt;\n  &lt;active&gt;true&lt;/active&gt;\n  &lt;description&gt;tate velit esse cill&lt;/description&gt;\n  &lt;id&gt;null&lt;/id&gt;\n  &lt;completed&gt;false&lt;/completed&gt;\n  &lt;title&gt;or sit amet, consect&lt;/title&gt;\n&lt;/project&gt;</code>\n                            </pre>\n                            <h4>category</h4>\nFields:\n                            <ul>\n                                <table>\n                                    <thead>\n                                        <tr>\n                                            <td>Fieldname</td>\n                                            <td>Type</td>\n                                            <td>Validation</td>\n                                        </tr>\n                                    </thead>\n                                    <tbody>\n                                        <tr>\n                                            <tr>\n                                                <td>id</td>\n                                                <td>ID</td>\n                                                <td>\n                                                    <ul>\n                                                        <li>Mandatory?: false</li>\n                                                    </ul>\n                                                </td>\n                                            </tr>\n                                            <tr>\n                                                <td colspan='3' class='examplevalue'>Example: \"39\"</td>\n                                            </tr>\n                                            <tr>\n                                                <td>title</td>\n                                                <td>STRING</td>\n                                                <td>\n                                                    <ul>\n                                                        <li> : can not be empty</li>\n                                                        <li>Mandatory?: true</li>\n                                                    </ul>\n                                                </td>\n                                            </tr>\n                                            <tr>\n                                                <td colspan='3' class='examplevalue'>Example: \", sed do eiusmod tem\"</td>\n                                            </tr>\n                                            <tr>\n                                                <td>description</td>\n                                                <td>STRING</td>\n                                                <td>\n                                                    <ul>\n                                                        <li>Mandatory?: false</li>\n                                                    </ul>\n                                                </td>\n                                            </tr>\n                                            <tr>\n                                                <td colspan='3' class='examplevalue'>Example: \"ut labore et dolorea\"</td>\n                                            </tr>\n                                        </tbody>\n                                    </table>\n                                    <p>Example JSON Output from API calls</p>\n                                    <pre class='json'>\n                                        <code class='json'>\n{\n  \"id\": \"39\",\n  \"title\": \", sed do eiusmod tem\",\n  \"description\": \"ut labore et dolorea\"\n}</code>\n                                    </pre>\n                                    <p>Example XML Output from API calls</p>\n                                    <pre class='xml'>\n                                        <code class='xml'>\n&lt;category&gt;\n  &lt;description&gt;ut labore et dolorea&lt;/description&gt;\n  &lt;id&gt;39&lt;/id&gt;\n  &lt;title&gt;, sed do eiusmod tem&lt;/title&gt;\n&lt;/category&gt;</code>\n                                    </pre>\n                                    <p>Example JSON Input to API calls</p>\n                                    <pre class='json'>\n                                        <code class='json'>\n{\n  \"title\": \", sed do eiusmod tem\",\n  \"description\": \"ut labore et dolorea\"\n}</code>\n                                    </pre>\n                                    <p>Example XML Input to API calls</p>\n                                    <pre class='xml'>\n                                        <code class='xml'>\n&lt;category&gt;\n  &lt;description&gt;ut labore et dolorea&lt;/description&gt;\n  &lt;id&gt;null&lt;/id&gt;\n  &lt;title&gt;, sed do eiusmod tem&lt;/title&gt;\n&lt;/category&gt;</code>\n                                    </pre>\n                                    <h3>Relationships</h3>\n                                    <ul>\n                                        <li>projects : category => project\n\n                                            <li>categories : todo => category\n\n                                                <li>todos : category => todo\n\n                                                    <li>tasks/tasksof : project =(tasks)=> todo / todo =(tasksof)=> project \n\n                                                    </ul>\n                                                    <h2>API</h2>\n                                                    <p>The API takes body with objects using the field definitions and examples shown in the model.</p>\n                                                    <h3>End Points</h3>\n                                                    <h4 class='endpoint'>/todos</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/todos</span\n                                                    </p>\n                                                    <p>This endpoint can be filtered with fields as URL Query Parameters.</p>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/todos?title=cupidatat%20non%20proide</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /todos</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the instances of todo</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /todos</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for all the instances of todo</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /todos</strong>\n                                                            <ul>\n                                                                <li class='normal'>we should be able to create todo without a ID using the field values in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/todos/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/todos/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /todos/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>return a specific instances of todo using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /todos/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for a specific instances of todo using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /todos/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>amend a specific instances of todo using a id with a body containing the fields to amend</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>PUT /todos/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>amend a specific instances of todo using a id with a body containing the fields to amend</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /todos/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete a specific instances of todo using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/todos/:id/tasksof</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/todos/:id/tasksof</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /todos/:id/tasksof</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the project items related to todo, with given id, by the relationship named tasksof</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /todos/:id/tasksof</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for the project items related to todo, with given id, by the relationship named tasksof</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /todos/:id/tasksof</strong>\n                                                            <ul>\n                                                                <li class='normal'>create an instance of a relationship named tasksof between todo instance :id and the project instance represented by the id in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/todos/:id/tasksof/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/todos/:id/tasksof/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /todos/:id/tasksof/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete the instance of the relationship named tasksof between todo and project using the :id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/todos/:id/categories</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/todos/:id/categories</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /todos/:id/categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the category items related to todo, with given id, by the relationship named categories</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /todos/:id/categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for the category items related to todo, with given id, by the relationship named categories</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /todos/:id/categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>create an instance of a relationship named categories between todo instance :id and the category instance represented by the id in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/todos/:id/categories/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/todos/:id/categories/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /todos/:id/categories/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete the instance of the relationship named categories between todo and category using the :id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/projects</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/projects</span\n                                                    </p>\n                                                    <p>This endpoint can be filtered with fields as URL Query Parameters.</p>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/projects?title=consectetur%20adipisca</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /projects</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the instances of project</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /projects</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for all the instances of project</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /projects</strong>\n                                                            <ul>\n                                                                <li class='normal'>we should be able to create project without a ID using the field values in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/projects/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/projects/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /projects/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>return a specific instances of project using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /projects/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for a specific instances of project using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /projects/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>amend a specific instances of project using a id with a body containing the fields to amend</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>PUT /projects/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>amend a specific instances of project using a id with a body containing the fields to amend</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /projects/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete a specific instances of project using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/projects/:id/tasks</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/projects/:id/tasks</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /projects/:id/tasks</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the todo items related to project, with given id, by the relationship named tasks</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /projects/:id/tasks</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for the todo items related to project, with given id, by the relationship named tasks</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /projects/:id/tasks</strong>\n                                                            <ul>\n                                                                <li class='normal'>create an instance of a relationship named tasks between project instance :id and the todo instance represented by the id in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/projects/:id/tasks/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/projects/:id/tasks/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /projects/:id/tasks/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete the instance of the relationship named tasks between project and todo using the :id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/projects/:id/categories</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/projects/:id/categories</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /projects/:id/categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the category items related to project, with given id, by the relationship named categories</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /projects/:id/categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for the category items related to project, with given id, by the relationship named categories</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /projects/:id/categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>create an instance of a relationship named categories between project instance :id and the category instance represented by the id in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/projects/:id/categories/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/projects/:id/categories/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /projects/:id/categories/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete the instance of the relationship named categories between project and category using the :id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/categories</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/categories</span\n                                                    </p>\n                                                    <p>This endpoint can be filtered with fields as URL Query Parameters.</p>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/categories?title=dunt%20ut%20labore%20et%20do</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the instances of category</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for all the instances of category</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /categories</strong>\n                                                            <ul>\n                                                                <li class='normal'>we should be able to create category without a ID using the field values in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/categories/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/categories/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /categories/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>return a specific instances of category using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /categories/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for a specific instances of category using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /categories/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>amend a specific instances of category using a id with a body containing the fields to amend</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>PUT /categories/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>amend a specific instances of category using a id with a body containing the fields to amend</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /categories/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete a specific instances of category using a id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/categories/:id/projects</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/categories/:id/projects</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /categories/:id/projects</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the project items related to category, with given id, by the relationship named projects</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /categories/:id/projects</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for the project items related to category, with given id, by the relationship named projects</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /categories/:id/projects</strong>\n                                                            <ul>\n                                                                <li class='normal'>create an instance of a relationship named projects between category instance :id and the project instance represented by the id in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/categories/:id/projects/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/categories/:id/projects/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /categories/:id/projects/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete the instance of the relationship named projects between category and project using the :id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/categories/:id/todos</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/categories/:id/todos</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /categories/:id/todos</strong>\n                                                            <ul>\n                                                                <li class='normal'>return all the todo items related to category, with given id, by the relationship named todos</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>HEAD /categories/:id/todos</strong>\n                                                            <ul>\n                                                                <li class='normal'>headers for the todo items related to category, with given id, by the relationship named todos</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>POST /categories/:id/todos</strong>\n                                                            <ul>\n                                                                <li class='normal'>create an instance of a relationship named todos between category instance :id and the todo instance represented by the id in the body of the message</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4 class='endpoint'>/categories/:id/todos/:id</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/categories/:id/todos/:id</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>DELETE /categories/:id/todos/:id</strong>\n                                                            <ul>\n                                                                <li class='normal'>delete the instance of the relationship named todos between category and todo using the :id</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4>/docs</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/docs</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /http://localhost:4567/docs</strong>\n                                                            <ul>\n                                                                <li class='normal'>Show this documentation as HTML.</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <h4>/shutdown</h4>\n                                                    <p>e.g. \n                                                        <span class='endpoint'>http://localhost:4567/shutdown</span\n                                                    </p>\n                                                    <ul>\n                                                        <li class='endpoint'>\n                                                            <strong>GET /shutdown</strong>\n                                                            <ul>\n                                                                <li class='normal'>Shutdown the API server</li>\n                                                            </ul>\n                                                        </li>\n                                                    </ul>\n                                                    <p>\n                                                        <a href='/docs/swagger'>[download swagger file]</a>\n                                                    </p>\n                                                    <p>&nbsp;</p>\n                                                    <hr/>\n                                                    <div class='footer'>\n                                                        <p>Thingifier version 1.5, Copyright Alan Richardson, Compendium Developments Ltd 2020 </p>\n                                                        <ul class='footerlinks'>\n                                                            <li>\n                                                                <a href='https://github.com/eviltester/thingifier'>Thingifier</a>\n                                                            </li>\n                                                            <li>\n                                                                <a href='http://eviltester.com'>EvilTester.com</a>\n                                                            </li>\n                                                            <li>\n                                                                <a href='https://compendiumdev.co.uk'>Compendium Developments</a>\n                                                            </li>\n                                                        </ul>\n                                                    </div>\n                                                </div>\n                                            </body>\n                                        </html>"
+				}
+			]
+		}
+	]
+}

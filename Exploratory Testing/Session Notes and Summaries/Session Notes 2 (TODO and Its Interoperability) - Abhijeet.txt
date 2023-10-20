@@ -1,0 +1,120 @@
+CHARTER
+-----------------------------------------------
+Identify capabilities and areas of potential instability of the “rest api todo list manager”
+
+
+Build
+-----------------------------------------------
+runTodoManagerRestAPI-1.5.5.jar
+
+
+Area
+-----------------------------------------------
+Typical Scenarios - Main functions and capabilities
+
+
+Environment
+-----------------------------------------------
+MacOS Sonoma 14.0
+Screen resolution: 2560x1600
+
+
+START TIME
+-----------------------------------------------
+6:12 PM 11th October 2023
+
+
+Other Data
+-----------------------------------------------
+Postman Collection used during this testing session (JSON)
+Postman Environment Variables used during this testing session (JSON)
+
+
+TESTER
+-----------------------------------------------
+
+Abhijeet Praveen
+abhijeet.praveen@mail.mcgill.ca
+260985492
+
+
+TASK BREAKDOWN
+-----------------------------------------------
+
+#DURATION
+45 minutes
+
+
+TEST NOTES
+-----------------------------------------------
+1) Start Application
+
+2) GET /docs (get api documentation) works as expected
+
+3) GET /todos (all previously filled todos) works as expected
+
+4) HEAD /todos (get headers for todos) works as expected
+
+5) OPTIONS /todos (get options for todos) works as expected
+
+6) POST /todos (create todo object) works as expected but (ID increments even if post did not work)
+
+7) GET /todos/3 (returns specific todo with given id) works as expected 
+
+8) HEAD /todos/3 (get header for specific todo) works as expected
+
+9) OPTIONS /todos/2 (get options for specific todo) works as expected
+
+10) PUT /todos/3 (amend a pre-existing todo) works as expected
+
+11) POST /todos/3 (amend a pre-existing todo but using POST request) [same behaviour as PUT]
+
+12) DELETE /todos/3 (delete a todo that exists) [no confirmation message]
+
+13) GET /todos/3/tasksof (get tasksof relationship for todo: this is testing interoperability) works as expected
+
+14) HEAD /todos/3/tasksof (get header for tasksof relationship) works as expected 
+
+15) POST /todos/4/tasksof (create a tasksof relationship with project id 1) [no confirmation message]
+
+16) GET /project (to check relationship established) works as expected 
+
+17) DELETE /todos/4/tasksof/1 (delete tasksof relationship) [no confirmation message]
+
+18) GET /todos/1/categories (checking interoperability with categories) works as expected 
+
+19) HEAD /todos/3/categories (get header for todos/categories relationship) works as expected 
+
+20) POST /todos/3/categories (create relationship with specific category - id:1) [no confirmation message]
+
+21) GET /todos/3/categories (checking interoperability with categories to see if relationship established) works as expected 
+
+22) DELETE /todos/3/categories/1 (deleting relationship) [no confirmation message]
+
+23) GET /todos/3/categories (checking if delete worked) works as expected 
+
+24) GET /shutdown (shutting down application) works as expected
+
+
+** Ending session
+
+
+END TIME
+-----------------------------------------------
+6:57 PM 11th October 2023
+
+
+POTENTIAL INSTABILITIES/CONCERNS
+-----------------------------------------------
+* App can be shutdown by anyone as it is a simple get request without any authentication or validation
+* ID increases even though post fails (newly created ID will be 2 higher than previous object instead of 1)
+* Trying to create a relationship that already exists between two objects does not result in a warning being given
+* Creating a relationship only returns 201 status code, not a body. Difficult to figure out if any problems occurred during creation, will always have to do a get after the post request
+
+
+NEW TESTING IDEAS
+-----------------------------------------------
+* Test how the API handles the null keyword
+* Test with IDs that are negative
+* Will there be a race condition if two requests are sent at the exact same time?
+* Creating a relationship with an ID that doesn’t exist

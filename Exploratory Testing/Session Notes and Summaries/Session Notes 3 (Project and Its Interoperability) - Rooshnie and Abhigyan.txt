@@ -1,0 +1,111 @@
+CHARTER
+-----------------------------------------------
+Identify capabilities and areas of potential instability of the “rest api todo list manager”
+
+
+Build
+-----------------------------------------------
+runTodoManagerRestAPI-1.5.5.jar
+
+
+Area
+-----------------------------------------------
+Typical Scenarios - Main functions and capabilites
+
+
+Environment
+-----------------------------------------------
+Windows 10
+Screen resolution: 1920x1080
+
+
+PREPARATION
+-----------------------------------------------
+Run the application and read documentation about REST API http://localhost:4567/docs
+
+START
+-----------------------------------------------
+10:00 PM Oct 14, 2023
+
+
+TESTER
+-----------------------------------------------
+Rooshnie Velautham
+260985875
+rooshnie.velautham@mail.mcgill.ca
+
+Abhigyan Praveen
+261047297
+abhigyan.praveen@mail.mcgill.ca
+
+
+TASK BREAKDOWN
+-----------------------------------------------
+CHARTER VS. OPPORTUNITY 90:10
+
+
+
+TESTING TOOLS USED
+-----------------------------------------------
+Postman (all requests will be sent using Postman)
+
+
+DURATION
+-----------------------------------------------
+45 minutes
+
+
+TEST NOTES
+-----------------------------------------------
+10:00 PM 10/15/2023 Run application using java -jar runTodoManagerRestAPI-1.5.5.jar.
+
+10:01 PM : Test GET/projects (http://localhost:4567/projects) Worked as expected, retrieved all the intances of projects
+
+10:03 PM : Test HEAD/projects (http://localhost:4567/projects) No JSON output, worked as expected, gets all the headers of the project.
+
+10:07 PM : POST/projects (http://localhost:4567/projects) Worked as expected with some discrepancies, a new project gets created without any id or input, if the id of the element is changed to 5, the next id will be 6. More details in Issue 1.
+
+10:10 PM : GET/projects/:id (http://localhost:4567/projects/2) Worked as expected. When the id exists it shows the JSON object, when the id doesn't exist, shows an error message that it doesn't exist.
+
+10:13 PM : HEAD/projects/:id (http://localhost:4567/projects/2) Same comment as HEAD/projects -> No JSON output, however on the Header tab the date and time changes after sending it on postman.
+
+10:16 PM : POST/projects/:id (http://localhost:4567/projects/2) This post request works exactly like the put request, and you are not able to create an instance of a project to an id of your choosing.
+
+10:20 PM : PUT/projects/:id (http://localhost:4567/projects/1) Worked as expected, changes the values and data of the specific instance that is wanted.
+
+10:23 PM : DELETE/projects/:id (http://localhost:4567/projects/1) Worked as expected, deletes the specific project.
+
+10:26 PM : GET/projects/:id/tasks (http://localhost:4567/projects/2/tasks) Worked as expected, gets all the todo items that are related to the project.
+
+10:30 PM : HEAD/projects/:id/tasks (http://localhost:4567/projects/1/tasks) Worked as expected, gets all the headers of the todo items that are related to the project.
+
+10:32 PM : POST/projects/:id/tasks (http://localhost:4567/projects/2/tasks) Worked as expected, creates an instance of the relationship between todos and project.
+
+10:36 PM : DELETE/projects/:id/tasks/:id (http://localhost:4567/projects/2/tasks/1) Worked as expected, deletes the association between todo and the project.
+
+10:38 PM : GET/projects/:id/categories (http://localhost:4567/projects/1/categories)  Worked as expected, gets all the categories items that are related to the project.
+
+10:40 PM : HEAD/projects/:id/categories (http://localhost:4567/projects/1/categories) Worked as expected, gets all the headers of the categories items that are related to the project.
+
+10:43 PM : POST/projects/:id/categories (http://localhost:4567/projects/1/categories) Worked as expected, creates an instance of the relationship between the categories and project.
+
+10:46 PM : DELETE/projects/:id/categories/:id (http://localhost:4567/projects/1categories/1) Worked as expected, deletes the association between categories and the project.
+
+END OF SESSION
+
+END TIME
+-----------------------------------------------
+10:47 PM Oct 14, 2023
+
+POTENTIAL INSTABILITIES/CONCERNS
+-----------------------------------------------
+*Although the request is a POST which is usually used to create an instance the POST/projects/:id is behaving like a PUT request. If the instance of the specific project is not already created by POST/projects, you are unable to use POST/projects/:id to create a project to the id of your liking.
+*The status to all the request is always 200 OK when deleting and nothing in the body. So, in order to verify if the deletion was done, we had to put in another request.
+
+
+NEW TESTING IDEAS
+----------------------------------------------
+
+Testing when you link a project to multiple todos.
+Testing when you link a todo to multiple projects.
+Testing if you can make a relationship twice between todos and projects/ categories and projects.
