@@ -24,35 +24,29 @@ public class TodoTest {
 
     CloseableHttpClient httpClient;
 
-//    @AfterClass
-//    public static void teardown() {
-//        CloseableHttpClient httpClient= HttpClients.createDefault();
-//        try {
-//            ApiHelper.sendHttpRequest("get", "http://localhost:4567/shutdown", null, httpClient);
-//        } catch (Exception e) {
-//            assertEquals(HttpHostConnectException.class, e.getClass());
-//        }
-//    }
-
     @Test
     public void testCreateGetAllAndDeleteByIdTodo() throws IOException {
+        // Define Todo properties
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
 
-//        create Todo object
+        // Create a new Todo
         HttpResponse response = createTodo(title, doneStatus, description, httpClient);
 
+        // Check the HTTP status code to ensure successful creation
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_CREATED, statusCode);
 
-//        check todo object was created
+        // Retrieve all Todos to check if the newly created Todo exists
         response = getAllTodos(httpClient);
         TodoResponse todos = deserialize(response, TodoResponse.class);
 
+        // Check the HTTP status code to ensure successful retrieval
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
 
+        // Filter and collect Todos based on criteria, then assert that the list is not empty
         List<Todo> todoList = todos.getTodos()
                 .stream()
                 .filter(todo -> title.equals(todo.getTitle())
@@ -61,28 +55,30 @@ public class TodoTest {
                 .collect(Collectors.toList());
         assertFalse(CollectionUtils.isEmpty(todoList));
 
-//        delete each todo created, should be just one
+        // Delete the created Todo(s)
         todoList.forEach(todo-> {
             try {
                 deleteTodo(todo.getId(), httpClient);
             } catch (IOException e) {
+                // Handle and re-throw any exceptions during deletion
                 throw new RuntimeException(e);
             }
         });
     }
 
+    // Test: HEAD request for all Todos
     @Test
     public void testHeadAllTodos() throws IOException {
         HttpResponse headResponse = headAllTodos(httpClient);
         HttpResponse getResponse = getAllTodos(httpClient);
 
-        // check the head response does not return anything in the body
+        // Check that the HEAD response does not return anything in the body
         assertNull(headResponse.getEntity());
 
-        // we will now check that all the headers returned are the same as the ones returned for the get request
-        // except for the date attribute
+        // Compare the headers from the HEAD and GET responses (excluding the 'Date' attribute)
         assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
 
+        // Compare corresponding elements in HEAD and GET responses (excluding 'Date')
         for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
             if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
                 assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
@@ -91,29 +87,30 @@ public class TodoTest {
 
     }
 
+    // Test: HEAD request for a Todo by ID
     @Test
     public void testHeadTodoById() throws IOException {
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
 
-//        create Category object to fetch ID that will be used in the head request
+        // Create a Todo to fetch its ID for the head request
         createTodo(title,doneStatus,description,httpClient);
         HttpResponse getAllResponse = getAllTodos(httpClient);
         TodoResponse projects = deserialize(getAllResponse, TodoResponse.class);
         String projectID = projects.getTodos().get(0).getId();
 
-        // making requests
+        // Making requests for HEAD and GET
         HttpResponse headResponse = headTodo(projectID, httpClient);
         HttpResponse getResponse = getTodo(projectID, httpClient);
 
-        // check the head response does not return anything in the body
+        // Check that the HEAD response does not return anything in the body
         assertNull(headResponse.getEntity());
 
-        // we will now check that all the headers returned are the same as the ones returned for the get request
-        // except for the date attribute
+        // Compare the headers from the HEAD and GET responses (excluding the 'Date' attribute)
         assertEquals(headResponse.getAllHeaders().length, getResponse.getAllHeaders().length);
 
+        // Compare corresponding elements in HEAD and GET responses (excluding 'Date')
         for (int i = 0; i < headResponse.getAllHeaders().length; i++) {
             if (!headResponse.getAllHeaders()[i].getName().equalsIgnoreCase("Date")) {
                 assertEquals(headResponse.getAllHeaders()[i].getElements(), getResponse.getAllHeaders()[i].getElements());
@@ -121,21 +118,23 @@ public class TodoTest {
         }
     }
 
+    // Test: Create and modify a Todo
     @Test
     public void testCreateAndModify() throws IOException {
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
 
-//        create Todo object
+        // Create a new Todo
         HttpResponse response = createTodo(title, doneStatus, description, httpClient);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_CREATED, statusCode);
 
-//        get todo objects and match to the one we just created
+        // Get Todo objects and match the one we just created
         response = getAllTodos(httpClient);
         TodoResponse todos = deserialize(response, TodoResponse.class);
 
+        // Filter Todos based on criteria, collect them, and get the 'id' of the first matching Todo
         List<Todo> todoList = todos.getTodos()
                 .stream()
                 .filter(todo -> title.equals(todo.getTitle())
@@ -144,13 +143,13 @@ public class TodoTest {
                 .toList();
         String id = todoList.get(0).getId();
 
-//        modify the created todo using put
+        // Modify the created Todo using PUT
         String newDescription = "new test description";
         response = modifyTodoPut(id, title, doneStatus, newDescription, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
 
-//        get the created todo by id
+        // Get the created Todo by ID and verify the changes
         response = getTodo(id, httpClient);
         todos = deserialize(response, TodoResponse.class);
         Todo todo = todos.getTodos().get(0);
@@ -158,43 +157,47 @@ public class TodoTest {
         assertEquals(doneStatus, todo.getDoneStatus());
         assertEquals(newDescription, todo.getDescription());
 
-//        modify the created todo using post
+        // Modify the created Todo using POST
         Boolean newDoneStatus = Boolean.TRUE;
         response = modifyTodoPost(id, title, newDoneStatus, description, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
 
-//        get the created todo by id
+        // Get the created Todo by ID and verify the changes
         response = getTodo(id, httpClient);
         todos = deserialize(response, TodoResponse.class);
         todo = todos.getTodos().get(0);        assertEquals(title, todo.getTitle());
         assertEquals(newDoneStatus, todo.getDoneStatus());
         assertEquals(description, todo.getDescription());
 
-//        delete the created todo
+        // Delete the created Todo
         response = deleteTodo(todo.getId(), httpClient);
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
     }
 
+    // Test: Create a Todo with an empty title
     @Test
     public void testErrorCreate() throws IOException {
         String title = "testTodo";
         String doneStatus = "fals";
         String description = "test description";
 
-//        create Todo object
+        // Create a Todo with an empty title and expect an error
         HttpResponse response = createTodo(title, doneStatus, description, httpClient);
 
+        // Verify that a bad request status is returned with an error message
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: doneStatus should be BOOLEAN", e.getErrorMessages().get(0));
     }
 
+    // Test: Retrieve a Todo by a non-existent ID
     @Test
     public void testGetByIdNonexistent() throws IOException {
         HttpResponse response = getTodo("-1", httpClient);
+        // Verify that a not found status is returned
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
@@ -209,12 +212,14 @@ public class TodoTest {
         assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
+    // Test: Modify a Todo with an empty title using PUT
     @Test
     public void testPutInvalidDoneStatus() throws IOException {
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
 
+        // Create a Todo to get its ID
         createTodo(title, doneStatus, description, httpClient);
         HttpResponse response = getAllTodos(httpClient);
         TodoResponse todos = deserialize(response, TodoResponse.class);
@@ -229,13 +234,17 @@ public class TodoTest {
 
         String invalidDoneStatus = "fals";
 
+        // Attempt to modify the Todo with an empty title using PUT
         response = modifyTodoPut(id, title, invalidDoneStatus
                 , description, httpClient);
+
+        // Verify that a bad request status is returned with an error message
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: doneStatus should be BOOLEAN", e.getErrorMessages().get(0));
 
+        // Delete the Todo created for the test
         response = deleteTodo(id, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
@@ -251,12 +260,15 @@ public class TodoTest {
         assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
+    // Test: Modify a Todo with an empty title using POST
     @Test
     public void testPostInvalidDoneStatus() throws IOException {
+        // Define Todo properties
         String title = "testTodo";
         Boolean doneStatus = Boolean.FALSE;
         String description = "test description";
 
+        // Create a Todo to get its ID
         createTodo(title, doneStatus, description, httpClient);
         HttpResponse response = getAllTodos(httpClient);
         TodoResponse todos = deserialize(response, TodoResponse.class);
@@ -271,21 +283,27 @@ public class TodoTest {
 
         String invalidDoneStatus = "fals";
 
+        // Attempt to modify the Todo with an empty title using POST
         response = modifyTodoPost(id, title, invalidDoneStatus
                 , description, httpClient);
+
+        // Verify that a bad request status is returned with an error message
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
         assertEquals("Failed Validation: doneStatus should be BOOLEAN", e.getErrorMessages().get(0));
 
+        // Delete the Todo created for the test
         response = deleteTodo(id, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
     }
-
+     // Test: Delete a Todo by a non-existent ID
     @Test
     public void testDeleteNonexistentID() throws IOException {
+        // Attempt to delete a Todo with a non-existent ID
         HttpResponse response = deleteTodo("-1", httpClient);
+        // Verify that a not found status is returned
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
