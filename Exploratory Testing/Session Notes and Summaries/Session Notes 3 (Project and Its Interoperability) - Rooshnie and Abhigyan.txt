@@ -10,7 +10,7 @@ runTodoManagerRestAPI-1.5.5.jar
 
 Area
 -----------------------------------------------
-Typical Scenarios - Main functions and capabilites
+Typical Scenarios - Main functions and capabilities
 
 
 Environment
@@ -59,7 +59,7 @@ TEST NOTES
 -----------------------------------------------
 10:00 PM 10/15/2023 Run application using java -jar runTodoManagerRestAPI-1.5.5.jar.
 
-10:01 PM : Test GET/projects (http://localhost:4567/projects) Worked as expected, retrieved all the intances of projects
+10:01 PM : Test GET/projects (http://localhost:4567/projects) Worked as expected, retrieved all the instances of projects
 
 10:03 PM : Test HEAD/projects (http://localhost:4567/projects) No JSON output, worked as expected, gets all the headers of the project.
 
