@@ -2,8 +2,8 @@
 
 ## Team Members 
 | Name| Major| Year |GitHub|
-| :--- |:---|:---:| :---:|
-|Abhijeet Praveen | Computer Engineering|U4| [abhijeetpraveen](https://github.com/abhijeetpraveen)|
+| :---: |:---:|:---:| :---:|
+|Abhijeet Praveen | Computer Engineering| U4 | [abhijeetpraveen](https://github.com/abhijeetpraveen)|
 |Abhigyan Praveen | Computer Engineering| U3|[AbhiPraveen](https://github.com/AbhiPraveen)|
 |Rooshnie Velautham | Computer Engineering| U4|[rooshnie23](https://github.com/rooshnie23)|
 |Sébastien Cantin    | Computer Engineering | U4 |[seb8stien1](https://github.com/seb8stien1)|
