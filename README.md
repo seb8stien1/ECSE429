@@ -1,4 +1,4 @@
-# Welcome to Group 1's Code Repository for the ECSE 429 Automation Project
+# Welcome to Group 1's Code Repository for the ECSE 429 Automation Project with Prof. Sabourin
 
 ## Team Members 
 | Name| Major| Year |GitHub|
