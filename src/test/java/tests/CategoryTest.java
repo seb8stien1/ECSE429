@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import response.*;
 
-import java.io IOException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -197,7 +197,7 @@ public class CategoryTest {
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
-        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0);
+        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0));
     }
 
     // Test retrieving a category by a non-existent ID
@@ -206,6 +206,17 @@ public class CategoryTest {
         // Attempt to retrieve a category with a non-existent ID
         HttpResponse response = getCategory("-1", httpClient);
 
+        // Verify that a not found status is returned
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
+    }
+
+    // Test modifying using non-existent ID using PUT
+    @Test
+    public void testPutByIdNonExistent() throws IOException {
+        String title = "testCategory";
+        String description = "test description";
+        HttpResponse response = modifyCategoryPut("-1", title, description, httpClient);
         // Verify that a not found status is returned
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
@@ -239,12 +250,23 @@ public class CategoryTest {
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
-        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0);
+        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0));
 
         // Delete the category created for the test
         response = deleteCategory(id, httpClient);
         statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
+    }
+
+    // Test modifying using a non-existent ID (post)
+    @Test
+    public void testPostModifyNonExistentID() throws IOException {
+        String title = "testCategory";
+        String description = "test description";
+        HttpResponse response = modifyCategoryPost("-1", title, description, httpClient);
+        // Verify that a not found status is returned
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertEquals(HttpStatus.SC_NOT_FOUND, statusCode);
     }
 
     // Test modifying a category with an empty title using POST
@@ -275,7 +297,7 @@ public class CategoryTest {
         ResponseError e = deserialize(response, ResponseError.class);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
-        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0);
+        assertEquals("Failed Validation: title : can not be empty", e.getErrorMessages().get(0));
 
         // Delete the category created for the test
         response = deleteCategory(id, httpClient);

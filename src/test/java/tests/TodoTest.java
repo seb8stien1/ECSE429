@@ -1,9 +1,13 @@
 package tests;
 
 import config.RandomOrderTestRunner;
+import helpers.ApiHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.conn.HttpHostConnectException;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.HttpStatus;
+import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import response.ResponseError;
 import response.Todo;
@@ -23,6 +27,16 @@ import static org.junit.Assert.*;
 public class TodoTest {
 
     CloseableHttpClient httpClient;
+
+    @AfterClass
+    public static void teardown() {
+        CloseableHttpClient httpClient= HttpClients.createDefault();
+        try {
+            ApiHelper.sendHttpRequest("get", "http://localhost:4567/shutdown", null, httpClient);
+        } catch (Exception e) {
+            assertEquals(HttpHostConnectException.class, e.getClass());
+        }
+    }
 
     @Test
     public void testCreateGetAllAndDeleteByIdTodo() throws IOException {
