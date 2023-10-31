@@ -37,5 +37,5 @@ Feature: Create a New Todo
     Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:
-      | todoTitle | todoDescription | error                                           | statusCode |
-      | Homework  | English Reading | Failed Validation: doneStatus should be BOOLEAN | 400        |
+      | todoTitle | todoDescription | error                                           | statusCode | expectedTodoCount |
+      | Homework  | English Reading | Failed Validation: doneStatus should be BOOLEAN | 400        | 3                 |
