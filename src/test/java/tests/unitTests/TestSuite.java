@@ -1,4 +1,4 @@
-package tests;
+package tests.unitTests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

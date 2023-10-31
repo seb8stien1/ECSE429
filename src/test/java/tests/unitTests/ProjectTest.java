@@ -1,4 +1,4 @@
-package tests;
+package tests.unitTests;
 
 import config.RandomOrderTestRunner;
 import org.apache.commons.collections4.CollectionUtils;
