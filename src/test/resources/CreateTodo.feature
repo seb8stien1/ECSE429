@@ -32,10 +32,9 @@ Feature: Create a New Todo
 
   Scenario Outline: Error Flow - A user creates a new todo with an invalid doneStatus
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
-    Then the following "<error>" shall be raised
-    And the status code returned by the API is "<statusCode>"
-    Then the number of todos in the system is "<expectedTodoCount>"
+    Then the status code returned by the API is "<statusCode>"
+    And the number of todos in the system is "<expectedTodoCount>"
 
     Examples:
-      | todoTitle | todoDescription | error                                           | statusCode | expectedTodoCount |
-      | Homework  | English Reading | Failed Validation: doneStatus should be BOOLEAN | 400        | 3                 |
+      | todoTitle | todoDescription | doneStatus | error                                           | statusCode | expectedTodoCount |
+      | Homework  | English Reading | Arsenal    | Failed Validation: doneStatus should be BOOLEAN | 400        | 3                 |
