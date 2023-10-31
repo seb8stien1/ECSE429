@@ -2,6 +2,8 @@ Feature: Update Todo Details
   As a user, I wish to update the details of a todo in the system to fix and update any mistakes I may have made earlier.
 
   Background:
+    Given the API server is running and available
+
     Given the following todos exist in the system:
       | todoTitle         | todoDescription        | doneStatus |
       | Complete Homework | Finish math assignment | false      |
@@ -33,7 +35,7 @@ Feature: Update Todo Details
   Scenario Outline: Error Flow - A user attempts to update a todo with an invalid doneStatus
     When a user attempts to update the todo with the title "<todoTitle>" with same description "<sameDescription>" and new doneStatus "<newDoneStatus>"
     Then the following "<error>" shall be raised
-    And the status code returned by the API is "<statusCode>"
+    Then the status code returned by the API is "<statusCode>"
     Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:

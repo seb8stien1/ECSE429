@@ -3,6 +3,8 @@ Feature: Create a tasksof relationship between a task and a project
   As a user, I want to add a task to a project, so that I can remember to complete it during the project.
 
   Background:
+    Given the API server is running and available
+
     Given the following projects exist in the system:
       | projectTitle   | projectCompleted  | projectActive  | projectDescription    |
       | Project A      | false             | true           | Unit Tests            |

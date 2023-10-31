@@ -2,6 +2,8 @@ Feature: Mark a Todo as Complete
   As a user, I want to mark a todo as complete so that I can track my progress.
 
   Background:
+    Given the API server is running and available
+
     Given the following todos exist in the system:
       | todoTitle         | todoDescription        | doneStatus |
       | Complete Homework | Finish math assignment | false      |
@@ -28,7 +30,7 @@ Feature: Mark a Todo as Complete
   Scenario Outline: Error Flow - A user tries to mark a non-existent todo as complete
     When a user attempts to mark the non-existent todo titled "<todoTitle>" with doneStatus as "<doneStatus>"
     Then an error should be raised
-    And the status code returned by the API is "<statusCode>"
+    Then the status code returned by the API is "<statusCode>"
     Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:

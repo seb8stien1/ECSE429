@@ -2,6 +2,8 @@ Feature: Create a New Todo
   As a user, I wish to create a new todo in the system so that I can have all my todos in one place.
 
   Background:
+    Given the API server is running and available
+
     Given the following todos exist in the system:
       | todoTitle         | todoDescription        | doneStatus |
       | Complete Homework | Finish math assignment | false      |
@@ -32,6 +34,7 @@ Feature: Create a New Todo
 
   Scenario Outline: Error Flow - A user creates a new todo with an invalid doneStatus
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
+    Then the following "<error>" shall be raised
     Then the status code returned by the API is "<statusCode>"
     And the number of todos in the system is "<expectedTodoCount>"
 
