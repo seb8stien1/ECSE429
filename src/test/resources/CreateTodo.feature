@@ -14,10 +14,10 @@ Feature: Create a New Todo
     Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:
-      | todoTitle           | todoDescription           | expectedTodoCount |
-      | Plan Vacation       | Prepare for upcoming trip | 4                 |
-      | Study for Exam      | Review study materials    | 5                 |
-      | Project Deadline    | Complete project tasks    | 6                 |
+      | todoTitle           | todoDescription           | doneStatus | expectedTodoCount |
+      | Plan Vacation       | Prepare for upcoming trip | true       | 4                 |
+      | Study for Exam      | Review study materials    | true       | 5                 |
+      | Project Deadline    | Complete project tasks    | true       | 6                 |
 
   Scenario Outline: Alternate Flow - A user creates a new todo with doneStatus as false
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
@@ -25,10 +25,10 @@ Feature: Create a New Todo
     Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:
-      | todoTitle           | todoDescription           | expectedTodoCount |
-      | Weekend Plans       | Prepare for weekend plans | 4                 |
-      | Work Assignment     | Complete work assignment  | 5                 |
-      | Family Gathering    | Plan family gathering     | 6                 |
+      | todoTitle           | todoDescription           | doneStatus | expectedTodoCount |
+      | Weekend Plans       | Prepare for weekend plans | false      | 4                 |
+      | Work Assignment     | Complete work assignment  | false      | 5                 |
+      | Family Gathering    | Plan family gathering     | false      | 6                 |
 
   Scenario Outline: Error Flow - A user creates a new todo with an invalid doneStatus
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
