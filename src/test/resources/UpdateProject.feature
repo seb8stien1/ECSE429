@@ -4,7 +4,7 @@ Feature: Update Project
   Background:
     Given the API server is running and available
 
-    And the following projects exist in the system:
+    Given the following projects exist in the system:
       | projectTitle   | projectDescription      | completed | active |
       | Expansion Plan | Company expansion plans | false     | true   |
 

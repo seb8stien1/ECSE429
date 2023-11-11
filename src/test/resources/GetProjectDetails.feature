@@ -4,7 +4,7 @@ Feature: Get Project Details
   Background:
     Given the API server is running and available
 
-    And the following projects exist in the system:
+    Given the following projects exist in the system:
       | projectTitle    | projectDescription       | completed | active |
       | Redesign Website| Website layout overhaul  | false     | true   |
       | Team Outing     | Organize a team outing   | false     | true   |

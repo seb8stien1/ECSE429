@@ -4,7 +4,7 @@ Feature: Delete Project
   Background:
     Given the API server is running and available
 
-    And the following projects exist in the system:
+    Given the following projects exist in the system:
       | projectTitle     | projectDescription     |
       | Old Assignment   | ECSE 415 Assignment 3  |
       | New Assignment   | ECSE 415 Assignment 4  |

@@ -4,7 +4,7 @@ Feature: Delete Todo
   Background:
     Given the API server is running and available
 
-    And the following todos exist in the system:
+    Given the following todos exist in the system:
       | todoTitle            | todoDescription           | doneStatus |
       | Clean House          | Clean the entire house    | false      |
       | Call Abhigyan        | Call my friend John       | false      |
