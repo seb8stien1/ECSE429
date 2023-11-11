@@ -13,12 +13,10 @@ Feature: Get Todos by Category
       | Recreation    | Fun and recreational activities              |
       | Travel        | Upcoming trips and travel plans              |
 
-    Given the following todos exist in the system:
-      | todoTitle         | todoDescription        | todoDoneStatus | todoCategory |
-      | Complete Homework | Finish math assignment | false          | School       |
-      | Grocery Shopping  | Buy groceries          | false          | Personal     |
-      | Gym Workout       | Exercise at the gym    | true           | Health       |
-      | Work Presentation | Prepare slides         | false          | Work         |
+    Given the following todos exist in the system and are associated to the School category:
+      | todoTitle         | todoDescription         | todoDoneStatus |
+      | Complete Homework | Finish math assignment  | false          |
+      | Complete Project  | Finish ECSE 429 Project | false          |
 
 
   Scenario Outline: Normal Flow - A user gets todos by a certain category
