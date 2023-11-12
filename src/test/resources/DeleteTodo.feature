@@ -14,12 +14,11 @@ Feature: Delete Todo
     When a user attempts to delete the todo with the title "<todoTitle>"
     Then the todo with the title "<todoTitle>" shall be removed from the system
     Then the number of todos in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
 
     Examples:
-      | todoTitle   | expectedTodoCount |
-      | Clean House | 2                 |
-      | Call John   | 2                 |
+      | todoTitle       | expectedTodoCount |
+      | Clean House     | 2                 |
+      | Call Abhigyan   | 1                 |
 
   Scenario Outline: Alternate Flow - A user attempts to delete a todo that has already been deleted
     When a user attempts to delete the todo with the title "<todoTitle>"

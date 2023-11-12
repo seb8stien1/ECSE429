@@ -16,7 +16,7 @@ Feature: Delete Category
 
     Examples:
       | categoryTitle | expectedCategoryCount |
-      | Old Course   | 1                     |
+      | Old Course    | 1                     |
 
   Scenario Outline: Alternate Flow - A user attempts to delete a category that has already been deleted
     When a user deletes the category "<categoryTitle>"

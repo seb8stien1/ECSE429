@@ -29,8 +29,8 @@ Feature: Create New Category
 
     Examples:
       | categoryTitle | categoryDescription | expectedCategoryCount |
-      | Office        |                     | 7                     |
-      | Exercise      |                     | 8                     |
+      | Office        |                     | 5                     |
+      | Exercise      |                     | 6                     |
 
   Scenario Outline: Error Flow - Attempting to create a category with an invalid title
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
@@ -40,7 +40,7 @@ Feature: Create New Category
 
     Examples:
       | categoryTitle | error                                                 | statusCode | expectedCategoryCount |
-      |               | Failed Validation: title : can not be empty           | 400        | 8                     |
+      |               | Failed Validation: title : can not be empty           | 400        | 4                     |
 
   Scenario: Teardown
     Then the system is restored to the original state

@@ -16,8 +16,8 @@ Feature: Update Category
 
     Examples:
       | categoryTitle | newDescription                      | expectedCategoryCount |
-      | Urgent       | Tasks that need immediate attention | 2                     |
-      | Personal     | Personal and private tasks          | 2                     |
+      | Urgent       | Tasks that need immediate attention  | 2                     |
+      | Personal     | Personal and private tasks           | 2                     |
 
   Scenario Outline: Alternate Flow - Update an existing category with a blank description
     When a user updates the category "<categoryTitle>" with new description "<newDescription>"
@@ -26,8 +26,8 @@ Feature: Update Category
 
     Examples:
       | categoryTitle | newDescription | expectedCategoryCount |
-      | Urgent       |                | 2                     |
-      | Personal     |                | 2                     |
+      | Urgent       |                 | 2                     |
+      | Personal     |                 | 2                     |
 
   Scenario Outline: Error Flow - Update an existing category with an invalid title
     When a user updates the category "<categoryTitle>" with new title "<newTitle>"
@@ -37,7 +37,7 @@ Feature: Update Category
 
     Examples:
       | categoryTitle | newTitle | statusCode | error                                       | expectedCategoryCount |
-      | Work         |          | 404        | Failed Validation: title : can not be empty | 2                     |
+      | Work          |          | 404        | Failed Validation: title : can not be empty  | 2                     |
 
   Scenario: Teardown
     Then the system is restored to the original state

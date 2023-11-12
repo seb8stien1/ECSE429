@@ -21,8 +21,8 @@ Feature: Create New Project
 
     Examples:
       | projectTitle      | projectDescription | expectedProjectCount |
-      | Portfolio Website |                    | 3                    |
-      | Capstone          |                    | 4                    |
+      | Portfolio Website |                    | 1                    |
+      | Capstone          |                    | 2                    |
 
   Scenario Outline: Error Flow - A user attempts to create a project with an invalid title
     When a user attempts to create a project with an invalid title "<invalidTitle>"

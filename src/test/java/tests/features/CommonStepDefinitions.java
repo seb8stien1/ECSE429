@@ -2,6 +2,8 @@ package tests.features;
 
 import helpers.ApiHelper;
 import helpers.TodoHelper;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -10,10 +12,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import response.Category;
-import response.Project;
-import response.ResponseError;
-import response.Todo;
+import response.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,6 +38,7 @@ public class CommonStepDefinitions {
      *
      * @throws IOException if an I/O exception occurs.
      */
+    @Before
     @Given("the API server is running and available")
     public void theAPIServerIsRunningAndAvailable() throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -157,33 +157,50 @@ public class CommonStepDefinitions {
      * Verifies the number of todos in the system.
      *
      * @param expectedTodoCount Expected count of todos.
+     *
+     * @throws IOException if an I/O exception occurs during the association process.
      */
     @Then("the number of todos in the system is {string}")
-    public void theNumberOfTodosInTheSystemIs(String expectedTodoCount) {
-        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
-        assertEquals(createdTodos.size(), Integer.parseInt(expectedTodoCount));
+    public void theNumberOfTodosInTheSystemIs(String expectedTodoCount) throws IOException {
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        TodoResponse allTodos = deserialize(getAllTodos(httpClient), TodoResponse.class);
+
+        assertEquals(allTodos.getTodos().size(), Integer.parseInt(expectedTodoCount));
+
+
     }
 
     /**
      * Verifies the number of projects in the system.
      *
      * @param expectedProjectCount Expected count of projects.
+     *
+     * @throws IOException if an I/O exception occurs during the association process.
      */
     @And("the number of projects in the system is {string}")
-    public void theNumberOfProjectsInTheSystemIs(String expectedProjectCount) {
-        HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
-        assertEquals(createdProjects.size(), Integer.parseInt(expectedProjectCount));
+    public void theNumberOfProjectsInTheSystemIs(String expectedProjectCount) throws IOException {
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        ProjectResponse allProjects = deserialize(getAllProjects(httpClient), ProjectResponse.class);
+
+        assertEquals(allProjects.getProjects().size(), Integer.parseInt(expectedProjectCount));
     }
 
     /**
      * Verifies the number of categories in the system.
      *
      * @param expectedCategoryCount Expected count of categories.
+     *
+     * @throws IOException if an I/O exception occurs during the association process.
      */
     @Then("the number of categories in the system is {string}")
-    public void theNumberOfCategoriesInTheSystemIs(String expectedCategoryCount) {
-        HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
-        assertEquals(createdCategories.size(), Integer.parseInt(expectedCategoryCount));
+    public void theNumberOfCategoriesInTheSystemIs(String expectedCategoryCount) throws IOException {
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        CategoryResponse allCategories = deserialize(getAllCategories(httpClient), CategoryResponse.class);
+
+        assertEquals(allCategories.getCategories().size(), Integer.parseInt(expectedCategoryCount));
     }
 
     /**
@@ -217,6 +234,7 @@ public class CommonStepDefinitions {
      *
      * @throws IOException if an I/O exception occurs.
      */
+    @After
     @Then("the system is restored to the original state")
     public void theSystemIsRestoredToTheOriginalState() throws IOException {
         HashMap<String, Todo> createdTodos = null;
