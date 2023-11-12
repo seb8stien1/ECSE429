@@ -14,6 +14,7 @@ Feature: Delete Todo
     When a user attempts to delete the todo with the title "<todoTitle>"
     Then the todo with the title "<todoTitle>" shall be removed from the system
     And the number of todos in the system is "<expectedTodoCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle   | expectedTodoCount |
@@ -24,6 +25,7 @@ Feature: Delete Todo
     Given the todo with the title "<todoTitle>" is already deleted
     When a user attempts to delete the todo with the title "<todoTitle>"
     Then the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle   | statusCode |
@@ -34,6 +36,7 @@ Feature: Delete Todo
     When a user attempts to delete the todo with an invalid ID "<todoID>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | todoID | statusCode |

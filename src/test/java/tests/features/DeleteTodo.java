@@ -24,4 +24,9 @@ public class DeleteTodo {
     public void aUserAttemptsToDeleteTheTodoWithAnInvalidID(String invalidID) {
         // TODO
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // TODO
+    }
 }

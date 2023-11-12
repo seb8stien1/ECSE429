@@ -26,6 +26,7 @@ Feature: Get Todos Linked to Multiple Categories
   Scenario Outline: Normal Flow - Viewing todos linked to multiple categories
     When a user retrieves todos linked to categories "<categoryName1>" and "<categoryName2>"
     Then the "<todoTitle>" linked to "<categoryName1>" and "<categoryName2>" should be the same
+    Then the system is restored to the original state
 
     Examples:
       | categoryName1          | categoryName2 | todoTitle |
@@ -34,6 +35,7 @@ Feature: Get Todos Linked to Multiple Categories
   Scenario Outline: Alternate Flow - Viewing one todo linked to a category
     When a user retrieves the todo linked only to the category "<categoryName>"
     Then only the todo "<todoTitle>" linked to the category "<categoryName>" should be returned
+    Then the system is restored to the original state
 
     Examples:
       | categoryName | todoTitle    |
@@ -43,6 +45,7 @@ Feature: Get Todos Linked to Multiple Categories
     When a user attempts to retrieve todos linked to a non-existent category "<nonExistentCategory>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | nonExistentCategory | statusCode |

@@ -24,4 +24,9 @@ public class DeleteCategory {
     public void aUserAttemptsToDeleteTheCategoryWithAnInvalidID(String categoryID) {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

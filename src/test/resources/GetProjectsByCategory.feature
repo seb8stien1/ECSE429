@@ -17,6 +17,7 @@ Feature: Get Projects By Category
   Scenario Outline: Normal Flow - Retrieve all projects under a given category
     When a user retrieves projects under the category "<categoryName>"
     Then the projects under the category "<categoryName>" are returned
+    Then the system is restored to the original state
 
     Examples:
       | categoryName  |
@@ -25,6 +26,7 @@ Feature: Get Projects By Category
   Scenario Outline: Alternate Flow - Retrieve projects under a category with no associated projects
     When a user retrieves projects under the category "<categoryName>"
     Then the system should return an empty list indicating there are no projects for the given category
+    Then the system is restored to the original state
 
     Examples:
       | categoryName |
@@ -34,6 +36,7 @@ Feature: Get Projects By Category
     When a user retrieves projects under the category "<categoryName>"
     Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryName  | statusCode |

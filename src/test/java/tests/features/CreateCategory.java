@@ -13,4 +13,9 @@ public class CreateCategory {
     public void aNewCategoryWithTitleAndShouldBeCreated(String categoryTitle, String categoryDescription) {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

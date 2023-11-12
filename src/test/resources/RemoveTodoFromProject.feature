@@ -22,6 +22,7 @@ Feature: Remove Todo from Project
   Scenario Outline: Normal Flow - Unlink a todo from a project
     When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
     Then the todo "<todoTitle>" should no longer be linked to the project "<projectTitle>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle       | projectTitle       |
@@ -31,6 +32,7 @@ Feature: Remove Todo from Project
   Scenario Outline: Alternate Flow - Unlink a todo that was not linked to the project
     When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle   | statusCode |
@@ -39,6 +41,7 @@ Feature: Remove Todo from Project
   Scenario Outline: Error Flow - Try to unlink a todo from a non-existent project
     When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle       | projectTitle    | statusCode |

@@ -19,4 +19,9 @@ public class CategorizeTodo {
     public void theTodoIsAlreadyCategorizedAs(String todoTitle, String categoryName) {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

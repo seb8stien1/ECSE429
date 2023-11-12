@@ -18,4 +18,9 @@ public class CreateProject {
     public void aUserAttemptsToCreateAProjectWithAnInvalidTitle(String invalidTitle) {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

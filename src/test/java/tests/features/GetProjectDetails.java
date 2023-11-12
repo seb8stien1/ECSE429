@@ -1,6 +1,7 @@
 package tests.features;
 
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class GetProjectDetails {
@@ -11,6 +12,11 @@ public class GetProjectDetails {
 
     @And("the project returned has description {string}, has completed status {string} and active status {string}")
     public void theProjectReturnedHasDescriptionHasCompletedStatusAndActiveStatus(String projectDescription, String completed, String active) {
+        // todo
+    }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
         // todo
     }
 }

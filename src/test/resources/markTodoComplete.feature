@@ -13,6 +13,7 @@ Feature: Mark a Todo as Complete
   Scenario Outline: Normal Flow - A user marks an existing todo as complete
     When a user attempts to mark the todo titled "<todoTitle>" with doneStatus "<doneStatus>" as completed "<completed>"
     Then the todo titled "<todoTitle>" should have doneStatus as "<completed>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle         | doneStatus  | completed |
@@ -22,6 +23,7 @@ Feature: Mark a Todo as Complete
   Scenario Outline: Alternate Flow - A user marks an already completed todo as complete again
     When a user attempts to mark the todo titled "<todoTitle>" with doneStatus "<doneStatus>" as completed "<completed>"
     Then the todo titled "<todoTitle>" should have doneStatus as "<completed>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle  | doneStatus |
@@ -32,6 +34,7 @@ Feature: Mark a Todo as Complete
     Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
     Then the number of todos in the system is "<expectedTodoCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle            | doneStatus | statusCode | expectedTodoCount |

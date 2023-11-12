@@ -17,6 +17,7 @@ Feature: Get Todos of a Project
   Scenario Outline: Normal Flow - Retrieve all todos linked to a project
     When a user attempts to get todos for the project "<projectTitle>"
     Then the system should return todos for the project "<projectTitle>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle      |
@@ -25,6 +26,7 @@ Feature: Get Todos of a Project
   Scenario Outline: Alternate Flow - Retrieve todos from a project with no associated tasks
     When a user attempts to get todos for the project "<projectTitle>"
     Then the system should return an empty list indicating there are no todos for the given project
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    |
@@ -34,6 +36,7 @@ Feature: Get Todos of a Project
     When a user attempts to get todos for the project "<projectTitle>"
     Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle             | statusCode |

@@ -24,4 +24,9 @@ public class GetCategoriesByTodo {
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoCategoriesForTheGivenTodo() {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

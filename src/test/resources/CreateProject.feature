@@ -8,6 +8,7 @@ Feature: Create New Project
     When a user attempts to create a project with title "<projectTitle>" and description "<projectDescription>"
     Then a new project with title "<projectTitle>" and description "<projectDescription>" is created
     And the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle   | projectDescription           | expectedProjectCount |
@@ -18,6 +19,7 @@ Feature: Create New Project
     When a user attempts to create a project with title "<projectTitle>" and description "<projectDescription>"
     Then a new project with title "<projectTitle>" and description "<projectDescription>" is created
     And the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle   |projectDescription | expectedProjectCount |
@@ -28,6 +30,7 @@ Feature: Create New Project
     When a user attempts to create a project with an invalid title "<invalidTitle>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | invalidTitle   | statusCode |

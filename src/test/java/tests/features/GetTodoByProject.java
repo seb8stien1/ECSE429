@@ -24,4 +24,9 @@ public class GetTodoByProject {
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoTodosForTheGivenProject() {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

@@ -34,4 +34,9 @@ public class GetCategoriesOfMultipleProjects {
     public void aUserAttemptsToRetrieveCategoriesAssociatedWithANonExistentProject(String nonExistentProject) {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

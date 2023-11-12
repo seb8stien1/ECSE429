@@ -13,6 +13,7 @@ Feature: Delete Project
     When a user deletes the project with title "<projectTitle>"
     Then the project with title "<projectTitle>" should be removed from the system
     And the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    | expectedProjectCount |
@@ -22,6 +23,7 @@ Feature: Delete Project
     Given the project with the title "<projectTitle>" is already deleted
     When a user deletes the project with title "<projectTitle>"
     Then the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    | statusCode |
@@ -31,6 +33,7 @@ Feature: Delete Project
     When a user attempts to delete the project with an invalid ID "<projectID>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | projectID    | statusCode |

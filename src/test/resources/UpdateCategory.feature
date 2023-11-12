@@ -13,6 +13,7 @@ Feature: Update Category
     When a user updates the category "<categoryName>" with new description "<newDescription>"
     Then the category "<categoryName>" should have description "<newDescription>"
     Then the number of categories in the system is "<expectedCategoryCount>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryName | newDescription                      | expectedCategoryCount |
@@ -23,6 +24,7 @@ Feature: Update Category
     When a user updates the category "<categoryName>" with new description "<newDescription>"
     Then the category "<categoryName>" should have description "<newDescription>"
     Then the number of categories in the system is "<expectedCategoryCount>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryName | newDescription | expectedCategoryCount |
@@ -34,7 +36,7 @@ Feature: Update Category
     Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
     Then the number of categories in the system is "<expectedCategoryCount>"
-
+    Then the system is restored to the original state
 
     Examples:
       | categoryName | newTitle | statusCode | expectedCategoryCount |

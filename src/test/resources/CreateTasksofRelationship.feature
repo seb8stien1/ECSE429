@@ -22,6 +22,7 @@ Feature: Create a tasksof relationship between a task and a project
     Then this task should be contained as a task of the project
     And the number of todos in the system is "<expectedTodoCount>"
     And the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle                | todoDescription         | todoDoneStatus   | projectTitle | expectedTodoCount | expectedProjectCount |
@@ -33,6 +34,7 @@ Feature: Create a tasksof relationship between a task and a project
     Then this task should be contained as a task of the project
     And the number of todos in the system is "<expectedTodoCount>"
     And the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle   | todoDescription     | todoDoneStatus  | projectTitle | expectedTodoCount | expectedProjectCount |
@@ -43,6 +45,7 @@ Feature: Create a tasksof relationship between a task and a project
     Then the status code returned by the API is "<statusCode>"
     And the number of todos in the system is "<expectedTodoCount>"
     And the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | todoDescription           | todoDoneStatus | projectTitle | statusCode | expectedTodoCount | expectedProjectCount |

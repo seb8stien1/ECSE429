@@ -22,4 +22,9 @@ public class UpdateProject {
     @Then("the project {string} should have active status {string}")
     public void theProjectShouldHaveActiveStatus(String projectTitle, String newActive) {
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

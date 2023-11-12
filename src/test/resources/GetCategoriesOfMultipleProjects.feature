@@ -24,6 +24,7 @@ Feature: Get Categories Linked to a Project
   Scenario Outline: Normal Flow - Viewing categories associated with a project
     When a user retrieves categories associated with the project "<projectTitle>"
     Then the categories "<categoryName1>" and "<categoryName2>" associated with "<projectTitle>" should be returned
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    | categoryName1 | categoryName2 |
@@ -32,6 +33,7 @@ Feature: Get Categories Linked to a Project
   Scenario Outline: Alternate Flow - Viewing one single category of a project
     When a user retrieves the categories associated with the project "<projectTitle>"
     Then only the category "<categoryName>" associated with the project "<projectTitle>" should be returned
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    | categoryName  |
@@ -41,6 +43,7 @@ Feature: Get Categories Linked to a Project
     When a user attempts to retrieve categories associated with a non-existent project "<nonExistentProject>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | nonExistentProject | statusCode |

@@ -24,6 +24,7 @@ Feature: Get Categories By Todo
   Scenario Outline: Normal Flow - Retrieve the category linked to a todo
     When a user retrieves the category for the todo "<todoTitle>"
     Then the category for the todo "<todoTitle>" is returned
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle          |
@@ -33,6 +34,7 @@ Feature: Get Categories By Todo
   Scenario Outline: Alternate Flow - Retrieve the category for a todo with no associated categories
     When a user retrieves the category for the todo "<todoTitle>"
     Then the system should return an empty list indicating there are no categories for the given todo
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle          |
@@ -42,6 +44,7 @@ Feature: Get Categories By Todo
     When a user retrieves the category for the todo "<todoTitle>"
     Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle       | statusCode |

@@ -13,6 +13,7 @@ Feature: Get Project Details
   Scenario Outline: Normal Flow - A user views details of an existing project
     When a user retrieves details of the project with title "<projectTitle>"
     Then the project returned has description "<projectDescription>", has completed status "<completed>" and active status "<active>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle     | projectDescription       | completed | active |
@@ -22,6 +23,7 @@ Feature: Get Project Details
   Scenario Outline: Alternate Flow - A user attempts to view details of a project with a blank description
     When a user retrieves details of the project with title "<projectTitle>"
     Then the project returned has description "<projectDescription>", has completed status "<completed>" and active status "<active>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle     | projectDescription       | completed | active |
@@ -31,6 +33,7 @@ Feature: Get Project Details
     When a user retrieves details of the project with title "<projectTitle>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    | statusCode |

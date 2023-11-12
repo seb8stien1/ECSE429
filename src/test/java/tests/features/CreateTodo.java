@@ -14,4 +14,9 @@ public class CreateTodo {
         // todo
     }
 
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
+
 }

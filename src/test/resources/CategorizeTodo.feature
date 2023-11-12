@@ -17,6 +17,7 @@ Feature: Categorize Todo
   Scenario Outline: Normal Flow - Assigning a category to a todo
     When a user categorizes the todo "<todoTitle>" as "<categoryName>"
     Then the todo "<todoTitle>" should be categorized as "<categoryName>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle    | categoryName |
@@ -27,6 +28,7 @@ Feature: Categorize Todo
     Given the todo "<todoTitle>" is already categorized as "<oldCategoryName>"
     When a user categorizes the todo "<todoTitle>" as "<newCategoryName>"
     Then the todo "<todoTitle>" should be categorized as "<newCategoryName>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle    | oldCategoryName | newCategoryName |
@@ -37,6 +39,7 @@ Feature: Categorize Todo
     When a user categorizes the todo "<todoTitle>" as "<categoryName>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle    | categoryName | statusCode |

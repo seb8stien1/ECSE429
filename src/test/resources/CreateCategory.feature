@@ -16,6 +16,7 @@ Feature: Create New Category
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
     Then a new category with title "<categoryTitle>" and "<categoryDescription>" should be created
     Then the number of categories in the system is "<expectedCategoryCount>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryTitle | categoryDescription                          | expectedCategoryCount |
@@ -26,6 +27,7 @@ Feature: Create New Category
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
     Then a new category with title "<categoryTitle>" and "<categoryDescription>" should be created
     Then the number of categories in the system is "<expectedCategoryCount>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryTitle | categoryDescription | expectedCategoryCount |
@@ -37,6 +39,7 @@ Feature: Create New Category
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     And the number of categories in the system is "<expectedCategoryCount>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryTitle | statusCode | expectedCategoryCount |

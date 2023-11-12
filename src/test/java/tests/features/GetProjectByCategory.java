@@ -24,4 +24,9 @@ public class GetProjectByCategory {
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoProjectsForTheGivenCategory() {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

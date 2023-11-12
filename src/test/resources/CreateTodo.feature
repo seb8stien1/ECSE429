@@ -14,6 +14,7 @@ Feature: Create a New Todo
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
     Then a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>" shall be created
     Then the number of todos in the system is "<expectedTodoCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | todoDescription           | doneStatus | expectedTodoCount |
@@ -25,6 +26,7 @@ Feature: Create a New Todo
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
     Then a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "false" shall be created
     Then the number of todos in the system is "<expectedTodoCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | todoDescription           | doneStatus | expectedTodoCount |
@@ -37,6 +39,7 @@ Feature: Create a New Todo
     Then the following "<error>" shall be raised
     Then the status code returned by the API is "<statusCode>"
     And the number of todos in the system is "<expectedTodoCount>"
+    Then the system is restored to the original state
 
     Examples:
       | todoTitle | todoDescription | doneStatus | error                                           | statusCode | expectedTodoCount |

@@ -23,4 +23,9 @@ public class UpdateTodo {
     public void theTodoWithTheTitleShallBeUpdatedWithSameDescriptionAndDoneStatus(String title, String sameDescription, String newDoneStatus) {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

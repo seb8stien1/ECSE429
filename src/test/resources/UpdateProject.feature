@@ -12,6 +12,7 @@ Feature: Update Project
     When a user updates the project "<projectTitle>" with new description "<newDescription>" and new completed status "<newCompleted>"
     Then the project "<projectTitle>" should have description "<newDescription>" and completed status "<newCompleted>"
     Then the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    | newDescription                | newCompleted | expectedProjectCount |
@@ -21,6 +22,7 @@ Feature: Update Project
     When a user updates the project "<projectTitle>" with new active status "<newActive>"
     Then the project "<projectTitle>" should have active status "<newActive>"
     Then the number of projects in the system is "<expectedProjectCount>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle    | newActive     | expectedProjectCount |
@@ -31,6 +33,7 @@ Feature: Update Project
     Then the following "<error>" shall be raised
     Then the status code returned by the API is "<statusCode>"
     Then the number of projects in the system is "<expectedTodoCount>"
+    Then the system is restored to the original state
 
     Examples:
       | projectTitle   | newActive | error                                         | statusCode | expectedTodoCount |

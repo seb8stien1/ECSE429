@@ -28,4 +28,9 @@ public class GetTodosOfMultipleCategories {
     public void aUserAttemptsToRetrieveTodosLinkedToANonExistentCategory(String nonExistentCategory) {
         // todo
     }
+
+    @Then("the system is restored to the original state")
+    public void theSystemIsRestoredToTheOriginalState() {
+        // todo
+    }
 }

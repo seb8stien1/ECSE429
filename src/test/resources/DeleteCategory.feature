@@ -13,6 +13,7 @@ Feature: Delete Category
     When a user deletes the category "<categoryName>"
     Then the category "<categoryName>" should be removed from the system
     And the number of categories in the system is "<expectedCategoryCount>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryName | expectedCategoryCount |
@@ -22,6 +23,7 @@ Feature: Delete Category
     Given the category "<categoryName>" is already deleted
     When a user deletes the category "<categoryName>"
     Then the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryName    | statusCode |
@@ -31,6 +33,7 @@ Feature: Delete Category
     When a user attempts to delete the category with an invalid ID "<categoryID>"
     Then an error should be raised
     And the status code returned by the API is "<statusCode>"
+    Then the system is restored to the original state
 
     Examples:
       | categoryID     | statusCode |
