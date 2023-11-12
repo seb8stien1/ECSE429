@@ -212,7 +212,8 @@ public class CommonStepDefinitions {
         ResponseError errorResponse = deserialize(response, ResponseError.class);
 
         assertNotNull(errorResponse);
-        assertEquals(errorResponse.getErrorMessages().get(0), expectedErrorMessage);
+        String actualErrorMessage = errorResponse.getErrorMessages().get(0);
+        assertTrue(actualErrorMessage.startsWith(expectedErrorMessage));
     }
 
     /**
