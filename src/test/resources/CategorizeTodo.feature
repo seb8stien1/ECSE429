@@ -24,13 +24,14 @@ Feature: Categorize Todo
       | Email Client | Work          |
 
   Scenario Outline: Alternate Flow - Changing the category of an existing todo
+    Given the todo "<todoTitle>" is categorized as "<categoryTitle>"
     When a user categorizes the todo "<todoTitle>" as "<newCategoryTitle>"
     Then the todo "<todoTitle>" should be categorized as "<newCategoryTitle>"
 
     Examples:
-      | todoTitle    | newCategoryTitle |
-      | Laundry      | Work             |
-      | Email Client | Home             |
+      | todoTitle    | categoryTitle | newCategoryTitle |
+      | Laundry      | Home          | Work             |
+      | Email Client | Work          | Home             |
 
   Scenario Outline: Error Flow - Assigning a non-existent category to a todo
     When a user categorizes the todo "<todoTitle>" to a non-existent "<categoryTitle>"

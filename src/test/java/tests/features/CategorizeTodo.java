@@ -1,6 +1,7 @@
 package tests.features;
 
 import helpers.CategoryHelper;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class CategorizeTodo {
      * @throws IOException if an I/O exception occurs while making the association.
      */
     @When("a user categorizes the todo {string} as {string}")
+    @Given("the todo {string} is categorized as {string}")
     public void aUserCategorizesTheTodoAs(String todoTitle, String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
