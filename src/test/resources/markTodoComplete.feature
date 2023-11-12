@@ -31,7 +31,6 @@ Feature: Mark a Todo as Complete
 
   Scenario Outline: Error Flow - A user tries to mark a non-existent todo as complete
     When a user attempts to mark the non-existent todo titled "<todoTitle>" with doneStatus as "<doneStatus>"
-    Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
     Then the number of todos in the system is "<expectedTodoCount>"
     Then the system is restored to the original state

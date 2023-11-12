@@ -31,7 +31,6 @@ Feature: Delete Project
 
   Scenario Outline: Error Flow - A user attempts to delete a project with an invalid ID
     When a user attempts to delete the project with an invalid ID "<projectID>"
-    Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

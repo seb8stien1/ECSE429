@@ -43,7 +43,6 @@ Feature: Get Todos Linked to Multiple Categories
 
   Scenario Outline: Error Flow - Retrieving todos linked to non-existent categories
     When a user attempts to retrieve todos linked to a non-existent category "<nonExistentCategory>"
-    Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

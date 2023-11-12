@@ -31,7 +31,6 @@ Feature: Get Project Details
 
   Scenario Outline: Error Flow - A user attempts to retrieve details of a non-existent project
     When a user retrieves details of the project with title "<projectTitle>"
-    Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

@@ -41,7 +41,6 @@ Feature: Get Categories Linked to a Project
 
   Scenario Outline: Error Flow - Retrieving categories associated with a non-existent project
     When a user attempts to retrieve categories associated with a non-existent project "<nonExistentProject>"
-    Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

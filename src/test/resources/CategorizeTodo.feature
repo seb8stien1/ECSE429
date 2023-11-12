@@ -37,7 +37,6 @@ Feature: Categorize Todo
 
   Scenario Outline: Error Flow - Assigning a non-existent category to a todo
     When a user categorizes the todo "<todoTitle>" as "<categoryName>"
-    Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

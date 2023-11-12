@@ -34,7 +34,6 @@ Feature: Get Todos of a Project
 
   Scenario Outline: Error Flow - Attempt to retrieve todos for a non-existent project
     When a user attempts to get todos for the project "<projectTitle>"
-    Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

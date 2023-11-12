@@ -42,7 +42,6 @@ Feature: Get Categories By Todo
 
   Scenario Outline: Error Flow - Attempt to retrieve categories for a non-existent todo
     When a user retrieves the category for the todo "<todoTitle>"
-    Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

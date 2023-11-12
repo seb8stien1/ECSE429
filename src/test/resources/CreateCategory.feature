@@ -21,7 +21,7 @@ Feature: Create New Category
     Examples:
       | categoryTitle | categoryDescription                          | expectedCategoryCount |
       | Personal      | Personal errands and chores                  | 5                     |
-      | Health        | Activities related to well-being and fitness | 6                    |
+      | Health        | Activities related to well-being and fitness | 6                     |
 
   Scenario Outline: Alternate Flow - Creating a category with a blank description
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
@@ -36,11 +36,11 @@ Feature: Create New Category
 
   Scenario Outline: Error Flow - Attempting to create a category with an invalid title
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
-    Then an error should be raised
+    And the following "<error>" shall be raised
     And the status code returned by the API is "<statusCode>"
     And the number of categories in the system is "<expectedCategoryCount>"
     Then the system is restored to the original state
 
     Examples:
-      | categoryTitle | statusCode | expectedCategoryCount |
-      |               | 400        | 8                     |
+      | categoryTitle | error                                                 | statusCode | expectedCategoryCount |
+      |               | Failed Validation: title : can not be empty           | 400        | 8                     |

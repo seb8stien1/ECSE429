@@ -10,23 +10,31 @@ public class GetTodoByProject {
         // todo
     }
 
+    @Given("the following projects exist in the system:")
+    public void theFollowingProjectsExistInTheSystem() {
+    }
+
     @When("a user attempts to get todos for the project {string}")
     public void aUserAttemptsToGetTodosForTheProject(String projectTitle) {
-        // todo
     }
 
     @Then("the system should return todos for the project {string}")
     public void theSystemShouldReturnTodosForTheProject(String projectTitle) {
-        // todo
     }
 
     @Then("the system should return an empty list indicating there are no todos for the given project")
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoTodosForTheGivenProject() {
-        // todo
     }
 
     @Then("the system is restored to the original state")
     public void theSystemIsRestoredToTheOriginalState() {
         // todo
+    }
+    @Then("an error should be raised")
+    public void anErrorShouldBeRaised() {
+    }
+
+    @Then("the status code returned by the API is {string}")
+    public void theStatusCodeReturnedByTheAPIIs(String statusCode) {
     }
 }

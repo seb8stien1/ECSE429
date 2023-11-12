@@ -28,11 +28,11 @@ Feature: Create New Project
 
   Scenario Outline: Error Flow - A user attempts to create a project with an invalid title
     When a user attempts to create a project with an invalid title "<invalidTitle>"
-    Then an error should be raised
+    And the following "<error>" shall be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 
     Examples:
-      | invalidTitle   | statusCode |
-      |                | 400        |
+      | invalidTitle   | error                                        | statusCode |
+      |                | Failed Validation: title : can not be empty  | 400        |
 

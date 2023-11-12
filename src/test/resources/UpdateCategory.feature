@@ -33,11 +33,11 @@ Feature: Update Category
 
   Scenario Outline: Error Flow - Update an existing category with an invalid title
     When a user updates the category "<categoryName>" with new title "<newTitle>"
-    Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
+    And the following "<error>" shall be raised
     Then the number of categories in the system is "<expectedCategoryCount>"
     Then the system is restored to the original state
 
     Examples:
-      | categoryName | newTitle | statusCode | expectedCategoryCount |
-      | Work         |          | 404        | 2                     |
+      | categoryName | newTitle | statusCode | error                                       | expectedCategoryCount |
+      | Work         |          | 404        | Failed Validation: title : can not be empty | 2                     |

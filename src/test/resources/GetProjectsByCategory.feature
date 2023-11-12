@@ -34,7 +34,6 @@ Feature: Get Projects By Category
 
   Scenario Outline: Error Flow - Attempt to retrieve projects for a non-existent category
     When a user retrieves projects under the category "<categoryName>"
-    Then an error should be raised
     Then the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

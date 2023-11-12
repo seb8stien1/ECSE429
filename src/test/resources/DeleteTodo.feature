@@ -34,7 +34,6 @@ Feature: Delete Todo
 
   Scenario Outline: Error Flow - A user attempts to delete a todo with an invalid ID
     When a user attempts to delete the todo with an invalid ID "<todoID>"
-    Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 

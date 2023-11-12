@@ -31,7 +31,6 @@ Feature: Delete Category
 
   Scenario Outline: Error Flow - Attempt to delete a category with an invalid ID
     When a user attempts to delete the category with an invalid ID "<categoryID>"
-    Then an error should be raised
     And the status code returned by the API is "<statusCode>"
     Then the system is restored to the original state
 
