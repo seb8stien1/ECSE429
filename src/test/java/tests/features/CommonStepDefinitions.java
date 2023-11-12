@@ -2,6 +2,7 @@ package tests.features;
 
 import helpers.ApiHelper;
 import helpers.TodoHelper;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -80,6 +81,7 @@ public class CommonStepDefinitions {
      */
     @Given("the following todos exist in the system:")
     public void theFollowingTodosExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
+        System.out.println("creating todos");
         List<Map<String, String>> todos = dataTable.asMaps();
         HashMap<String, Todo> createdTodos = new HashMap<>();
 
@@ -158,15 +160,11 @@ public class CommonStepDefinitions {
      * @throws IOException if an I/O exception occurs during the association process.
      */
     @Then("the number of todos in the system is {string}")
-    public void theNumberOfTodosInTheSystemIs(String expectedTodoCount) throws IOException {
-        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
-
-        TodoResponse allTodos = deserialize(getAllTodos(httpClient), TodoResponse.class);
-
-        assertEquals(allTodos.getTodos().size(), Integer.parseInt(expectedTodoCount));
-
-
+    public void theNumberOfTodosInTheSystemIs(String expectedTodoCount) {
+        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
+        assertEquals(createdTodos.size(), Integer.parseInt(expectedTodoCount));
     }
+
 
     /**
      * Verifies the number of projects in the system.
@@ -232,8 +230,10 @@ public class CommonStepDefinitions {
      *
      * @throws IOException if an I/O exception occurs.
      */
+    @After
     @Then("the system is restored to the original state")
     public void theSystemIsRestoredToTheOriginalState() throws IOException {
+        System.out.println("restoring");
         HashMap<String, Todo> createdTodos = null;
         HashMap<String, Category> createdCategories = null;
         HashMap<String, Project> createdProjects = null;

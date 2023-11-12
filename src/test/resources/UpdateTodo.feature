@@ -11,8 +11,8 @@ Feature: Update Todo Details
       | Gym Workout       | Exercise at the gym    | true           |
 
   Scenario Outline: Normal Flow - A user updates a todo with a new description
-    When a user attempts to update the todo with the title "<todoTitle>" with new description "<newDescription>" and same doneStatus "<sameDoneStatus>"
-    Then the todo with the title "<todoTitle>" shall be updated with new description "<newDescription>" and same doneStatus "<sameDoneStatus>"
+    When a user attempts to update the todo with the title "<todoTitle>" with description "<newDescription>" and doneStatus "<sameDoneStatus>"
+    Then the todo with the title "<todoTitle>" shall be updated with description "<newDescription>" and doneStatus "<sameDoneStatus>"
     Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:
@@ -20,10 +20,9 @@ Feature: Update Todo Details
       | Complete Homework   | Complete math homework  | false          | 3                 |
       | Grocery Shopping    | Buy organic groceries   | false          | 3                 |
       | Gym Workout         | Cardio at the gym       | true           | 3                 |
-
   Scenario Outline: Alternate Flow - A user attempts to update a todo with a new done status
-    When a user attempts to update the todo with the title "<todoTitle>" with same description "<sameDescription>" and new doneStatus "<newDoneStatus>"
-    Then the todo with the title "<todoTitle>" shall be updated with same description "<sameDescription>" and doneStatus "<newDoneStatus>"
+    When a user attempts to update the todo with the title "<todoTitle>" with description "<sameDescription>" and doneStatus "<newDoneStatus>"
+    Then the todo with the title "<todoTitle>" shall be updated with description "<sameDescription>" and doneStatus "<newDoneStatus>"
     Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:
@@ -33,7 +32,7 @@ Feature: Update Todo Details
       | Gym Workout         | Exercise at the gym      | false          | 3                 |
 
   Scenario Outline: Error Flow - A user attempts to update a todo with an invalid doneStatus
-    When a user attempts to update the todo with the title "<todoTitle>" with same description "<sameDescription>" and new doneStatus "<newDoneStatus>"
+    When a user attempts to update the todo with the title "<todoTitle>" with description "<sameDescription>" and invalid doneStatus "<newDoneStatus>"
     Then the following "<error>" shall be raised
     Then the status code returned by the API is "<statusCode>"
     Then the number of todos in the system is "<expectedTodoCount>"
