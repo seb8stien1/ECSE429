@@ -8,7 +8,7 @@ Feature: Get Project Details
       | projectTitle    | projectDescription       | completed | active |
       | Redesign Website| Website layout overhaul  | false     | true   |
       | Team Outing     | Organize a team outing   | false     | true   |
-      | Finish Homework |                          | false     | true
+      | Finish Homework |                          | false     | true   |
 
   Scenario Outline: Normal Flow - A user views details of an existing project
     When a user retrieves details of the project with title "<projectTitle>"

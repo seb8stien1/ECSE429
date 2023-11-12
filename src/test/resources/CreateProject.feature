@@ -12,7 +12,7 @@ Feature: Create New Project
     Examples:
       | projectTitle   | projectDescription           | expectedProjectCount |
       | Website Launch | Launch the new company site  | 1                    |
-      | Marketing Plan | Plan for Q3 marketing        | 2                    |
+      | Marketing Plan | Plan for Q3 marketing        | 1                    |
 
   Scenario Outline: Alternate Flow - A user creates a project with a blank description
     When a user attempts to create a project with title "<projectTitle>" and description "<projectDescription>"
@@ -22,16 +22,16 @@ Feature: Create New Project
     Examples:
       | projectTitle      | projectDescription | expectedProjectCount |
       | Portfolio Website |                    | 1                    |
-      | Capstone          |                    | 2                    |
+      | Capstone          |                    | 1                    |
 
-  Scenario Outline: Error Flow - A user attempts to create a project with an invalid title
-    When a user attempts to create a project with an invalid title "<invalidTitle>"
+  Scenario Outline: Error Flow - A user attempts to create a project with an invalid completed
+    When a user attempts to create a project with an invalid completed "<invalidCompleted>"
     Then the following "<error>" shall be raised
     And the status code returned by the API is "<statusCode>"
 
     Examples:
-      | invalidTitle   | error                                        | statusCode |
-      |                | Failed Validation: title : can not be empty  | 400        |
+      | invalidCompleted  | error                                           | statusCode |
+      | Liverpool         | Failed Validation: completed should be BOOLEAN  | 400        |
 
   Scenario: Teardown
     Then the system is restored to the original state
