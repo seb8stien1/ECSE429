@@ -206,27 +206,27 @@ public class CommonStepDefinitions {
     /**
      * Verifies that a specific error has been raised.
      *
-     * @param error Expected error message.
+     * @param expectedErrorMessage Expected error message.
      * @throws IOException if an I/O exception occurs.
      */
     @Then("the following {string} shall be raised")
-    public void theFollowingErrorShallBeRaised(String error) throws IOException {
+    public void theFollowingErrorShallBeRaised(String expectedErrorMessage) throws IOException {
         HttpResponse response = testContext.get("response", HttpResponse.class);
         ResponseError errorResponse = deserialize(response, ResponseError.class);
 
         assertNotNull(errorResponse);
-        assertEquals(errorResponse.getErrorMessages().get(0), error);
+        assertEquals(errorResponse.getErrorMessages().get(0), expectedErrorMessage);
     }
 
     /**
      * Verifies the status code returned by the API.
      *
-     * @param statusCode Expected status code.
+     * @param expectedStatusCode Expected status code.
      */
     @Then("the status code returned by the API is {string}")
-    public void theStatusCodeReturnedByTheAPIIs(String statusCode) {
+    public void theStatusCodeReturnedByTheAPIIs(String expectedStatusCode) {
         int actualStatusCode = testContext.get("statusCode", Integer.class);
-        assertEquals(actualStatusCode, Integer.parseInt(statusCode));
+        assertEquals(actualStatusCode, Integer.parseInt(expectedStatusCode));
     }
 
     /**
@@ -279,6 +279,6 @@ public class CommonStepDefinitions {
 
         if (testContext.containsKey("response")) testContext.remove("response");
         if (testContext.containsKey("statusCode")) testContext.remove("statusCode");
-        if (testContext.containsKey("httpClient")) testContext.remove("httpClient");
+        testContext.remove("httpClient");
     }
 }
