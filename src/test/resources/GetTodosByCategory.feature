@@ -25,10 +25,10 @@ Feature: Get Todos by Category
 
     Examples:
       | categoryTitle |
-      | School   |
-      | Personal |
-      | Health   |
-      | Work     |
+      | School        |
+      | Personal      |
+      | Health        |
+      | Work          |
 
   Scenario Outline: Alternate Flow - A user gets todos by a category that has no todos assigned yet
     When a user attempts to get todos with the category "<categoryTitle>"

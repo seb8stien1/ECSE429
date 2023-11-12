@@ -29,7 +29,7 @@ Feature: Get Todos Linked to Multiple Categories
 
     Examples:
       | categoryTitle1          | categoryTitle2 | todoTitle |
-      | Work                   | Personal      | Call John |
+      | Work                    | Personal       | Call John |
 
   Scenario Outline: Alternate Flow - Viewing one todo linked to a category
     When a user retrieves the todo linked only to the category "<categoryTitle>"
@@ -37,7 +37,7 @@ Feature: Get Todos Linked to Multiple Categories
 
     Examples:
       | categoryTitle | todoTitle    |
-      | Health       | Morning Jog  |
+      | Health       | Morning Jog   |
 
   Scenario Outline: Error Flow - Retrieving todos linked to non-existent categories
     When a user attempts to retrieve todos linked to a non-existent category "<nonExistentCategory>"

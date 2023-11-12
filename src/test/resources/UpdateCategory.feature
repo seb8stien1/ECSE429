@@ -36,7 +36,7 @@ Feature: Update Category
     Then the number of categories in the system is "<expectedCategoryCount>"
 
     Examples:
-      | categoryTitle | newTitle | statusCode | error                                       | expectedCategoryCount |
+      | categoryTitle | newTitle | statusCode | error                                        | expectedCategoryCount |
       | Work          |          | 404        | Failed Validation: title : can not be empty  | 2                     |
 
   Scenario: Teardown

@@ -11,8 +11,8 @@ Feature: Categorize Todo
 
     Given the following categories exist in the system:
       | categoryTitle  | categoryDescription   |
-      | Home          | Stuff related to home |
-      | Work          | Stuff related to work |
+      | Home           | Stuff related to home |
+      | Work           | Stuff related to work |
 
   Scenario Outline: Normal Flow - Assigning a category to a todo
     When a user categorizes the todo "<todoTitle>" as "<categoryTitle>"
@@ -20,17 +20,17 @@ Feature: Categorize Todo
 
     Examples:
       | todoTitle    | categoryTitle |
-      | Laundry      | Home         |
-      | Email Client | Work         |
+      | Laundry      | Home          |
+      | Email Client | Work          |
 
   Scenario Outline: Alternate Flow - Changing the category of an existing todo
-    When a user categorizes the todo "<todoTitle>" as "<newcategoryTitle>"
-    Then the todo "<todoTitle>" should be categorized as "<newcategoryTitle>"
+    When a user categorizes the todo "<todoTitle>" as "<newCategoryTitle>"
+    Then the todo "<todoTitle>" should be categorized as "<newCategoryTitle>"
 
     Examples:
-      | todoTitle    | newcategoryTitle |
-      | Laundry      | Work            |
-      | Email Client | Home            |
+      | todoTitle    | newCategoryTitle |
+      | Laundry      | Work             |
+      | Email Client | Home             |
 
   Scenario Outline: Error Flow - Assigning a non-existent category to a todo
     When a user categorizes the todo "<todoTitle>" to a non-existent "<categoryTitle>"
@@ -38,8 +38,8 @@ Feature: Categorize Todo
 
     Examples:
       | todoTitle    | categoryTitle | statusCode |
-      | Laundry      | Outdoor      | 404        |
-      | Email Client | Personal     | 404        |
+      | Laundry      | Outdoor       | 404        |
+      | Email Client | Personal      | 404        |
 
   Scenario: Teardown
     Then the system is restored to the original state

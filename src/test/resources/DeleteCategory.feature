@@ -24,7 +24,7 @@ Feature: Delete Category
 
     Examples:
       | categoryTitle    | statusCode |
-      | Old Course      | 404        |
+      | Old Course       | 404        |
 
   Scenario Outline: Error Flow - Attempt to delete a category with an invalid ID
     When a user attempts to delete the category with an invalid ID "<categoryID>"

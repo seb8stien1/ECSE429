@@ -17,9 +17,9 @@ Feature: Get Categories Linked to a Project
 
     Given the following project and category association exist in the system:
       | projectTitle     | categoryTitle  |
-      | Website Revamp   | Design        |
-      | Website Revamp   | Marketing     |
-      | App Development  | Development   |
+      | Website Revamp   | Design         |
+      | Website Revamp   | Marketing      |
+      | App Development  | Development    |
 
   Scenario Outline: Normal Flow - Viewing categories associated with a project
     When a user retrieves categories associated with the project "<projectTitle>"
@@ -27,7 +27,7 @@ Feature: Get Categories Linked to a Project
 
     Examples:
       | projectTitle    | categoryTitle1 | categoryTitle2 |
-      | Website Revamp  | Design        | Marketing     |
+      | Website Revamp  | Design         | Marketing      |
 
   Scenario Outline: Alternate Flow - Viewing one single category of a project
     When a user retrieves the categories associated with the project "<projectTitle>"
@@ -35,7 +35,7 @@ Feature: Get Categories Linked to a Project
 
     Examples:
       | projectTitle    | categoryTitle  |
-      | App Development | Development   |
+      | App Development | Development    |
 
   Scenario Outline: Error Flow - Retrieving categories associated with a non-existent project
     When a user attempts to retrieve categories associated with a non-existent project "<nonExistentProject>"

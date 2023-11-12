@@ -20,7 +20,7 @@ Feature: Get Projects By Category
 
     Examples:
       | categoryTitle  |
-      | Development   |
+      | Development    |
 
   Scenario Outline: Alternate Flow - Retrieve projects under a category with no associated projects
     When a user retrieves projects under the category "<categoryTitle>"
@@ -28,7 +28,7 @@ Feature: Get Projects By Category
 
     Examples:
       | categoryTitle |
-      | Marketing    |
+      | Marketing     |
 
   Scenario Outline: Error Flow - Attempt to retrieve projects for a non-existent category
     When a user retrieves projects under the non-existent category "<categoryTitle>"
@@ -36,7 +36,7 @@ Feature: Get Projects By Category
 
     Examples:
       | categoryTitle  | statusCode |
-      | Unknown       | 404        |
+      | Unknown        | 404        |
 
   Scenario: Teardown
     Then the system is restored to the original state
