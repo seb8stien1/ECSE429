@@ -5,9 +5,9 @@ Feature: Delete Project
     Given the API server is running and available
 
     Given the following projects exist in the system:
-      | projectTitle     | projectDescription     |
-      | Old Assignment   | ECSE 415 Assignment 3  |
-      | New Assignment   | ECSE 415 Assignment 4  |
+      | projectTitle     |
+      | Old Assignment   |
+      | New Assignment   |
 
   Scenario Outline: Normal Flow - A user deletes an existing project
     When a user deletes the project with title "<projectTitle>"
@@ -18,7 +18,7 @@ Feature: Delete Project
       | projectTitle    | expectedProjectCount |
       | Old Assignment  | 1                    |
 
-  Scenario Outline: Alternate Flow - A user attempts to delete a project with that has already been deleted
+  Scenario Outline: Alternate Flow - A user attempts to delete a project that has already been deleted
     Given the project with the title "<projectTitle>" is already deleted
     When a user deletes the project with title "<projectTitle>"
     Then the status code returned by the API is "<statusCode>"
