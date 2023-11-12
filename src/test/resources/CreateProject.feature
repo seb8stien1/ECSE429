@@ -8,31 +8,30 @@ Feature: Create New Project
     When a user attempts to create a project with title "<projectTitle>" and description "<projectDescription>"
     Then a new project with title "<projectTitle>" and description "<projectDescription>" is created
     And the number of projects in the system is "<expectedProjectCount>"
-    Then the system is restored to the original state
 
     Examples:
       | projectTitle   | projectDescription           | expectedProjectCount |
       | Website Launch | Launch the new company site  | 1                    |
-      | Marketing Plan | Plan for Q3 marketing        | 1                    |
+      | Marketing Plan | Plan for Q3 marketing        | 2                    |
 
   Scenario Outline: Alternate Flow - A user creates a project with a blank description
     When a user attempts to create a project with title "<projectTitle>" and description "<projectDescription>"
     Then a new project with title "<projectTitle>" and description "<projectDescription>" is created
     And the number of projects in the system is "<expectedProjectCount>"
-    Then the system is restored to the original state
 
     Examples:
-      | projectTitle   |projectDescription | expectedProjectCount |
-      | Website Launch |                   | 1                    |
-      | Marketing Plan |                   | 1                    |
+      | projectTitle      | projectDescription | expectedProjectCount |
+      | Portfolio Website |                    | 3                    |
+      | Capstone          |                    | 4                    |
 
   Scenario Outline: Error Flow - A user attempts to create a project with an invalid title
     When a user attempts to create a project with an invalid title "<invalidTitle>"
-    And the following "<error>" shall be raised
+    Then the following "<error>" shall be raised
     And the status code returned by the API is "<statusCode>"
-    Then the system is restored to the original state
 
     Examples:
       | invalidTitle   | error                                        | statusCode |
       |                | Failed Validation: title : can not be empty  | 400        |
 
+  Scenario: Teardown
+    Then the system is restored to the original state

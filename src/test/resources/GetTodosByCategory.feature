@@ -22,7 +22,6 @@ Feature: Get Todos by Category
   Scenario Outline: Normal Flow - A user gets todos by a certain category
     When a user attempts to get todos with the category "<categoryTitle>"
     Then the system should return todos with the category "<categoryTitle>"
-    Then the system is restored to the original state
 
     Examples:
       | categoryTitle |
@@ -34,7 +33,6 @@ Feature: Get Todos by Category
   Scenario Outline: Alternate Flow - A user gets todos by a category that has no todos assigned yet
     When a user attempts to get todos with the category "<categoryTitle>"
     Then the system should return an empty list indicating there are no todos for the given category
-    Then the system is restored to the original state
 
     Examples:
       | categoryTitle |
@@ -42,11 +40,13 @@ Feature: Get Todos by Category
       | Travel        |
 
   Scenario Outline: Error Flow - A user provides an invalid category filter
-    When a user attempts to get todos with the category "<categoryTitle>"
+    When a user attempts to get todos with the invalid category "<categoryTitle>"
     Then the status code returned by the API is "<statusCode>"
-    Then the system is restored to the original state
 
     Examples:
       | categoryTitle | statusCode |
       | &*^%$#@       | 400        |
       | 123456        | 400        |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

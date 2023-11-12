@@ -16,7 +16,6 @@ Feature: Create New Category
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
     Then a new category with title "<categoryTitle>" and "<categoryDescription>" should be created
     Then the number of categories in the system is "<expectedCategoryCount>"
-    Then the system is restored to the original state
 
     Examples:
       | categoryTitle | categoryDescription                          | expectedCategoryCount |
@@ -27,7 +26,6 @@ Feature: Create New Category
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
     Then a new category with title "<categoryTitle>" and "<categoryDescription>" should be created
     Then the number of categories in the system is "<expectedCategoryCount>"
-    Then the system is restored to the original state
 
     Examples:
       | categoryTitle | categoryDescription | expectedCategoryCount |
@@ -36,11 +34,13 @@ Feature: Create New Category
 
   Scenario Outline: Error Flow - Attempting to create a category with an invalid title
     When a user creates a category with title "<categoryTitle>" and description "<categoryDescription>"
-    And the following "<error>" shall be raised
+    Then the following "<error>" shall be raised
     And the status code returned by the API is "<statusCode>"
-    And the number of categories in the system is "<expectedCategoryCount>"
-    Then the system is restored to the original state
+    Then the number of categories in the system is "<expectedCategoryCount>"
 
     Examples:
       | categoryTitle | error                                                 | statusCode | expectedCategoryCount |
       |               | Failed Validation: title : can not be empty           | 400        | 8                     |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

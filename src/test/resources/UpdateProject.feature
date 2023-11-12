@@ -11,8 +11,7 @@ Feature: Update Project
   Scenario Outline: Normal Flow - A user updates an existing project's description and completed status
     When a user updates the project "<projectTitle>" with new description "<newDescription>" and new completed status "<newCompleted>"
     Then the project "<projectTitle>" should have description "<newDescription>" and completed status "<newCompleted>"
-    Then the number of projects in the system is "<expectedProjectCount>"
-    Then the system is restored to the original state
+    And the number of projects in the system is "<expectedProjectCount>"
 
     Examples:
       | projectTitle    | newDescription                | newCompleted | expectedProjectCount |
@@ -21,8 +20,7 @@ Feature: Update Project
   Scenario Outline: Alternate Flow - A user updates an existing project's active status
     When a user updates the project "<projectTitle>" with new active status "<newActive>"
     Then the project "<projectTitle>" should have active status "<newActive>"
-    Then the number of projects in the system is "<expectedProjectCount>"
-    Then the system is restored to the original state
+    And the number of projects in the system is "<expectedProjectCount>"
 
     Examples:
       | projectTitle    | newActive     | expectedProjectCount |
@@ -32,9 +30,11 @@ Feature: Update Project
     When a user updates the project "<projectTitle>" with new active status "<newActive>"
     Then the following "<error>" shall be raised
     Then the status code returned by the API is "<statusCode>"
-    Then the number of projects in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
+    And the number of projects in the system is "<expectedTodoCount>"
 
     Examples:
       | projectTitle   | newActive | error                                         | statusCode | expectedTodoCount |
       | Unknown Plan   | Liverpool | Failed Validation: active should be BOOLEAN   | 400        | 1                 |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

@@ -5,16 +5,15 @@ Feature: Update Todo Details
     Given the API server is running and available
 
     Given the following todos exist in the system:
-      | todoTitle         | todoDescription        | doneStatus |
-      | Complete Homework | Finish math assignment | false      |
-      | Grocery Shopping  | Buy groceries          | false      |
-      | Gym Workout       | Exercise at the gym    | true       |
+      | todoTitle         | todoDescription        | todoDoneStatus |
+      | Complete Homework | Finish math assignment | false          |
+      | Grocery Shopping  | Buy groceries          | false          |
+      | Gym Workout       | Exercise at the gym    | true           |
 
   Scenario Outline: Normal Flow - A user updates a todo with a new description
     When a user attempts to update the todo with the title "<todoTitle>" with new description "<newDescription>" and same doneStatus "<sameDoneStatus>"
     Then the todo with the title "<todoTitle>" shall be updated with new description "<newDescription>" and same doneStatus "<sameDoneStatus>"
     Then the number of todos in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | newDescription          | sameDoneStatus | expectedTodoCount |
@@ -26,7 +25,6 @@ Feature: Update Todo Details
     When a user attempts to update the todo with the title "<todoTitle>" with same description "<sameDescription>" and new doneStatus "<newDoneStatus>"
     Then the todo with the title "<todoTitle>" shall be updated with same description "<sameDescription>" and doneStatus "<newDoneStatus>"
     Then the number of todos in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | sameDescription          | newDoneStatus  | expectedTodoCount |
@@ -39,10 +37,12 @@ Feature: Update Todo Details
     Then the following "<error>" shall be raised
     Then the status code returned by the API is "<statusCode>"
     Then the number of todos in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | sameDescription          | newDoneStatus  | error                                           | statusCode | expectedTodoCount |
       | Complete Homework   | Finish math homework     | invalidStatus  | Failed Validation: doneStatus should be BOOLEAN | 400        | 3                 |
       | Grocery Shopping    | Buy groceries            | notDone        | Failed Validation: doneStatus should be BOOLEAN | 400        | 3                 |
       | Gym Workout         | Exercise at the gym      | newStatus      | Failed Validation: doneStatus should be BOOLEAN | 400        | 3                 |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

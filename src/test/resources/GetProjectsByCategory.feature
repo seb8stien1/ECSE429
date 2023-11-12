@@ -5,38 +5,38 @@ Feature: Get Projects By Category
     Given the API server is running and available
 
     Given the following categories exist in the system:
-      | categoryName  |
-      | Development   |
-      | Marketing     |
+      | categoryTitle  | categoryDescription  |
+      | Development    | Coding               |
+      | Marketing      | Non-technical aspect |
 
     Given the following projects are categorized under Development:
-      | projectTitle      |
-      | Software Upgrade  |
-      | Database Migration|
+      | projectTitle       | projectDescription  | completed | active |
+      | Software Upgrade   | Update to version 7 | false     | true   |
+      | Database Migration | Add new table       | false     | true   |
 
   Scenario Outline: Normal Flow - Retrieve all projects under a given category
-    When a user retrieves projects under the category "<categoryName>"
-    Then the projects under the category "<categoryName>" are returned
-    Then the system is restored to the original state
+    When a user retrieves projects under the category "<categoryTitle>"
+    Then the projects under the category "<categoryTitle>" are returned
 
     Examples:
-      | categoryName  |
+      | categoryTitle  |
       | Development   |
 
   Scenario Outline: Alternate Flow - Retrieve projects under a category with no associated projects
-    When a user retrieves projects under the category "<categoryName>"
+    When a user retrieves projects under the category "<categoryTitle>"
     Then the system should return an empty list indicating there are no projects for the given category
-    Then the system is restored to the original state
 
     Examples:
-      | categoryName |
+      | categoryTitle |
       | Marketing    |
 
   Scenario Outline: Error Flow - Attempt to retrieve projects for a non-existent category
-    When a user retrieves projects under the category "<categoryName>"
+    When a user retrieves projects under the non-existent category "<categoryTitle>"
     Then the status code returned by the API is "<statusCode>"
-    Then the system is restored to the original state
 
     Examples:
-      | categoryName  | statusCode |
+      | categoryTitle  | statusCode |
       | Unknown       | 404        |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

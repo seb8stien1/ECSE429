@@ -5,14 +5,14 @@ Feature: Remove Todo from Project
     Given the API server is running and available
 
     Given the following projects exist in the system:
-      | projectTitle       |
-      | Marketing Campaign |
+      | projectTitle       | projectDescription | completed | active |
+      | Marketing Campaign | New product ads    | false     | true   |
 
     Given the following todos exist in the system:
-      | todoTitle       |
-      | Design Brochure |
-      | Plan Event      |
-      | New Design      |
+      | todoTitle       | todoDescription  | todoDoneStatus |
+      | Design Brochure | Pamphlets        | false          |
+      | Plan Event      | Book venue       | false          |
+      | New Design      | Website homepage | false          |
 
     Given the following todos are associated with the Marketing Campaign project:
       | todoTitle       |
@@ -22,7 +22,6 @@ Feature: Remove Todo from Project
   Scenario Outline: Normal Flow - Unlink a todo from a project
     When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
     Then the todo "<todoTitle>" should no longer be linked to the project "<projectTitle>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle       | projectTitle       |
@@ -32,17 +31,18 @@ Feature: Remove Todo from Project
   Scenario Outline: Alternate Flow - Unlink a todo that was not linked to the project
     When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
     And the status code returned by the API is "<statusCode>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle   | statusCode |
       | New Design  | 400        |
 
   Scenario Outline: Error Flow - Try to unlink a todo from a non-existent project
-    When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
+    When a user attempts to remove the todo "<todoTitle>" from the non-existent project "<projectTitle>"
     And the status code returned by the API is "<statusCode>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle       | projectTitle    | statusCode |
       | Design Brochure | Unknown Project | 404        |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

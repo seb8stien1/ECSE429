@@ -5,16 +5,15 @@ Feature: Create a New Todo
     Given the API server is running and available
 
     Given the following todos exist in the system:
-      | todoTitle         | todoDescription        | doneStatus |
-      | Complete Homework | Finish math assignment | false      |
-      | Grocery Shopping  | Buy groceries          | false      |
-      | Gym Workout       | Exercise at the gym    | true       |
+      | todoTitle         | todoDescription        | todoDoneStatus |
+      | Complete Homework | Finish math assignment | false          |
+      | Grocery Shopping  | Buy groceries          | false          |
+      | Gym Workout       | Exercise at the gym    | true           |
 
   Scenario Outline: Normal Flow - A user creates a new todo with doneStatus as true
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
     Then a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>" shall be created
     Then the number of todos in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | todoDescription           | doneStatus | expectedTodoCount |
@@ -26,7 +25,6 @@ Feature: Create a New Todo
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
     Then a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "false" shall be created
     Then the number of todos in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
 
     Examples:
       | todoTitle           | todoDescription           | doneStatus | expectedTodoCount |
@@ -38,9 +36,11 @@ Feature: Create a New Todo
     When a user attempts to create a new todo with the title "<todoTitle>", description "<todoDescription>", and doneStatus "<doneStatus>"
     Then the following "<error>" shall be raised
     Then the status code returned by the API is "<statusCode>"
-    And the number of todos in the system is "<expectedTodoCount>"
-    Then the system is restored to the original state
+    Then the number of todos in the system is "<expectedTodoCount>"
 
     Examples:
       | todoTitle | todoDescription | doneStatus | error                                           | statusCode | expectedTodoCount |
       | Homework  | English Reading | Arsenal    | Failed Validation: doneStatus should be BOOLEAN | 400        | 3                 |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

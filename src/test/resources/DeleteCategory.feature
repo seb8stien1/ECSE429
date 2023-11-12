@@ -5,36 +5,35 @@ Feature: Delete Category
     Given the API server is running and available
 
     Given the following categories exist in the system:
-      | categoryName   |
-      | Old Course     |
-      | New Course     |
+      | categoryTitle   | categoryDescription |
+      | Old Course      | Completed Class     |
+      | New Course      | Will do this class  |
 
   Scenario Outline: Normal Flow - Delete an existing category
-    When a user deletes the category "<categoryName>"
-    Then the category "<categoryName>" should be removed from the system
-    And the number of categories in the system is "<expectedCategoryCount>"
-    Then the system is restored to the original state
+    When a user deletes the category "<categoryTitle>"
+    Then the category "<categoryTitle>" should be removed from the system
+    Then the number of categories in the system is "<expectedCategoryCount>"
 
     Examples:
-      | categoryName | expectedCategoryCount |
+      | categoryTitle | expectedCategoryCount |
       | Old Course   | 1                     |
 
   Scenario Outline: Alternate Flow - A user attempts to delete a category that has already been deleted
-    Given the category "<categoryName>" is already deleted
-    When a user deletes the category "<categoryName>"
+    When a user deletes the category "<categoryTitle>"
     Then the status code returned by the API is "<statusCode>"
-    Then the system is restored to the original state
 
     Examples:
-      | categoryName    | statusCode |
+      | categoryTitle    | statusCode |
       | Old Course      | 404        |
 
   Scenario Outline: Error Flow - Attempt to delete a category with an invalid ID
     When a user attempts to delete the category with an invalid ID "<categoryID>"
     And the status code returned by the API is "<statusCode>"
-    Then the system is restored to the original state
 
     Examples:
       | categoryID     | statusCode |
-      | Shah Rukh Khan | 404        |
-      | Invalid ID     | 404        |
+      | Shah Rukh Khan | 400        |
+      | Invalid ID     | 400        |
+
+  Scenario: Teardown
+    Then the system is restored to the original state

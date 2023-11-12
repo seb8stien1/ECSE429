@@ -10,30 +10,24 @@ public class GetTodoByCategory {
         // todo
     }
 
-    @Given("the following categories exist in the system:")
-    public void theFollowingCategoriesExistInTheSystem() {
-    }
-
     @When("a user attempts to get todos with the category {string}")
     public void aUserAttemptsToGetTodosWithTheCategory(String categoryTitle) {
+        // todo
     }
 
     @Then("the system should return todos with the category {string}")
     public void theSystemShouldReturnTodosWithTheCategory(String categoryTitle) {
-    }
-
-    @Then("the system is restored to the original state")
-    public void theSystemIsRestoredToTheOriginalState() {
         // todo
     }
 
     @Then("the system should return an empty list indicating there are no todos for the given category")
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoTodosForTheGivenCategory() {
+        // todo
     }
 
-    @Then("the status code returned by the API is {string}")
-    public void theStatusCodeReturnedByTheAPIIs(String statusCode) {
-
+    @When("a user attempts to get todos with the invalid category {string}")
+    public void aUserAttemptsToGetTodosWithTheInvalidCategory(String categoryTitle) {
+        // todo
     }
 
 }

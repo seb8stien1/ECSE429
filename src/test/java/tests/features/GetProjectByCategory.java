@@ -10,32 +10,23 @@ public class GetProjectByCategory {
         // todo
     }
 
-    @Given("the following categories exist in the system:")
-    public void theFollowingCategoriesExistInTheSystem() {
-    }
-
     @When("a user retrieves projects under the category {string}")
-    public void aUserRetrievesProjectsUnderTheCategory(String categoryName) {
+    public void aUserRetrievesProjectsUnderTheCategory(String categoryTitle) {
+        // todo
     }
 
     @Then("the projects under the category {string} are returned")
-    public void theProjectsUnderTheCategoryAreReturned(String categoryName) {
+    public void theProjectsUnderTheCategoryAreReturned(String categoryTitle) {
+        // todo
     }
 
     @Then("the system should return an empty list indicating there are no projects for the given category")
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoProjectsForTheGivenCategory() {
-    }
-
-    @Then("the system is restored to the original state")
-    public void theSystemIsRestoredToTheOriginalState() {
         // todo
     }
 
-    @Then("an error should be raised")
-    public void anErrorShouldBeRaised() {
-    }
-
-    @Then("the status code returned by the API is {string}")
-    public void theStatusCodeReturnedByTheAPIIs(String statusCode) {
+    @When("a user retrieves projects under the non-existent category {string}")
+    public void aUserRetrievesProjectsUnderTheNonExistentCategory(String  categoryTitle) {
+        // todo
     }
 }
