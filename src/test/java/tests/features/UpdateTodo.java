@@ -31,13 +31,13 @@ public class UpdateTodo {
         String todoID = createdTodos.get(todoTitle).getId();
         HttpResponse response = TodoHelper.modifyTodoPut(todoID,todoTitle, todoDoneStatus,todoDescription, httpClient);
         Todo modifiedTodo = deserialize(response,Todo.class);
-        createdTodos.put(todoID,modifiedTodo);
-        testContext.set("createdTodos",createdTodos);
+        createdTodos.put(todoTitle, modifiedTodo);
+        testContext.set("createdTodos", createdTodos);
 
         testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
     @Then("the todo with the title {string} shall be updated with description {string} and doneStatus {string}")
-    public void theTodoWithTheTitleShallBeUpdatedWithDescriptionAndDoneStatus(String todoTitle, String newDescription, String sameDoneStatus) throws IOException {
+    public void theTodoWithTheTitleShallBeUpdatedWithDescriptionAndDoneStatus(String todoTitle, String todoDescription, String todoDoneStatus) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
@@ -47,16 +47,16 @@ public class UpdateTodo {
         TodoResponse todoResponse = deserialize(response, TodoResponse.class);
 
         assertFalse(CollectionUtils.isEmpty(todoResponse.getTodos()));
-        Optional<Todo> todoAssociationOptional = todoResponse.getTodos()
+        Optional<Todo> todoOptional = todoResponse.getTodos()
                 .stream()
                 .filter(todo -> todoID.equals(todo.getId()))
                 .findFirst();
-        assertTrue(todoAssociationOptional.isPresent());
-        Todo associatedTodo = todoAssociationOptional.get();
+        assertTrue(todoOptional.isPresent());
+        Todo returnedTodo = todoOptional.get();
 
-        assertEquals(todoTitle, associatedTodo.getTitle());
-        assertEquals(createdTodos.get(todoTitle).getDescription(), associatedTodo.getDescription());
-        assertEquals(createdTodos.get(todoTitle).getDoneStatus(), associatedTodo.getDoneStatus());
+        assertEquals(todoTitle, returnedTodo.getTitle());
+        assertEquals(todoDescription, returnedTodo.getDescription());
+        assertEquals(Boolean.valueOf(todoDoneStatus), returnedTodo.getDoneStatus());
     }
 
 
@@ -69,6 +69,7 @@ public class UpdateTodo {
         HttpResponse response = TodoHelper.modifyTodoPut(todoID,todoTitle, todoDoneStatus,todoDescription, httpClient);
 
 
+        testContext.set("response", response);
         testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
 }

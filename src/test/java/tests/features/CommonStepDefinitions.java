@@ -2,7 +2,6 @@ package tests.features;
 
 import helpers.ApiHelper;
 import helpers.TodoHelper;
-import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -34,6 +33,8 @@ public class CommonStepDefinitions {
 
     /**
      * Verifies that the API server is running and available.
+     * Once that is verified, it checks the number of each type of object that pre-exists in the database
+     * This will help in asserting the right amount of objects are created during these feature tests
      *
      * @throws IOException if an I/O exception occurs.
      */
@@ -45,6 +46,19 @@ public class CommonStepDefinitions {
         assertEquals(HttpStatus.SC_OK, statusCode);
 
         testContext.set("httpClient", httpClient);
+
+        ProjectResponse allProjects = deserialize(getAllProjects(httpClient), ProjectResponse.class);
+        int numProjectsPredefined = allProjects.getProjects().size();
+        testContext.set("numProjectsPredefined", numProjectsPredefined);
+
+        TodoResponse allTodos = deserialize(getAllTodos(httpClient), TodoResponse.class);
+        int numTodosPredefined = allTodos.getTodos().size();
+        testContext.set("numTodosPredefined", numTodosPredefined);
+
+        CategoryResponse allCategories = deserialize(getAllCategories(httpClient), CategoryResponse.class);
+        int numCategoriesPredefined = allCategories.getCategories().size();
+        testContext.set("numCategoriesPredefined", numCategoriesPredefined);
+
     }
 
     /**
@@ -81,7 +95,6 @@ public class CommonStepDefinitions {
      */
     @Given("the following todos exist in the system:")
     public void theFollowingTodosExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
-        System.out.println("creating todos");
         List<Map<String, String>> todos = dataTable.asMaps();
         HashMap<String, Todo> createdTodos = new HashMap<>();
 
@@ -160,9 +173,15 @@ public class CommonStepDefinitions {
      * @throws IOException if an I/O exception occurs during the association process.
      */
     @Then("the number of todos in the system is {string}")
-    public void theNumberOfTodosInTheSystemIs(String expectedTodoCount) {
-        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
-        assertEquals(createdTodos.size(), Integer.parseInt(expectedTodoCount));
+    public void theNumberOfTodosInTheSystemIs(String expectedTodoCount) throws IOException {
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+        int numTodosPredefined = testContext.get("numTodosPredefined", Integer.class);
+
+        TodoResponse allTodos = deserialize(getAllTodos(httpClient), TodoResponse.class);
+
+        int numNewlyCreatedTodos = allTodos.getTodos().size() - numTodosPredefined;
+
+        assertEquals(Integer.parseInt(expectedTodoCount), numNewlyCreatedTodos);
     }
 
 
@@ -176,10 +195,13 @@ public class CommonStepDefinitions {
     @And("the number of projects in the system is {string}")
     public void theNumberOfProjectsInTheSystemIs(String expectedProjectCount) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+        int numProjectsPredefined = testContext.get("numProjectsPredefined", Integer.class);
 
         ProjectResponse allProjects = deserialize(getAllProjects(httpClient), ProjectResponse.class);
 
-        assertEquals(allProjects.getProjects().size(), Integer.parseInt(expectedProjectCount));
+        int numNewlyCreatedProjects = allProjects.getProjects().size() - numProjectsPredefined;
+
+        assertEquals(Integer.parseInt(expectedProjectCount), numNewlyCreatedProjects);
     }
 
     /**
@@ -192,10 +214,13 @@ public class CommonStepDefinitions {
     @Then("the number of categories in the system is {string}")
     public void theNumberOfCategoriesInTheSystemIs(String expectedCategoryCount) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+        int numCategoriesPredefined = testContext.get("numCategoriesPredefined", Integer.class);
 
         CategoryResponse allCategories = deserialize(getAllCategories(httpClient), CategoryResponse.class);
 
-        assertEquals(allCategories.getCategories().size(), Integer.parseInt(expectedCategoryCount));
+        int numNewlyCreatedCategories = allCategories.getCategories().size() - numCategoriesPredefined;
+
+        assertEquals(Integer.parseInt(expectedCategoryCount), numNewlyCreatedCategories);
     }
 
     /**
@@ -222,7 +247,7 @@ public class CommonStepDefinitions {
     @Then("the status code returned by the API is {string}")
     public void theStatusCodeReturnedByTheAPIIs(String expectedStatusCode) {
         int actualStatusCode = testContext.get("statusCode", Integer.class);
-        assertEquals(actualStatusCode, Integer.parseInt(expectedStatusCode));
+        assertEquals(Integer.parseInt(expectedStatusCode), actualStatusCode);
     }
 
     /**
@@ -230,10 +255,8 @@ public class CommonStepDefinitions {
      *
      * @throws IOException if an I/O exception occurs.
      */
-    @After
     @Then("the system is restored to the original state")
     public void theSystemIsRestoredToTheOriginalState() throws IOException {
-        System.out.println("restoring");
         HashMap<String, Todo> createdTodos = null;
         HashMap<String, Category> createdCategories = null;
         HashMap<String, Project> createdProjects = null;

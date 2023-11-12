@@ -20,6 +20,7 @@ Feature: Update Todo Details
       | Complete Homework   | Complete math homework  | false          | 3                 |
       | Grocery Shopping    | Buy organic groceries   | false          | 3                 |
       | Gym Workout         | Cardio at the gym       | true           | 3                 |
+
   Scenario Outline: Alternate Flow - A user attempts to update a todo with a new done status
     When a user attempts to update the todo with the title "<todoTitle>" with description "<sameDescription>" and doneStatus "<newDoneStatus>"
     Then the todo with the title "<todoTitle>" shall be updated with description "<sameDescription>" and doneStatus "<newDoneStatus>"
