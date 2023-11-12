@@ -15,8 +15,8 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import static helpers.ApiHelper.deserialize;
+import static helpers.TodoHelper.getTodo;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 @AllArgsConstructor
 public class UpdateTodo {
@@ -43,7 +43,7 @@ public class UpdateTodo {
 
         String todoID = createdTodos.get(todoTitle).getId();
 
-        HttpResponse response = TodoHelper.getTodo(todoID, httpClient);
+        HttpResponse response = getTodo(todoID, httpClient);
         TodoResponse todoResponse = deserialize(response, TodoResponse.class);
 
         assertFalse(CollectionUtils.isEmpty(todoResponse.getTodos()));
@@ -61,12 +61,12 @@ public class UpdateTodo {
 
 
     @When("a user attempts to update the todo with the title {string} with description {string} and invalid doneStatus {string}")
-    public void aUserAttemptsToUpdateTheTodoWithTheTitleWithDescriptionAndInvalidDoneStatus(String todoTitle, String todoDoneStatus, String todoDescription) throws IOException {
+    public void aUserAttemptsToUpdateTheTodoWithTheTitleWithDescriptionAndInvalidDoneStatus(String todoTitle, String todoDescription, String invalidDoneStatus) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
         String todoID = createdTodos.get(todoTitle).getId();
-        HttpResponse response = TodoHelper.modifyTodoPut(todoID,todoTitle, todoDoneStatus,todoDescription, httpClient);
+        HttpResponse response = TodoHelper.modifyTodoPut(todoID,todoTitle, invalidDoneStatus,todoDescription, httpClient);
 
 
         testContext.set("response", response);
