@@ -25,7 +25,7 @@ Feature: Get Project Details
 
     Examples:
       | projectTitle     | projectDescription       |
-      | Finish Homework  |                          |
+      | Finish Homework  | null                     |
 
   Scenario Outline: Error Flow - A user attempts to retrieve details of a non-existent project
     When a user retrieves details of the non-existent project with title "<projectTitle>"
