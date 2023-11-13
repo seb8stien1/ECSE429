@@ -22,7 +22,7 @@ Feature: Get Categories Linked to a Project
       | App Development  | Development    |
 
   Scenario Outline: Normal Flow - Viewing categories associated with a project
-    When a user retrieves categories associated with the project "<projectTitle>"
+    When a user retrieves the categories associated with the project "<projectTitle>"
     Then the categories "<categoryTitle1>" and "<categoryTitle2>" associated with "<projectTitle>" should be returned
 
     Examples:
@@ -31,7 +31,7 @@ Feature: Get Categories Linked to a Project
 
   Scenario Outline: Alternate Flow - Viewing one single category of a project
     When a user retrieves the categories associated with the project "<projectTitle>"
-    Then only the category "<categoryTitle>" associated with the project "<projectTitle>" should be returned
+    Then the category "<categoryTitle>" associated with the project "<projectTitle>" should be returned
 
     Examples:
       | projectTitle    | categoryTitle  |
