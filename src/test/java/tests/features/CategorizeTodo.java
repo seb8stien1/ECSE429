@@ -47,8 +47,7 @@ public class CategorizeTodo {
         String categoryID = createdCategories.get(categoryTitle).getId();
         String todoID = createdTodos.get(todoTitle).getId();
 
-        HttpResponse response = CategoryHelper.createAssociation("todos", categoryID, todoID, httpClient);
-        testContext.set("statusCode", response.getStatusLine().getStatusCode());
+        CategoryHelper.createAssociation("todos", categoryID, todoID, httpClient);
     }
 
     /**

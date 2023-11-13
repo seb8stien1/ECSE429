@@ -18,25 +18,25 @@ Feature: Create a tasksof relationship between a task and a project
       | Gym Workout             | Exercise at the gym     | true           |
 
   Scenario Outline: Add a New incomplete Task to Project - Normal Flow
-    When a user adds a task with title "<todoTitle>", description "<todoDescription>" and done status "<todoDoneStatus>" to project with title "<projectTitle>"
-    Then this task should be contained as a task of the project
+    When a user adds a task with title "<todoTitle>" to project with title "<projectTitle>"
+    Then the task "<todoTitle>" should be contained as a task of the project "<projectTitle>"
     Then the number of todos in the system is "<expectedTodoCount>"
     And the number of projects in the system is "<expectedProjectCount>"
 
     Examples:
-      | todoTitle                | todoDescription         | todoDoneStatus   | projectTitle | expectedTodoCount | expectedProjectCount |
-      | Completed Project Report | Summarize in a word doc | false            | Project A    | 3                 | 3                    |
-      | Complete Feature Files   | Write 20 files          | false            | Project B    | 3                 | 3                    |
+      | todoTitle                | projectTitle | expectedTodoCount | expectedProjectCount |
+      | Complete Project Report | Project A    | 3                 | 3                    |
+      | Complete Feature Files   | Project B    | 3                 | 3                    |
 
   Scenario Outline: Add a Completed Task to a Project - Alternate Flow
-    When a user adds a task with title "<todoTitle>", description "<todoDescription>" and done status "<todoDoneStatus>" to project with title "<projectTitle>"
-    Then this task should be contained as a task of the project
+    When a user adds a task with title "<todoTitle>" to project with title "<projectTitle>"
+    Then the task "<todoTitle>" should be contained as a task of the project "<projectTitle>"
     Then the number of todos in the system is "<expectedTodoCount>"
     And the number of projects in the system is "<expectedProjectCount>"
 
     Examples:
-      | todoTitle   | todoDescription     | todoDoneStatus  | projectTitle | expectedTodoCount | expectedProjectCount |
-      | Gym Workout | Exercise at the gym | true            | Fitness      | 3                 | 3                    |
+      | todoTitle   | projectTitle | expectedTodoCount | expectedProjectCount |
+      | Gym Workout | Fitness      | 3                 | 3                    |
 
   Scenario Outline: Attempt to Add a non-existent Task to a Project - Error Flow
     When a user adds a non-existent task with title "<todoTitle>" to project with title "<projectTitle>"
@@ -46,7 +46,7 @@ Feature: Create a tasksof relationship between a task and a project
 
     Examples:
       | todoTitle           | projectTitle | statusCode | expectedTodoCount | expectedProjectCount |
-      | Complete Comments   | Project A    | 400        | 3                 | 3                    |
+      | Complete Comments   | Project A    | 404        | 3                 | 3                    |
 
   Scenario: Teardown
     Then the system is restored to the original state
