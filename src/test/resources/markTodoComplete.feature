@@ -5,27 +5,27 @@ Feature: Mark a Todo as Complete
     Given the API server is running and available
 
     Given the following todos exist in the system:
-      | todoTitle         | todoDescription        | doneStatus |
-      | Complete Homework | Finish math assignment | false      |
-      | Grocery Shopping  | Buy groceries          | false      |
-      | Gym Workout       | Exercise at the gym    | true       |
+      | todoTitle         | todoDescription        | todoDoneStatus |
+      | Complete Homework | Finish math assignment | false          |
+      | Grocery Shopping  | Buy groceries          | false          |
+      | Gym Workout       | Exercise at the gym    | true           |
 
   Scenario Outline: Normal Flow - A user marks an existing todo as complete
-    When a user attempts to mark the todo titled "<todoTitle>" with doneStatus "<doneStatus>" as completed "<completed>"
+    When a user attempts to mark the incomplete todo titled "<todoTitle>" as completed "<completed>"
     Then the todo titled "<todoTitle>" should have doneStatus as "<completed>"
 
     Examples:
-      | todoTitle         | doneStatus  | completed |
-      | Complete Homework | false       | true      |
-      | Grocery Shopping  | false       | true      |
+      | todoTitle         | completed |
+      | Complete Homework | true      |
+      | Grocery Shopping  | true      |
 
   Scenario Outline: Alternate Flow - A user marks an already completed todo as complete again
-    When a user attempts to mark the todo titled "<todoTitle>" with doneStatus "<doneStatus>" as completed "<completed>"
+    When a user attempts to mark the completed todo titled "<todoTitle>" as completed "<completed>"
     Then the todo titled "<todoTitle>" should have doneStatus as "<completed>"
 
     Examples:
-      | todoTitle  | doneStatus | completed |
-      | Gym Workout| true       | true      |
+      | todoTitle  | completed |
+      | Gym Workout| true      |
 
   Scenario Outline: Error Flow - A user tries to mark a non-existent todo as complete
     When a user attempts to mark the non-existent todo titled "<todoTitle>" with doneStatus as "<doneStatus>"

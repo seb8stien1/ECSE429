@@ -13,7 +13,6 @@ import response.TodoResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.UUID;
 
 import static helpers.ApiHelper.deserialize;
 import static helpers.TodoHelper.getTodo;
@@ -25,14 +24,34 @@ public class MarkTodoComplete {
 
     private final TestContext testContext;
 
-    @When("a user attempts to mark the todo titled {string} with doneStatus {string} as completed {string}")
-    public void aUserAttemptsToMarkTheTodoTitledWithDoneStatusAsCompleted(String todoTitle, String todoDoneStatus, String completed) throws IOException {
+    @When("a user attempts to mark the incomplete todo titled {string} as completed {string}")
+    public void aUserAttemptsToMarkTheTodoTitledWithDoneStatusAsCompleted(String todoTitle, String completed) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
-        String todoID = createdTodos.get(todoTitle).getId();
+        Todo todo = createdTodos.get(todoTitle);
+        String todoID = todo.getId();
         String todoDescription = createdTodos.get(todoTitle).getDescription();
+        assertFalse(todo.getDoneStatus());
         HttpResponse response = TodoHelper.modifyTodoPut(todoID,todoTitle, completed,todoDescription, httpClient);
+        Todo modifiedTodo = deserialize(response,Todo.class);
+        createdTodos.put(todoTitle, modifiedTodo);
+        testContext.set("createdTodos", createdTodos);
+
+        testContext.set("statusCode", response.getStatusLine().getStatusCode());
+    }
+
+    @When("a user attempts to mark the completed todo titled {string} as completed {string}")
+    public void aUserAttemptsToMarkTheCompletedTodoTitledAsCompleted(String todoTitle, String completed) throws IOException {
+        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        Todo todo = createdTodos.get(todoTitle);
+        String todoID = todo.getId();
+        String todoDescription = createdTodos.get(todoTitle).getDescription();
+        assertTrue(todo.getDoneStatus());
+
+        HttpResponse response = TodoHelper.modifyTodoPut(todoID,todoTitle, completed, todoDescription, httpClient);
         Todo modifiedTodo = deserialize(response,Todo.class);
         createdTodos.put(todoTitle, modifiedTodo);
         testContext.set("createdTodos", createdTodos);
@@ -46,7 +65,6 @@ public class MarkTodoComplete {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
         String todoID = createdTodos.get(todoTitle).getId();
-        String todoDescription = createdTodos.get(todoTitle).getDescription();
 
         HttpResponse response = getTodo(todoID, httpClient);
         TodoResponse todoResponse = deserialize(response, TodoResponse.class);
@@ -73,8 +91,10 @@ public class MarkTodoComplete {
         Todo nonExistentTodo = createdTodos.get(todoTitle);
         assertNull(nonExistentTodo);
         String nonExistentTodoID = "103i20023i0309458934539";
-        HttpResponse response = TodoHelper.modifyTodoPut(nonExistentTodoID,todoTitle, doneStatus,"todoDescription", httpClient);
-        testContext.set("response", response);
-        testContext.set("statusCode", response.getStatusLine().getStatusCode());
+
+        HttpResponse response = TodoHelper.modifyTodoPut(nonExistentTodoID, todoTitle, doneStatus,"todoDescription", httpClient);
+
+        int statusCode = response.getStatusLine().getStatusCode();
+        testContext.set("statusCode", statusCode);
     }
 }
