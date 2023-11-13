@@ -19,12 +19,12 @@ Feature: Delete Project
       | Old Assignment  | 1                    |
 
   Scenario Outline: Alternate Flow - A user attempts to delete a project that has already been deleted
-    When a user deletes the project with title "<projectTitle>"
+    When a user deletes the already deleted project with title "<projectTitle>"
     Then the status code returned by the API is "<statusCode>"
 
     Examples:
       | projectTitle    | statusCode |
-      | Old Assignment  | 404        |
+      | Old News        | 404        |
 
   Scenario Outline: Error Flow - A user attempts to delete a project with an invalid ID
     When a user attempts to delete the project with an invalid ID "<projectID>"
@@ -32,8 +32,8 @@ Feature: Delete Project
 
     Examples:
       | projectID    | statusCode |
-      | Invalid ID   | 400        |
-      | Liverpool    | 400        |
+      | Invalid      | 404        |
+      | Liverpool    | 404        |
 
   Scenario: Teardown
     Then the system is restored to the original state
