@@ -32,7 +32,7 @@ Feature: Get Categories By Todo
 
   Scenario Outline: Alternate Flow - Retrieve the category for a todo with no associated categories
     When a user retrieves the category for the todo "<todoTitle>"
-    Then the system should return an empty list indicating there are no categories for the given todo
+    Then the system should return an empty list indicating there are no categories for the given todo "<todoTitle>"
 
     Examples:
       | todoTitle          |
