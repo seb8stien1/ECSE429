@@ -29,9 +29,10 @@ public class UpdateProject {
         HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
-        String projectID = createdProjects.get(projectTitle).getId();
-        String projectActive = createdProjects.get(projectTitle).getActive().toString();
-        HttpResponse response = ProjectHelper.modifyProjectPut(projectID, projectTitle, newDescription, newCompleted, projectActive, httpClient);
+        Project project = createdProjects.get(projectTitle);
+        String projectID = project.getId();
+        String projectActive = project.getActive().toString();
+        HttpResponse response = ProjectHelper.modifyProjectPut(projectID, projectTitle, newCompleted, projectActive, newDescription, httpClient);
         Project modifiedProject = deserialize(response, Project.class);
         createdProjects.put(projectTitle, modifiedProject);
         testContext.set("createdProjects", createdProjects);
@@ -41,7 +42,7 @@ public class UpdateProject {
 
     @Then("the project {string} should have description {string} and completed status {string}")
     public void theProjectShouldHaveDescriptionAndCompletedStatus(String projectTitle, String newDescription, String newCompleted) throws IOException {
-        HashMap<String, Project> createdProjects = testContext.get("createdProject", HashMap.class);
+        HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
         String projectID = createdProjects.get(projectTitle).getId();
@@ -67,10 +68,11 @@ public class UpdateProject {
         HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
-        String projectID = createdProjects.get(projectTitle).getId();
-        String projectCompleted = createdProjects.get(projectTitle).getCompleted().toString();
-        String description = createdProjects.get(projectTitle).getDescription();
-        HttpResponse response = ProjectHelper.modifyProjectPut(projectID, projectTitle, description, projectCompleted, newActive, httpClient);
+        Project project = createdProjects.get(projectTitle);
+        String projectID = project.getId();
+        String projectCompleted = project.getCompleted().toString();
+        String description = project.getDescription();
+        HttpResponse response = ProjectHelper.modifyProjectPut(projectID, projectTitle, projectCompleted, newActive, description, httpClient);
         Project modifiedProject = deserialize(response, Project.class);
         createdProjects.put(projectTitle, modifiedProject);
         testContext.set("createdProjects", createdProjects);
@@ -80,7 +82,7 @@ public class UpdateProject {
 
     @Then("the project {string} should have active status {string}")
     public void theProjectShouldHaveActiveStatus(String projectTitle, String newActive) throws IOException {
-        HashMap<String, Project> createdProjects = testContext.get("createdProject", HashMap.class);
+        HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
         String projectID = createdProjects.get(projectTitle).getId();
@@ -99,5 +101,19 @@ public class UpdateProject {
         assertEquals(projectTitle, returnedProject.getTitle());
         assertEquals(Boolean.valueOf(newActive), returnedProject.getActive());
 
+    }
+
+    @When("a user updates the project {string} with an invalid active status {string}")
+    public void aUserUpdatesTheProjectWithAnInvalidCompleteStatus(String projectTitle, String invalidActive) throws IOException {
+        HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        Project project = createdProjects.get(projectTitle);
+        String projectID = project.getId();
+        String projectDescription = project.getDescription();
+        String projectComplete = project.getCompleted().toString();
+        HttpResponse response = ProjectHelper.modifyProjectPut(projectID, projectTitle, projectComplete, invalidActive, projectDescription, httpClient);
+        testContext.set("response", response);
+        testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
 }
