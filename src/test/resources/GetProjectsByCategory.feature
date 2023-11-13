@@ -9,10 +9,15 @@ Feature: Get Projects By Category
       | Development    | Coding               |
       | Marketing      | Non-technical aspect |
 
-    Given the following projects are categorized under Development:
+    Given the following projects exist in the system:
       | projectTitle       | projectDescription  | completed | active |
       | Software Upgrade   | Update to version 7 | false     | true   |
       | Database Migration | Add new table       | false     | true   |
+
+    Given the following category and project association exist in the system:
+      | categoryTitle | projectTitle       |
+      | Development   | Software Upgrade   |
+      | Development   | Database Migration |
 
   Scenario Outline: Normal Flow - Retrieve all projects under a given category
     When a user retrieves projects under the category "<categoryTitle>"
@@ -24,7 +29,7 @@ Feature: Get Projects By Category
 
   Scenario Outline: Alternate Flow - Retrieve projects under a category with no associated projects
     When a user retrieves projects under the category "<categoryTitle>"
-    Then the system should return an empty list indicating there are no projects for the given category
+    Then the system should return an empty list indicating there are no projects for the given category "<categoryTitle>"
 
     Examples:
       | categoryTitle |

@@ -1,7 +1,5 @@
 package tests.features;
 
-
-import helpers.ProjectHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,7 +8,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.impl.client.CloseableHttpClient;
-import response.*;
+import response.Project;
+import response.Todo;
+import response.TodoResponse;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,7 +73,7 @@ public class GetTodoByProject {
 
         String projectID = createdProjects.get(projectTitle).getId();
 
-        HttpResponse response = ProjectHelper.getAssociation("tasks", projectID, httpClient);
+        HttpResponse response = getAssociation("tasks", projectID, httpClient);
         TodoResponse todoResponse = deserialize(response, TodoResponse.class);
 
         List<Todo> returnedTodos = todoResponse.getTodos();
