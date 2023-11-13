@@ -3,21 +3,17 @@ package tests.features;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.AllArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
-import response.Category;
 import response.Project;
 import response.ProjectResponse;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import static helpers.ApiHelper.deserialize;
 import static helpers.ProjectHelper.getProject;
-import static helpers.TodoHelper.getAssociation;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -42,24 +38,21 @@ public class GetProjectDetails {
         testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
     @Then("the project returned has description {string}, has completed status {string} and active status {string}")
-    public void theProjectReturnedHasDescriptionHasCompletedStatusAndActiveStatus(String projectDescription, String completed, String active) throws IOException {
+    public void theProjectReturnedHasDescriptionHasCompletedStatusAndActiveStatus(String projectDescription, String completed, String active) {
         List<Project> retrievedProjects = testContext.get("retrievedProjects", List.class);
-        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+        Project retrievedProject = retrievedProjects.get(0);
 
-
-        assertEquals(projectDescription, retrievedProjects.get(0).getDescription());
-        assertEquals(Boolean.valueOf(completed), retrievedProjects.get(0).getCompleted());
-        assertEquals(Boolean.valueOf(active), retrievedProjects.get(0).getActive());
+        assertEquals(projectDescription, retrievedProject.getDescription());
+        assertEquals(Boolean.valueOf(completed), retrievedProject.getCompleted());
+        assertEquals(Boolean.valueOf(active), retrievedProject.getActive());
     }
 
     @Then("the project returned has blank description {string}")
     public void theProjectReturnedHasBlankDescription(String description) {
         List<Project> retrievedProjects = testContext.get("retrievedProjects", List.class);
-        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+        Project retrievedProject = retrievedProjects.get(0);
 
-
-        assertEquals(description, retrievedProjects.get(0).getDescription());
-
+        assertEquals(description, retrievedProject.getDescription());
     }
 
     @When("a user retrieves details of the non-existent project with title {string}")
