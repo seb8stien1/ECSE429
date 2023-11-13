@@ -19,9 +19,4 @@ public class DeleteTodo {
     public void aUserAttemptsToDeleteTheTodoWithAnInvalidID(String todoID) {
         // todo
     }
-
-    @Then("an error should be raised")
-    public void anErrorShouldBeRaised() {
-        // todo
-    }
 }

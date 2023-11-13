@@ -19,21 +19,21 @@ Feature: Delete Category
       | Old Course    | 1                     |
 
   Scenario Outline: Alternate Flow - A user attempts to delete a category that has already been deleted
-    When a user deletes the category "<categoryTitle>"
+    When a user deletes the already deleted category "<categoryTitle>"
     Then the status code returned by the API is "<statusCode>"
 
     Examples:
       | categoryTitle    | statusCode |
-      | Old Course       | 404        |
+      | Old News         | 404        |
 
   Scenario Outline: Error Flow - Attempt to delete a category with an invalid ID
     When a user attempts to delete the category with an invalid ID "<categoryID>"
-    And the status code returned by the API is "<statusCode>"
+    Then the status code returned by the API is "<statusCode>"
 
     Examples:
       | categoryID     | statusCode |
-      | Shah Rukh Khan | 400        |
-      | Invalid ID     | 400        |
+      | SRK            | 404        |
+      | Invalid        | 404        |
 
   Scenario: Teardown
     Then the system is restored to the original state

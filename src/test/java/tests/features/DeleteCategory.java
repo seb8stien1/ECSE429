@@ -2,21 +2,80 @@ package tests.features;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import lombok.AllArgsConstructor;
+import org.apache.http.HttpResponse;
+import org.apache.http.impl.client.CloseableHttpClient;
+import response.Category;
+import response.CategoryResponse;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.Assert.*;
+
+import static helpers.ApiHelper.deserialize;
+import static helpers.CategoryHelper.deleteCategory;
+import static helpers.CategoryHelper.getAllCategories;
+
+@AllArgsConstructor
 public class DeleteCategory {
 
+    private final TestContext testContext;
+
     @When("a user deletes the category {string}")
-    public void aUserDeletesTheCategory(String categoryTitle) {
-        // todo
+    public void aUserDeletesTheCategory(String categoryTitle) throws IOException {
+        HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        String categoryID = createdCategories.get(categoryTitle).getId();
+
+        deleteCategory(categoryID, httpClient);
     }
 
     @Then("the category {string} should be removed from the system")
-    public void theCategoryShouldBeRemovedFromTheSystem(String categoryTitle) {
-        // todo
+    public void theCategoryShouldBeRemovedFromTheSystem(String categoryTitle) throws IOException {
+        HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        String categoryID = createdCategories.get(categoryTitle).getId();
+
+        HttpResponse response = getAllCategories(httpClient);
+        CategoryResponse categoryResponse = deserialize(response, CategoryResponse.class);
+
+        Optional<Category> categoryOptional = categoryResponse.getCategories()
+                .stream()
+                .filter(category -> categoryID.equals(category.getId()))
+                .findFirst();
+        assertFalse(categoryOptional.isPresent());
     }
 
-    @When("a user attempts to delete the category with an invalid ID {string}")
-    public void aUserAttemptsToDeleteTheCategoryWithAnInvalidID(String categoryID) {
-        // todo
+
+    @When("a user deletes the already deleted category {string}")
+    public void aUserDeletesTheAlreadyDeletedCategory(String categoryTitle) throws IOException {
+        HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        Category nonExistentCategory = createdCategories.get(categoryTitle);
+        assertNull(nonExistentCategory);
+        String nonExistentCategoryID = UUID.randomUUID().toString();
+
+        HttpResponse response = deleteCategory(nonExistentCategoryID, httpClient);
+
+        int statusCode = response.getStatusLine().getStatusCode();
+        testContext.set("statusCode", statusCode);
     }
+
+
+    @When("a user attempts to delete the category with an invalid ID {string}")
+    public void aUserAttemptsToDeleteTheCategoryWithAnInvalidID(String invalidID) throws IOException {
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        HttpResponse response = deleteCategory(invalidID, httpClient);
+
+        int statusCode = response.getStatusLine().getStatusCode();
+        testContext.set("statusCode", statusCode);
+    }
+
 }
