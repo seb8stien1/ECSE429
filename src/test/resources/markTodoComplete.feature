@@ -24,8 +24,8 @@ Feature: Mark a Todo as Complete
     Then the todo titled "<todoTitle>" should have doneStatus as "<completed>"
 
     Examples:
-      | todoTitle  | doneStatus |
-      | Gym Workout| true       |
+      | todoTitle  | doneStatus | completed |
+      | Gym Workout| true       | true      |
 
   Scenario Outline: Error Flow - A user tries to mark a non-existent todo as complete
     When a user attempts to mark the non-existent todo titled "<todoTitle>" with doneStatus as "<doneStatus>"
