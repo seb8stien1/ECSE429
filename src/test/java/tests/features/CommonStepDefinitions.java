@@ -3,6 +3,8 @@ package tests.features;
 import helpers.ApiHelper;
 import helpers.CategoryHelper;
 import helpers.ProjectHelper;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -39,6 +41,7 @@ public class CommonStepDefinitions {
      *
      * @throws IOException if an I/O exception occurs.
      */
+    @Before
     @Given("the API server is running and available")
     public void theAPIServerIsRunningAndAvailable() throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -281,6 +284,7 @@ public class CommonStepDefinitions {
      *
      * @throws IOException if an I/O exception occurs.
      */
+    @After
     @Then("the system is restored to the original state")
     public void theSystemIsRestoredToTheOriginalState() throws IOException {
         HashMap<String, Todo> createdTodos = null;

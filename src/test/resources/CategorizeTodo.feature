@@ -1,5 +1,5 @@
 Feature: Categorize Todo
-  As a user, I want to categorize a todo to organize my tasks better.
+  As a user, I want to categorize a todo to better manage and prioritize my tasks.
 
   Background:
     Given the API server is running and available

@@ -45,5 +45,3 @@ Feature: Get Todo of a Project
 
   Scenario: Teardown
     Then the system is restored to the original state
-
-
