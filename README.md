@@ -12,7 +12,7 @@
 
 The first part consisted of Exploratory Testing the API. The contents of which can be found [here](https://github.com/seb8stien1/ECSE429-A1/tree/main/Exploratory%20Testing).
 
-The second part consisted of writng unit tests which can be found [here](https://github.com/seb8stien1/ECSE429-A1/tree/main/src/test/java).
+The second part consisted of writng unit tests which can be found [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/unitTests).
 
 The third part consisted of filming a video of the unit tests suite running, the video can be found [here](https://www.youtube.com/watch?v=Bm5irLbheT8&ab_channel=RooshnieVelautham).
 
