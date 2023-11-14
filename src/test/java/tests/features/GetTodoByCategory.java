@@ -22,11 +22,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 
+/**
+ * Step definitions for retrieving todos associated with a specific category.
+ */
 @AllArgsConstructor
 public class GetTodoByCategory {
 
     private final TestContext testContext;
 
+    /**
+     * Retrieves todos associated with a specified category.
+     *
+     * @param categoryTitle The title of the category.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @When("a user attempts to get todos with the category {string}")
     public void aUserAttemptsToGetTodosWithTheCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -42,6 +51,12 @@ public class GetTodoByCategory {
         testContext.set("associatedTodos", associatedTodos);
     }
 
+    /**
+     * Verifies that the returned todos are correctly associated with the given category.
+     *
+     * @param categoryTitle The title of the category.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @Then("the system should return todos with the category {string}")
     public void theSystemShouldReturnTodosWithTheCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -59,6 +74,12 @@ public class GetTodoByCategory {
         assertEquals(associatedTodos, returnedTodos);
     }
 
+    /**
+     * Validates that no todos are associated with a given category if the category does not exist.
+     *
+     * @param categoryTitle The title of the category.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @Then("the system should return an empty list indicating there are no todos for the given category {string}")
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoTodosForTheGivenCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -72,6 +93,12 @@ public class GetTodoByCategory {
         assertTrue(CollectionUtils.isEmpty(todoResponse.getTodos()));
     }
 
+    /**
+     * Attempts to retrieve todos associated with a non-existent category.
+     *
+     * @param categoryTitle The title of the non-existent category.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @When("a user attempts to get todos with the invalid category {string}")
     public void aUserAttemptsToGetTodosWithTheInvalidCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -82,6 +109,7 @@ public class GetTodoByCategory {
         String nonExistentCategoryID = UUID.randomUUID().toString();
 
         HttpResponse response = getAssociation("todos", nonExistentCategoryID, httpClient);
+
 
         // this is a bug that was identified in the last project
         // should return 404 but returns 200

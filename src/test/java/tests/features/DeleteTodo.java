@@ -14,16 +14,24 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
-
 import static helpers.ApiHelper.deserialize;
 import static helpers.TodoHelper.deleteTodo;
 import static helpers.TodoHelper.getAllTodos;
 
+/**
+ * Step definitions for deleting todos and verifying their deletion from the API.
+ */
 @AllArgsConstructor
 public class DeleteTodo {
 
     private final TestContext testContext;
 
+    /**
+     * Attempts to delete a todo with the specified title from the system.
+     *
+     * @param todoTitle The title of the todo to be deleted.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user attempts to delete the todo with the title {string}")
     public void aUserAttemptsToDeleteTheTodoWithTheTitle(String todoTitle) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -34,6 +42,12 @@ public class DeleteTodo {
         deleteTodo(todoID, httpClient);
     }
 
+    /**
+     * Verifies that the todo with the specified title has been removed from the system.
+     *
+     * @param todoTitle The title of the todo to verify removal.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Then("the todo with the title {string} shall be removed from the system")
     public void theTodoWithTheTitleShallBeRemovedFromTheSystem(String todoTitle) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -51,6 +65,12 @@ public class DeleteTodo {
         assertFalse(todoOptional.isPresent());
     }
 
+    /**
+     * Attempts to delete a todo that has already been deleted, identified by its title.
+     *
+     * @param todoTitle The title of the already deleted todo.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user attempts to delete the already deleted todo with the title {string}")
     public void aUserAttemptsToDeleteTheAlreadyDeletedTodoWithTheTitle(String todoTitle) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -64,9 +84,14 @@ public class DeleteTodo {
 
         int statusCode = response.getStatusLine().getStatusCode();
         testContext.set("statusCode", statusCode);
-
     }
 
+    /**
+     * Attempts to delete a todo using an invalid ID.
+     *
+     * @param invalidID The invalid ID to be used in the deletion attempt.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user attempts to delete the todo with an invalid ID {string}")
     public void aUserAttemptsToDeleteTheTodoWithAnInvalidID(String invalidID) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);

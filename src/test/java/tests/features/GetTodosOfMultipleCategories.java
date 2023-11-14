@@ -20,13 +20,23 @@ import static helpers.ApiHelper.deserialize;
 import static helpers.CategoryHelper.getAssociation;
 import static org.junit.Assert.*;
 
+/**
+ * Step definitions for retrieving todos linked to multiple categories.
+ */
 @AllArgsConstructor
 public class GetTodosOfMultipleCategories {
 
     private final TestContext testContext;
 
+    /**
+     * Retrieves todos linked to two specified categories.
+     *
+     * @param categoryTitle1 Title of the first category.
+     * @param categoryTitle2 Title of the second category.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @When("a user retrieves todos linked to categories {string} and {string}")
-    public void aUserRetrievesTodosLinkedToCategoriesAnd(String categoryTitle1, String categoryTitle2) throws IOException {
+    public void aUserRetrievesTodosLinkedToCategories(String categoryTitle1, String categoryTitle2) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
@@ -41,11 +51,16 @@ public class GetTodosOfMultipleCategories {
         TodoResponse secondTodoResponse = deserialize(secondResponse, TodoResponse.class);
         List<String> secondCategoryTodos = secondTodoResponse.getTodos().stream().map(Todo::getId).collect(Collectors.toList());
 
-        firstCategoryTodos.retainAll(secondCategoryTodos); // getting intersection, the @Then will see if the right common one was returned
+        firstCategoryTodos.retainAll(secondCategoryTodos);
 
         testContext.set("commonTodos", firstCategoryTodos);
     }
 
+    /**
+     * Verifies that the same todo is linked to both specified categories.
+     *
+     * @param todoTitle Title of the todo.
+     */
     @Then("the returned {string} should be the same for both categories")
     public void theLinkedToAndShouldBeTheSame(String todoTitle) {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -55,6 +70,12 @@ public class GetTodosOfMultipleCategories {
         assertTrue(commonTodos.contains(todoId));
     }
 
+    /**
+     * Retrieves a todo linked only to a specified category.
+     *
+     * @param categoryTitle Title of the category.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @When("a user retrieves the todo linked only to the category {string}")
     public void aUserRetrievesTheTodoLinkedOnlyToTheCategory(String categoryTitle) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
@@ -68,6 +89,11 @@ public class GetTodosOfMultipleCategories {
         testContext.set("returnedTodos", todosResponse.getTodos());
     }
 
+    /**
+     * Verifies that the specified todo is linked to the specified category.
+     *
+     * @param todoTitle Title of the todo.
+     */
     @Then("the todo {string} linked to the category should be returned")
     public void theTodoLinkedToTheCategoryShouldBeReturned(String todoTitle) {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -79,6 +105,12 @@ public class GetTodosOfMultipleCategories {
         assertTrue(todoIsPresent);
     }
 
+    /**
+     * Attempts to retrieve todos linked to a non-existent category.
+     *
+     * @param categoryTitle Title of the non-existent category.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @When("a user attempts to retrieve todos linked to a non-existent category {string}")
     public void aUserAttemptsToRetrieveTodosLinkedToANonExistentCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);

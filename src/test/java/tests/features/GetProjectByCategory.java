@@ -25,17 +25,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 
+/**
+ * Step definitions for retrieving projects associated with categories.
+ */
 @AllArgsConstructor
 public class GetProjectByCategory {
 
     private final TestContext testContext;
 
+    /**
+     * Establishes associations between projects and categories based on provided data.
+     *
+     * @param dataTable Contains category and project titles for association.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Given("the following category and project association exist in the system:")
     public void theFollowingCategoryAndProjectAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
+        List<Map<String, String>> associations = dataTable.asMaps();
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
         HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
-
-        List<Map<String, String>> associations = dataTable.asMaps();
 
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
@@ -50,6 +58,12 @@ public class GetProjectByCategory {
         }
     }
 
+    /**
+     * Retrieves projects associated with a specified category.
+     *
+     * @param categoryTitle The title of the category.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user retrieves projects under the category {string}")
     public void aUserRetrievesProjectsUnderTheCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -65,10 +79,16 @@ public class GetProjectByCategory {
         testContext.set("associatedProjects", associatedProjects);
     }
 
+    /**
+     * Validates that the specified projects are returned for a given category.
+     *
+     * @param categoryTitle The title of the category.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Then("the projects under the category {string} are returned")
     public void theProjectsUnderTheCategoryAreReturned(String categoryTitle) throws IOException {
-        HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
         List<Project> associatedProjects = testContext.get("associatedProjects", List.class);
+        HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
         String categoryID = createdCategories.get(categoryTitle).getId();
@@ -82,6 +102,12 @@ public class GetProjectByCategory {
         assertEquals(associatedProjects, returnedProjects);
     }
 
+    /**
+     * Validates that no projects are returned for a given category when no associations exist.
+     *
+     * @param categoryTitle The title of the category.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Then("the system should return an empty list indicating there are no projects for the given category {string}")
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoProjectsForTheGivenCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -95,8 +121,14 @@ public class GetProjectByCategory {
         assertTrue(CollectionUtils.isEmpty(projectResponse.getProjects()));
     }
 
+    /**
+     * Attempts to retrieve projects associated with a non-existent category.
+     *
+     * @param categoryTitle The title of the non-existent category.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user retrieves projects under the non-existent category {string}")
-    public void aUserRetrievesProjectsUnderTheNonExistentCategory(String  categoryTitle) throws IOException {
+    public void aUserRetrievesProjectsUnderTheNonExistentCategory(String categoryTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 

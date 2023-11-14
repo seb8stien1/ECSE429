@@ -18,11 +18,21 @@ import static helpers.ProjectHelper.createProject;
 import static helpers.ProjectHelper.getProject;
 import static org.junit.Assert.*;
 
+/**
+ * Step definitions for creating projects in the API.
+ */
 @AllArgsConstructor
 public class CreateProject {
 
     private final TestContext testContext;
 
+    /**
+     * Attempts to create a project with the specified title and description.
+     *
+     * @param projectTitle The title of the project to be created.
+     * @param projectDescription The description of the project to be created.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user attempts to create a project with title {string} and description {string}")
     public void aUserAttemptsToCreateAProjectWithTitleAndDescription(String projectTitle, String projectDescription) throws IOException {
         HashMap<String, Project> createdProjects = new HashMap<>();
@@ -35,6 +45,13 @@ public class CreateProject {
         testContext.set("createdProjects", createdProjects);
     }
 
+    /**
+     * Verifies that a new project with the specified title and description has been created.
+     *
+     * @param projectTitle The title of the project to verify.
+     * @param projectDescription The description of the project to verify.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Then("a new project with title {string} and description {string} is created")
     public void aNewProjectWithTitleAndDescriptionIsCreated(String projectTitle, String projectDescription) throws IOException {
         HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
@@ -60,6 +77,12 @@ public class CreateProject {
         assertTrue(returnedProject.getActive());
     }
 
+    /**
+     * Attempts to create a project with an invalid 'completed' status.
+     *
+     * @param invalidCompleted The invalid 'completed' status used to create a project.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user attempts to create a project with an invalid completed {string}")
     public void aUserAttemptsToCreateAProjectWithAnInvalidComplete(String invalidCompleted) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);

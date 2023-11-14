@@ -1,5 +1,5 @@
-Feature: Get Todos by Category
-  As a user, I want to get my list of todos that have a certain category so that I can focus on important tasks first.
+Feature: Get Todo by Category
+  As a user, I want to get a todo that has a certain category so that I can focus on important tasks first.
 
   Background:
     Given the API server is running and available

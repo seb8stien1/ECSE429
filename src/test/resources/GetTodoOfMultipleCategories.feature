@@ -1,5 +1,5 @@
-Feature: Get Todos Linked to Multiple Categories
-  As a user, I want to view all todos linked to multiple categories, so that I can understand how different tasks overlap across various aspects of my life.
+Feature: Get Todo Linked to Multiple Categories
+  As a user, I want to view a todoo linked to multiple categories, so that I can understand how different tasks overlap across various aspects of my life.
 
   Background:
     Given the API server is running and available

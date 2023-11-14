@@ -18,11 +18,21 @@ import static helpers.ApiHelper.deserialize;
 import static helpers.CategoryHelper.getCategory;
 import static org.junit.Assert.*;
 
+/**
+ * Step definitions for creating categories in the API.
+ */
 @AllArgsConstructor
 public class CreateCategory {
 
     private final TestContext testContext;
 
+    /**
+     * Creates a category with the specified title and description.
+     *
+     * @param categoryTitle The title of the category to be created.
+     * @param categoryDescription The description of the category to be created.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user creates a category with title {string} and description {string}")
     public void aUserCreatesACategoryWithTitleAndDescription(String categoryTitle, String categoryDescription) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -35,6 +45,13 @@ public class CreateCategory {
         testContext.set("createdCategories", createdCategories);
     }
 
+    /**
+     * Verifies that a new category with the specified title and description has been created.
+     *
+     * @param categoryTitle The title of the category to verify.
+     * @param categoryDescription The description of the category to verify.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Then("a new category with title {string} and {string} should be created")
     public void aNewCategoryWithTitleAndShouldBeCreated(String categoryTitle, String categoryDescription) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -58,7 +75,12 @@ public class CreateCategory {
         assertEquals(categoryDescription, returnedCategory.getDescription());
     }
 
-
+    /**
+     * Attempts to create a category with an invalid title.
+     *
+     * @param invalidTitle The invalid title used to create a category.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user creates a category with an invalid title {string}")
     public void aUserCreatesACategoryWithAnInvalidTitle(String invalidTitle) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);

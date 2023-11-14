@@ -21,21 +21,21 @@ import java.util.UUID;
 
 import static helpers.ApiHelper.deserialize;
 import static helpers.TodoHelper.getAssociation;
-
 import static org.junit.Assert.*;
 
+/**
+ * Step definitions for retrieving categories associated with todos.
+ */
 @AllArgsConstructor
 public class GetCategoriesByTodo {
 
     private final TestContext testContext;
 
     /**
-     * Sets up associations between todos and categories in the system as defined in a DataTable.
-     * This method associates existing todos with categories based on the provided data.
+     * Establishes associations between todos and categories based on provided data.
      *
-     * @param dataTable DataTable containing associations between todos and categories.
-     *                  The table should have columns for 'todoTitle' and 'categoryTitle'.
-     * @throws IOException if an I/O exception occurs during the association process.
+     * @param dataTable Contains todo and category titles for association.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
      */
     @Given("the following todo and category association exist in the system:")
     public void theFollowingTodoAndCategoryAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
@@ -57,6 +57,12 @@ public class GetCategoriesByTodo {
         }
     }
 
+    /**
+     * Retrieves categories associated with a specified todo.
+     *
+     * @param todoTitle The title of the todo.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user retrieves the category for the todo {string}")
     public void aUserRetrievesTheCategoryForTheTodo(String todoTitle) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -72,6 +78,12 @@ public class GetCategoriesByTodo {
         testContext.set("associatedCategories", associatedCategories);
     }
 
+    /**
+     * Validates that the specified categories are returned for a given todo.
+     *
+     * @param todoTitle The title of the todo.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Then("the category for the todo {string} is returned")
     public void theCategoryForTheTodoIsReturned(String todoTitle) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -89,6 +101,12 @@ public class GetCategoriesByTodo {
         assertEquals(associatedCategories, returnedCategories);
     }
 
+    /**
+     * Validates that no categories are returned for a given todo when no associations exist.
+     *
+     * @param todoTitle The title of the todo.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @Then("the system should return an empty list indicating there are no categories for the given todo {string}")
     public void theSystemShouldReturnAnEmptyListIndicatingThereAreNoCategoriesForTheGivenTodo(String todoTitle) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
@@ -102,6 +120,12 @@ public class GetCategoriesByTodo {
         assertTrue(CollectionUtils.isEmpty(categoryResponse.getCategories()));
     }
 
+    /**
+     * Attempts to retrieve categories associated with a non-existent todo.
+     *
+     * @param todoTitle The title of the non-existent todo.
+     * @throws IOException if an I/O error occurs when sending or receiving the HTTP request.
+     */
     @When("a user retrieves the category for the non-existent todo {string}")
     public void aUserRetrievesTheCategoryForTheNonExistentTodo(String todoTitle) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);

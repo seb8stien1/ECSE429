@@ -17,13 +17,22 @@ import java.util.Optional;
 import static helpers.ApiHelper.deserialize;
 import static helpers.CategoryHelper.getCategory;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
+/**
+ * Step definitions for updating category details in the system.
+ */
 @AllArgsConstructor
 public class UpdateCategory {
 
     private final TestContext testContext;
 
+    /**
+     * Updates a category's description.
+     *
+     * @param categoryTitle  The title of the category to update.
+     * @param newDescription The new description to set for the category.
+     * @throws IOException if an I/O exception occurs.
+     */
     @When("a user updates the category {string} with new description {string}")
     public void aUserUpdatesTheCategoryWithNewDescription(String categoryTitle, String newDescription) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -31,13 +40,20 @@ public class UpdateCategory {
 
         String categoryID = createdCategories.get(categoryTitle).getId();
         HttpResponse response = CategoryHelper.modifyCategoryPut(categoryID, categoryTitle, newDescription, httpClient);
-        Category modifiedCategory = deserialize(response,Category.class);
+        Category modifiedCategory = deserialize(response, Category.class);
         createdCategories.put(categoryTitle, modifiedCategory);
-        testContext.set("createdTodos", createdCategories);
+        testContext.set("createdCategories", createdCategories);
 
         testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
 
+    /**
+     * Validates that a category's description is updated.
+     *
+     * @param categoryTitle  The title of the category.
+     * @param newDescription The new description to verify.
+     * @throws IOException if an I/O exception occurs.
+     */
     @Then("the category {string} should have description {string}")
     public void theCategoryShouldHaveDescription(String categoryTitle, String newDescription) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -61,6 +77,13 @@ public class UpdateCategory {
         assertEquals(newDescription, returnedCategory.getDescription());
     }
 
+    /**
+     * Updates a category's title.
+     *
+     * @param categoryTitle The current title of the category.
+     * @param newTitle      The new title to update the category with.
+     * @throws IOException if an I/O exception occurs.
+     */
     @When("a user updates the category {string} with new title {string}")
     public void aUserUpdatesTheCategoryWithNewTitle(String categoryTitle, String newTitle) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -69,7 +92,6 @@ public class UpdateCategory {
         String categoryID = createdCategories.get(categoryTitle).getId();
         String categoryDescription = createdCategories.get(categoryTitle).getDescription();
         HttpResponse response = CategoryHelper.modifyCategoryPut(categoryID, newTitle, categoryDescription, httpClient);
-
 
         testContext.set("response", response);
         testContext.set("statusCode", response.getStatusLine().getStatusCode());

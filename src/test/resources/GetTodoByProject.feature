@@ -1,5 +1,5 @@
-Feature: Get Todos of a Project
-  As a user, I want to get all todos associated with a specific project to understand what needs to be done.
+Feature: Get Todo of a Project
+  As a user, I want to get a todo associated with a specific project to understand what needs to be done.
 
   Background:
     Given the API server is running and available

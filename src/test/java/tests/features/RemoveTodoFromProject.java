@@ -20,11 +20,21 @@ import static helpers.ProjectHelper.getAssociation;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
+/**
+ * Step definitions for removing a todo from a project.
+ */
 @AllArgsConstructor
 public class RemoveTodoFromProject {
 
     private final TestContext testContext;
 
+    /**
+     * Attempts to remove a todo from a project.
+     *
+     * @param todoTitle The title of the todo to be removed.
+     * @param projectTitle The title of the project from which the todo is to be removed.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @When("a user attempts to remove the todo {string} from the project {string}")
     public void aUserAttemptsToRemoveTheTodoFromTheProject(String todoTitle, String projectTitle) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
@@ -38,6 +48,13 @@ public class RemoveTodoFromProject {
         testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
 
+    /**
+     * Validates that a todo is no longer linked to a project.
+     *
+     * @param todoTitle The title of the todo.
+     * @param projectTitle The title of the project.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @Then("the todo {string} should no longer be linked to the project {string}")
     public void theTodoShouldNoLongerBeLinkedToTheProject(String todoTitle, String projectTitle) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
@@ -55,9 +72,16 @@ public class RemoveTodoFromProject {
 
         String todoID = createdTodos.get(todoTitle).getId();
 
-        assertFalse(associatedTodoIds.contains(todoID));
+        assertFalse("The Todo should not be linked to the Project anymore", associatedTodoIds.contains(todoID));
     }
 
+    /**
+     * Attempts to remove a todo from a non-existent project.
+     *
+     * @param todoTitle The title of the todo.
+     * @param projectTitle The title of the non-existent project.
+     * @throws IOException if an I/O error occurs during the HTTP request.
+     */
     @When("a user attempts to remove the todo {string} from the non-existent project {string}")
     public void aUserAttemptsToRemoveTheTodoFromTheNonExistentProject(String todoTitle, String projectTitle) throws IOException {
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
@@ -65,7 +89,7 @@ public class RemoveTodoFromProject {
         HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
 
         Project project = createdProjects.get(projectTitle);
-        assertNull(project);
+        assertNull("Project should not exist", project);
         String nonExistentProjectID = UUID.randomUUID().toString();
 
         String todoID = createdTodos.get(todoTitle).getId();
