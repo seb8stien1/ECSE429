@@ -36,6 +36,7 @@ public class UpdateTodo {
 
         testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
+
     @Then("the todo with the title {string} shall be updated with description {string} and doneStatus {string}")
     public void theTodoWithTheTitleShallBeUpdatedWithDescriptionAndDoneStatus(String todoTitle, String todoDescription, String todoDoneStatus) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);

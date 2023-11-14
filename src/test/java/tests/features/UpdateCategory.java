@@ -1,7 +1,6 @@
 package tests.features;
 
 import helpers.CategoryHelper;
-import helpers.TodoHelper;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import response.Category;
 import response.CategoryResponse;
-import response.Todo;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 public class UpdateCategory {
 
     private final TestContext testContext;
+
     @When("a user updates the category {string} with new description {string}")
     public void aUserUpdatesTheCategoryWithNewDescription(String categoryTitle, String newDescription) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
@@ -73,5 +72,6 @@ public class UpdateCategory {
 
 
         testContext.set("response", response);
-        testContext.set("statusCode", response.getStatusLine().getStatusCode());    }
+        testContext.set("statusCode", response.getStatusLine().getStatusCode());
+    }
 }

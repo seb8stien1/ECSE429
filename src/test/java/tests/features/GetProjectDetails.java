@@ -37,6 +37,7 @@ public class GetProjectDetails {
         testContext.set("retrievedProjects", retrievedProjects);
         testContext.set("statusCode", response.getStatusLine().getStatusCode());
     }
+
     @Then("the project returned has description {string}, has completed status {string} and active status {string}")
     public void theProjectReturnedHasDescriptionHasCompletedStatusAndActiveStatus(String projectDescription, String completed, String active) {
         List<Project> retrievedProjects = testContext.get("retrievedProjects", List.class);

@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNull;
 public class GetTodoByProject {
 
     private final TestContext testContext;
+
     @Given("the following project and todo association exist in the system:")
     public void theFollowingProjectAndTodoAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
         HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);

@@ -1,7 +1,7 @@
 package tests.features;
 
 import helpers.ApiHelper;
-import helpers.TodoHelper;
+import helpers.CategoryHelper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -137,33 +137,31 @@ public class CommonStepDefinitions {
     }
 
     /**
-     * Sets up associations between todos and categories in the system as defined in a DataTable.
-     * This method associates existing todos with categories based on the provided data.
+     * Sets up associations between categories and todos in the system as defined in a DataTable.
+     * This method associates existing categories with todos based on the provided data.
      *
-     * @param dataTable DataTable containing associations between todos and categories.
-     *                  The table should have columns for 'todoTitle' and 'categoryTitle'.
+     * @param dataTable DataTable containing associations between categories and todo.
      * @throws IOException if an I/O exception occurs during the association process.
      */
-    @Given("the following todo and category association exist in the system:")
-    public void theFollowingTodoAndCategoryAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
-        List<Map<String, String>> associations = dataTable.asMaps();
-
-        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
+    @Given("the following category and todo association exist in the system:")
+    public void theFollowingCategoryAndTodoAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
         HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
+        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
+
+        List<Map<String, String>> associations = dataTable.asMaps();
 
         CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
 
         for (Map<String, String> association : associations) {
-            String todoTitle = association.get("todoTitle");
             String categoryTitle = association.get("categoryTitle");
+            String todoTitle = association.get("todoTitle");
 
-            String todoID = createdTodos.get(todoTitle).getId();
             String categoryID = createdCategories.get(categoryTitle).getId();
+            String todoID = createdTodos.get(todoTitle).getId();
 
-            TodoHelper.createAssociation("categories", todoID, categoryID, httpClient);
+            CategoryHelper.createAssociation("todos", categoryID, todoID, httpClient);
         }
     }
-
 
     /**
      * Verifies the number of todos in the system.

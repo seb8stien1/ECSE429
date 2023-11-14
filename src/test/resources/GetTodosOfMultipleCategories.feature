@@ -16,7 +16,7 @@ Feature: Get Todos Linked to Multiple Categories
       | Pay Bills        | Electricity          | false          |
       | Morning Jog      | Routine life         | false          |
 
-    Given the following todo and category association exist in the system:
+    Given the following category and todo association exist in the system:
       | todoTitle   | categoryTitle  |
       | Call John   | Work           |
       | Call John   | Personal       |
@@ -25,7 +25,7 @@ Feature: Get Todos Linked to Multiple Categories
 
   Scenario Outline: Normal Flow - Viewing todos linked to multiple categories
     When a user retrieves todos linked to categories "<categoryTitle1>" and "<categoryTitle2>"
-    Then the "<todoTitle>" linked to "<categoryTitle1>" and "<categoryTitle2>" should be the same
+    Then the returned "<todoTitle>" should be the same for both categories
 
     Examples:
       | categoryTitle1          | categoryTitle2 | todoTitle |
@@ -33,11 +33,11 @@ Feature: Get Todos Linked to Multiple Categories
 
   Scenario Outline: Alternate Flow - Viewing one todo linked to a category
     When a user retrieves the todo linked only to the category "<categoryTitle>"
-    Then only the todo "<todoTitle>" linked to the category "<categoryTitle>" should be returned
+    Then the todo "<todoTitle>" linked to the category should be returned
 
     Examples:
-      | categoryTitle | todoTitle    |
-      | Health       | Morning Jog   |
+      | categoryTitle | todoTitle     |
+      | Health        | Morning Jog   |
 
   Scenario Outline: Error Flow - Retrieving todos linked to non-existent categories
     When a user attempts to retrieve todos linked to a non-existent category "<nonExistentCategory>"

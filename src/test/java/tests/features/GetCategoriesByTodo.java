@@ -1,5 +1,7 @@
 package tests.features;
 
+import helpers.TodoHelper;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import response.Todo;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static helpers.ApiHelper.deserialize;
@@ -25,6 +28,34 @@ import static org.junit.Assert.*;
 public class GetCategoriesByTodo {
 
     private final TestContext testContext;
+
+    /**
+     * Sets up associations between todos and categories in the system as defined in a DataTable.
+     * This method associates existing todos with categories based on the provided data.
+     *
+     * @param dataTable DataTable containing associations between todos and categories.
+     *                  The table should have columns for 'todoTitle' and 'categoryTitle'.
+     * @throws IOException if an I/O exception occurs during the association process.
+     */
+    @Given("the following todo and category association exist in the system:")
+    public void theFollowingTodoAndCategoryAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
+        List<Map<String, String>> associations = dataTable.asMaps();
+
+        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
+        HashMap<String, Category> createdCategories = testContext.get("createdCategories", HashMap.class);
+
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        for (Map<String, String> association : associations) {
+            String todoTitle = association.get("todoTitle");
+            String categoryTitle = association.get("categoryTitle");
+
+            String todoID = createdTodos.get(todoTitle).getId();
+            String categoryID = createdCategories.get(categoryTitle).getId();
+
+            TodoHelper.createAssociation("categories", todoID, categoryID, httpClient);
+        }
+    }
 
     @When("a user retrieves the category for the todo {string}")
     public void aUserRetrievesTheCategoryForTheTodo(String todoTitle) throws IOException {
