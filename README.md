@@ -20,10 +20,10 @@ The fourth part consisted of writing a report for the project, the report can be
 
 ## Project B
 
-The first part consisted of creating 20 feature files, 5 for each team member. The contents of which can be found [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/resources).
+The first part consisted of creating 20 user stories, 5 for each team member. For which, the Gherkin feature files can be found [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/resources).
 
-The second part consisted of writing story a test suite which can be found [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/features).
+The second part consisted of writing a story tests suite which can be found [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/features).
 
-The third part consisted of filming a video of the unit tests suite running, the video can be found [here](placeholder).
+The third part consisted of filming a video of the story tests suite running, the video can be found [here](https://www.youtube.com/watch?v=0Fwq0cPXK_Q).
 
-The fourth part consisted of writing a report for the project, the report can be found [here](placeholder).
+The fourth part consisted of writing a report for the project, the report can be found [here](https://github.com/seb8stien1/ECSE429/blob/main/Project%20B%20Report.pdf).
