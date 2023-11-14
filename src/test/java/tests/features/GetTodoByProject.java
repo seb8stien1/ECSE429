@@ -1,6 +1,5 @@
 package tests.features;
 
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.AllArgsConstructor;
@@ -15,12 +14,10 @@ import response.TodoResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import static helpers.ApiHelper.deserialize;
 import static helpers.ProjectHelper.getAssociation;
-import static helpers.ProjectHelper.createAssociation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
@@ -30,26 +27,6 @@ import static org.junit.Assert.assertNull;
 public class GetTodoByProject {
 
     private final TestContext testContext;
-
-    @Given("the following project and todo association exist in the system:")
-    public void theFollowingProjectAndTodoAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
-        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
-        HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
-
-        List<Map<String, String>> associations = dataTable.asMaps();
-
-        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
-
-        for (Map<String, String> association : associations) {
-            String todoTitle = association.get("todoTitle");
-            String projectTitle = association.get("projectTitle");
-
-            String todoID = createdTodos.get(todoTitle).getId();
-            String projectID = createdProjects.get(projectTitle).getId();
-
-           createAssociation("tasks", projectID, todoID, httpClient);
-        }
-    }
 
     @When("a user attempts to get todos for the project {string}")
     public void aUserAttemptsToGetTodosForTheProject(String projectTitle) throws IOException {

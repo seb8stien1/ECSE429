@@ -14,10 +14,10 @@ Feature: Remove Todo from Project
       | Plan Event      | Book venue       | false          |
       | New Design      | Website homepage | false          |
 
-    Given the following todos are associated with the Marketing Campaign project:
-      | todoTitle       |
-      | Design Brochure |
-      | Plan Event      |
+    Given the following project and todo association exist in the system:
+      | projectTitle       | todoTitle       |
+      | Marketing Campaign | Design Brochure |
+      | Marketing Campaign | Plan Event      |
 
   Scenario Outline: Normal Flow - Unlink a todo from a project
     When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
@@ -30,11 +30,11 @@ Feature: Remove Todo from Project
 
   Scenario Outline: Alternate Flow - Unlink a todo that was not linked to the project
     When a user attempts to remove the todo "<todoTitle>" from the project "<projectTitle>"
-    And the status code returned by the API is "<statusCode>"
+    Then the status code returned by the API is "<statusCode>"
 
     Examples:
-      | todoTitle   | statusCode |
-      | New Design  | 400        |
+      | todoTitle   | projectTitle       | statusCode |
+      | New Design  | Marketing Campaign | 404        |
 
   Scenario Outline: Error Flow - Try to unlink a todo from a non-existent project
     When a user attempts to remove the todo "<todoTitle>" from the non-existent project "<projectTitle>"
@@ -42,7 +42,7 @@ Feature: Remove Todo from Project
 
     Examples:
       | todoTitle       | projectTitle    | statusCode |
-      | Design Brochure | Unknown Project | 404        |
+      | Design Brochure | Unknown Project | 400        |
 
   Scenario: Teardown
     Then the system is restored to the original state

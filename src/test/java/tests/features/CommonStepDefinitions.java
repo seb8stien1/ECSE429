@@ -2,6 +2,7 @@ package tests.features;
 
 import helpers.ApiHelper;
 import helpers.CategoryHelper;
+import helpers.ProjectHelper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -160,6 +161,33 @@ public class CommonStepDefinitions {
             String todoID = createdTodos.get(todoTitle).getId();
 
             CategoryHelper.createAssociation("todos", categoryID, todoID, httpClient);
+        }
+    }
+
+    /**
+     * Sets up associations between projects and todos in the system as defined in a DataTable.
+     * This method associates existing projects with todos based on the provided data.
+     *
+     * @param dataTable DataTable containing associations between projects and todo.
+     * @throws IOException if an I/O exception occurs during the association process.
+     */
+    @Given("the following project and todo association exist in the system:")
+    public void theFollowingProjectAndTodoAssociationExistInTheSystem(io.cucumber.datatable.DataTable dataTable) throws IOException {
+        HashMap<String, Todo> createdTodos = testContext.get("createdTodos", HashMap.class);
+        HashMap<String, Project> createdProjects = testContext.get("createdProjects", HashMap.class);
+
+        List<Map<String, String>> associations = dataTable.asMaps();
+
+        CloseableHttpClient httpClient = testContext.get("httpClient", CloseableHttpClient.class);
+
+        for (Map<String, String> association : associations) {
+            String todoTitle = association.get("todoTitle");
+            String projectTitle = association.get("projectTitle");
+
+            String todoID = createdTodos.get(todoTitle).getId();
+            String projectID = createdProjects.get(projectTitle).getId();
+
+            ProjectHelper.createAssociation("tasks", projectID, todoID, httpClient);
         }
     }
 
