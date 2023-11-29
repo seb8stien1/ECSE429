@@ -21,7 +21,7 @@ public class ChartGenerator {
                 yAxisLabel,
                 dataset);
 
-        File chartsDir = new File(directoryPath);
+        File chartsDir = new File("src/test/java/tests/performance/graphs/" + directoryPath);
 
         ChartUtils.saveChartAsPNG(new File(chartsDir, fileName), chart, 800, 600);
     }

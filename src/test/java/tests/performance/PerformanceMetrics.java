@@ -22,11 +22,7 @@ public class PerformanceMetrics {
 
     public static long measureTime(Runnable operation) {
         long startTime = System.currentTimeMillis();
-        try {
-            operation.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        operation.run();
         return System.currentTimeMillis() - startTime;
     }
 
@@ -40,13 +36,13 @@ public class PerformanceMetrics {
         System.out.printf(formatHeader, "Metric", "Value", "Units");
         System.out.println("+--------------------+-----------------+-----------------+");
         System.out.printf(formatLong, "Creation Time", metrics.getCreateTime(), "ms");
-        if (!entityType.equals("Association")) System.out.printf(formatLong, "Update Time", metrics.getUpdateTime(), "ms");
+        if (!entityType.equals("Interoperability")) System.out.printf(formatLong, "Update Time", metrics.getUpdateTime(), "ms");
         System.out.printf(formatLong, "Deletion Time", metrics.getDeleteTime(), "ms");
-        System.out.printf(formatRow, "Creation Memory", metrics.getCreateMemoryUsage(), "bytes");
-        if (!entityType.equals("Association")) System.out.printf(formatRow, "Update Memory", metrics.getUpdateMemoryUsage(), "bytes");
-        System.out.printf(formatRow, "Deletion Memory", metrics.getDeleteMemoryUsage(), "bytes");
+        System.out.printf(formatRow, "Creation Memory", metrics.getCreateMemoryUsage(), "MB");
+        if (!entityType.equals("Interoperability")) System.out.printf(formatRow, "Update Memory", metrics.getUpdateMemoryUsage(), "MB");
+        System.out.printf(formatRow, "Deletion Memory", metrics.getDeleteMemoryUsage(), "MB");
         System.out.printf(formatRow, "Creation CPU", metrics.getCreateCpuUsage(), "%");
-        if (!entityType.equals("Association")) System.out.printf(formatRow, "Update CPU", metrics.getUpdateCpuUsage(), "%");
+        if (!entityType.equals("Interoperability")) System.out.printf(formatRow, "Update CPU", metrics.getUpdateCpuUsage(), "%");
         System.out.printf(formatRow, "Deletion CPU", metrics.getDeleteCpuUsage(), "%");
         System.out.println("+--------------------+-----------------+-----------------+");
     }
