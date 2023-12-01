@@ -27,3 +27,16 @@ The second part consisted of writing a story tests suite which can be found [her
 The third part consisted of filming a video of the story tests suite running, the video can be found [here](https://www.youtube.com/watch?v=0Fwq0cPXK_Q).
 
 The fourth part consisted of writing a report for the project, the report can be found [here](https://github.com/seb8stien1/ECSE429/blob/main/Project%20B%20Report.pdf).
+
+## Project C
+
+The first part consisted of writing code that performs dynamic analysis of the source code. This was the performance test suite and that code can be found [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/performance).
+
+The graphs generated during the execution of the performance test suite are found in the report and [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/performance/graphs) as well.
+
+The second part consisted of peforming static analysis of the source code using SonarQube, the details of which are found in the report.
+
+The third part consisted of filming a video of the performance tests suite running, the video can be found [here](https://www.youtube.com/watch?v=_W9NNCbi_TA).
+
+The fourth part consisted of writing a report for the project, the report can be found [here](https://github.com/seb8stien1/ECSE429/blob/main/Project%20C%20Report.pdf).
+
