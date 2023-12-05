@@ -32,6 +32,8 @@ public class ProjectPerformanceTest {
         XYSeries updateCpuLoadSeries = new XYSeries("Update CPU Use for Project");
         XYSeries deleteCpuLoadSeries = new XYSeries("Delete CPU Use for Project");
         XYSeries transactionTimeSeries = new XYSeries("Total Transaction vs Sample Time");
+        XYSeries memoryUseSeries = new XYSeries("Total Memory vs Sample Time");
+        XYSeries cpuUseSeries = new XYSeries("Total CPU vs Sample Time");
 
         int object_count = NUM_OBJECTS / 10;
         for (int count = object_count; count <= NUM_OBJECTS; count += object_count) {
@@ -46,6 +48,8 @@ public class ProjectPerformanceTest {
             updateCpuLoadSeries.add(count, performanceMetrics.getUpdateCpuUsage());
             deleteCpuLoadSeries.add(count, performanceMetrics.getDeleteCpuUsage());
             transactionTimeSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionTime());
+            memoryUseSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionMemory());
+            cpuUseSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionCpu());
             printMetrics("Project", count, performanceMetrics);
         }
 
@@ -59,6 +63,8 @@ public class ProjectPerformanceTest {
         createAndSaveChart(updateCpuLoadSeries, "CPU Use (%)", "Update CPU Use vs Number of Objects", "update_cpu_chart_project.png", "Project");
         createAndSaveChart(deleteCpuLoadSeries, "CPU Use (%)", "Delete CPU Use vs Number of Objects", "delete_cpu_chart_project.png", "Project");
         createAndSaveChart(transactionTimeSeries, "Sample Time (ms)", "Transaction Time vs Sample Time", "transaction_time_vs_sample_time_chart.png", "Project");
+        createAndSaveChart(memoryUseSeries, "Total Memory (MB)", "Memory vs Sample Time", "memory_vs_sample_time_chart.png", "Project");
+        createAndSaveChart(cpuUseSeries, "Total CPU (%)", "CPU vs Sample Time", "cpu_vs_sample_time_chart.png", "Project");
     }
 
     private static PerformanceMetrics performProjectExperiment(int count) throws Exception {
@@ -97,6 +103,8 @@ public class ProjectPerformanceTest {
 
         long sampleEndTime = System.currentTimeMillis();
         long totalTransactionTime = createTime + updateTime + deleteTime;
+        double totalTransactionMemory = createMemoryUsage + updateMemoryUsage + deleteMemoryUsage;
+        double totalTransactionCpu = createCpuUsage + updateCpuUsage + deleteCpuUsage;
         long sampleTime = sampleEndTime - sampleStartTime;
 
         httpClient.close();
@@ -112,6 +120,8 @@ public class ProjectPerformanceTest {
                 updateCpuUsage,
                 deleteCpuUsage,
                 totalTransactionTime,
+                totalTransactionMemory,
+                totalTransactionCpu,
                 sampleTime
         );
     }

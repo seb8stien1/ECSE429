@@ -22,6 +22,10 @@ public class PerformanceMetrics {
 
     private long totalTransactionTime;
 
+    private double totalTransactionMemory;
+
+    private double totalTransactionCpu;
+
     private long sampleTime;
 
     public static long measureTime(Runnable operation) {

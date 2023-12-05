@@ -25,6 +25,8 @@ public class InteroperabilityPerformanceTest {
         XYSeries createInteroperabilityCPUSeries = new XYSeries("Create Interoperability CPU Use");
         XYSeries deleteInteroperabilityCPUSeries = new XYSeries("Delete Interoperability CPU Use");
         XYSeries transactionTimeSeries = new XYSeries("Total Transaction vs Sample Time");
+        XYSeries memoryUseSeries = new XYSeries("Total Memory vs Sample Time");
+        XYSeries cpuUseSeries = new XYSeries("Total CPU vs Sample Time");
 
 
         int object_count = NUM_OBJECTS / 10;
@@ -37,6 +39,8 @@ public class InteroperabilityPerformanceTest {
             createInteroperabilityCPUSeries.add(count, performanceMetrics.getCreateCpuUsage());
             deleteInteroperabilityCPUSeries.add(count, performanceMetrics.getDeleteCpuUsage());
             transactionTimeSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionTime());
+            memoryUseSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionMemory());
+            cpuUseSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionCpu());
             printMetrics("Interoperability", count, performanceMetrics);
         }
 
@@ -47,6 +51,8 @@ public class InteroperabilityPerformanceTest {
         createAndSaveChart(createInteroperabilityCPUSeries, "CPU Use (%)", "Create CPU Use vs Number of Objects", "create_cpu_chart_interoperability.png", "Interoperability");
         createAndSaveChart(deleteInteroperabilityCPUSeries, "CPU Use (%)", "Delete CPU Use vs Number of Objects", "delete_cpu_chart_interoperability.png", "Interoperability");
         createAndSaveChart(transactionTimeSeries, "Sample Time (ms)", "Transaction Time vs Sample Time", "transaction_time_vs_sample_time_chart.png", "Interoperability");
+        createAndSaveChart(memoryUseSeries, "Total Memory (MB)", "Memory vs Sample Time", "memory_vs_sample_time_chart.png", "Interoperability");
+        createAndSaveChart(cpuUseSeries, "Total CPU (%)", "CPU vs Sample Time", "cpu_vs_sample_time_chart.png", "Interoperability");
     }
 
     private static PerformanceMetrics performAssociationExperiment(int count) throws Exception {
@@ -105,6 +111,8 @@ public class InteroperabilityPerformanceTest {
 
         long sampleEndTime = System.currentTimeMillis();
         long totalTransactionTime = createTime + deleteTime;
+        double totalTransactionMemory = createMemoryUsage + deleteMemoryUsage;
+        double totalTransactionCpu = createCpuUsage + deleteCpuUsage;
         long sampleTime = sampleEndTime - sampleStartTime;
 
         httpClient.close();
@@ -117,6 +125,8 @@ public class InteroperabilityPerformanceTest {
         performanceMetrics.setCreateCpuUsage(createCpuUsage);
         performanceMetrics.setDeleteCpuUsage(deleteCpuUsage);
         performanceMetrics.setTotalTransactionTime(totalTransactionTime);
+        performanceMetrics.setTotalTransactionMemory(totalTransactionMemory);
+        performanceMetrics.setTotalTransactionCpu(totalTransactionCpu);
         performanceMetrics.setSampleTime(sampleTime);
 
         return performanceMetrics;
