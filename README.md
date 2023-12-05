@@ -32,7 +32,7 @@ The fourth part consisted of writing a report for the project, the report can be
 
 The first part consisted of writing code that performs dynamic analysis of the source code. This was the performance test suite and that code can be found [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/performance).
 
-The graphs generated during the execution of the performance test suite are found in the report and [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/performance/graphs) as well.
+The graphs generated during the execution of the performance test suite are found in the report and [here](https://github.com/seb8stien1/ECSE429/tree/main/src/test/java/tests/performance/graphs) as well. Graphs are generated for both sample time and number of objects.
 
 The second part consisted of peforming static analysis of the source code using SonarQube, the details of which are found in the report.
 
