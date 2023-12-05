@@ -15,9 +15,14 @@ public class ChartGenerator {
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
 
+        String xAxis = "Number of Objects";
+        if (chartTitle.equals("Transaction Time vs Sample Time")) {
+            xAxis = "Sample Time (ms)";
+        }
+
         JFreeChart chart = ChartFactory.createXYLineChart(
                 chartTitle,
-                "Number of Objects",
+                xAxis,
                 yAxisLabel,
                 dataset);
 

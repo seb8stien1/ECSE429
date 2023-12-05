@@ -20,6 +20,10 @@ public class PerformanceMetrics {
     private double updateCpuUsage;
     private double deleteCpuUsage;
 
+    private long totalTransactionTime;
+
+    private long sampleTime;
+
     public static long measureTime(Runnable operation) {
         long startTime = System.currentTimeMillis();
         operation.run();

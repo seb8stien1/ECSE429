@@ -32,6 +32,7 @@ public class CategoryPerformanceTest {
         XYSeries createCpuLoadSeries = new XYSeries("Create CPU Use for Category");
         XYSeries updateCpuLoadSeries = new XYSeries("Update CPU Use for Category");
         XYSeries deleteCpuLoadSeries = new XYSeries("Delete CPU Use for Category");
+        XYSeries transactionTimeSeries = new XYSeries("Total Transaction vs Sample Time");
 
         int object_count = NUM_OBJECTS / 10;
         for (int count = object_count; count <= NUM_OBJECTS; count += object_count) {
@@ -45,6 +46,7 @@ public class CategoryPerformanceTest {
             createCpuLoadSeries.add(count, performanceMetrics.getCreateCpuUsage());
             updateCpuLoadSeries.add(count, performanceMetrics.getUpdateCpuUsage());
             deleteCpuLoadSeries.add(count, performanceMetrics.getDeleteCpuUsage());
+            transactionTimeSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionTime());
             printMetrics("Category", count, performanceMetrics);
         }
 
@@ -57,6 +59,7 @@ public class CategoryPerformanceTest {
         createAndSaveChart(createCpuLoadSeries, "CPU Use (%)", "Create CPU Use vs Number of Objects", "create_cpu_chart_category.png", "Category");
         createAndSaveChart(updateCpuLoadSeries, "CPU Use (%)", "Update CPU Use vs Number of Objects", "update_cpu_chart_category.png", "Category");
         createAndSaveChart(deleteCpuLoadSeries, "CPU Use (%)", "Delete CPU Use vs Number of Objects", "delete_cpu_chart_category.png", "Category");
+        createAndSaveChart(transactionTimeSeries, "Transaction Time (ms)", "Transaction Time vs Sample Time", "transaction_time_vs_sample_time_chart.png", "Category");
     }
 
     private static PerformanceMetrics performCategoryExperiment(int count) throws Exception {
@@ -64,6 +67,7 @@ public class CategoryPerformanceTest {
         OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
         Runtime runtime = Runtime.getRuntime();
 
+        long sampleStartTime = System.currentTimeMillis();
 
         CreateResult createResult = testCreateCategories(httpClient, count);
         List<String> createdCategoryIds = createResult.getCreatedIds();
@@ -91,6 +95,10 @@ public class CategoryPerformanceTest {
         double deleteMemoryUsage = (usedMemory) / (1024.0 * 1024.0); // convert to MB
         double deleteCpuUsage = osBean.getProcessCpuLoad() * 100;
 
+        long sampleEndTime = System.currentTimeMillis();
+        long totalTransactionTime = createTime + updateTime + deleteTime;
+        long sampleTime = sampleEndTime - sampleStartTime;
+
         httpClient.close();
 
         return new PerformanceMetrics(
@@ -102,7 +110,9 @@ public class CategoryPerformanceTest {
                 deleteMemoryUsage,
                 createCpuUsage,
                 updateCpuUsage,
-                deleteCpuUsage
+                deleteCpuUsage,
+                totalTransactionTime,
+                sampleTime
         );
     }
 

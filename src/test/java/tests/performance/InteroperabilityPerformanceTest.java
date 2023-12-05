@@ -24,6 +24,8 @@ public class InteroperabilityPerformanceTest {
         XYSeries deleteInteroperabilityMemorySeries = new XYSeries("Delete Interoperability Memory Usage");
         XYSeries createInteroperabilityCPUSeries = new XYSeries("Create Interoperability CPU Use");
         XYSeries deleteInteroperabilityCPUSeries = new XYSeries("Delete Interoperability CPU Use");
+        XYSeries transactionTimeSeries = new XYSeries("Total Transaction vs Sample Time");
+
 
         int object_count = NUM_OBJECTS / 10;
         for (int count = object_count; count <= NUM_OBJECTS; count += object_count) {
@@ -34,6 +36,7 @@ public class InteroperabilityPerformanceTest {
             deleteInteroperabilityMemorySeries.add(count, performanceMetrics.getDeleteMemoryUsage());
             createInteroperabilityCPUSeries.add(count, performanceMetrics.getCreateCpuUsage());
             deleteInteroperabilityCPUSeries.add(count, performanceMetrics.getDeleteCpuUsage());
+            transactionTimeSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionTime());
             printMetrics("Interoperability", count, performanceMetrics);
         }
 
@@ -43,6 +46,7 @@ public class InteroperabilityPerformanceTest {
         createAndSaveChart(deleteInteroperabilityMemorySeries, "Memory (MB)", "Delete Memory Usage vs Number of Objects", "delete_memory_chart_interoperability.png", "Interoperability");
         createAndSaveChart(createInteroperabilityCPUSeries, "CPU Use (%)", "Create CPU Use vs Number of Objects", "create_cpu_chart_interoperability.png", "Interoperability");
         createAndSaveChart(deleteInteroperabilityCPUSeries, "CPU Use (%)", "Delete CPU Use vs Number of Objects", "delete_cpu_chart_interoperability.png", "Interoperability");
+        createAndSaveChart(transactionTimeSeries, "Sample Time (ms)", "Transaction Time vs Sample Time", "transaction_time_vs_sample_time_chart.png", "Interoperability");
     }
 
     private static PerformanceMetrics performAssociationExperiment(int count) throws Exception {
@@ -53,6 +57,8 @@ public class InteroperabilityPerformanceTest {
         List<String> createdCategoryIds = CategoryPerformanceTest.testCreateCategories(httpClient, count).getCreatedIds();
         List<String> createdProjectIds = ProjectPerformanceTest.testCreateProjects(httpClient, count).getCreatedIds();
         List<String> createdTodoIds = TodoPerformanceTest.testCreateTodos(httpClient, count).getCreatedIds();
+
+        long sampleStartTime = System.currentTimeMillis();
 
         // Perform association creation and deletion while measuring time, memory, and CPU usage
         long createTime = measureTime(() -> {
@@ -97,6 +103,10 @@ public class InteroperabilityPerformanceTest {
         deleteMemoryUsage = deleteMemoryUsage / 3.0;
         deleteCpuUsage = deleteCpuUsage / 3.0;
 
+        long sampleEndTime = System.currentTimeMillis();
+        long totalTransactionTime = createTime + deleteTime;
+        long sampleTime = sampleEndTime - sampleStartTime;
+
         httpClient.close();
 
         PerformanceMetrics performanceMetrics = new PerformanceMetrics();
@@ -106,6 +116,8 @@ public class InteroperabilityPerformanceTest {
         performanceMetrics.setDeleteMemoryUsage(deleteMemoryUsage);
         performanceMetrics.setCreateCpuUsage(createCpuUsage);
         performanceMetrics.setDeleteCpuUsage(deleteCpuUsage);
+        performanceMetrics.setTotalTransactionTime(totalTransactionTime);
+        performanceMetrics.setSampleTime(sampleTime);
 
         return performanceMetrics;
     }

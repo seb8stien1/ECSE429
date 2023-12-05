@@ -31,6 +31,7 @@ public class ProjectPerformanceTest {
         XYSeries createCpuLoadSeries = new XYSeries("Create CPU Use for Project");
         XYSeries updateCpuLoadSeries = new XYSeries("Update CPU Use for Project");
         XYSeries deleteCpuLoadSeries = new XYSeries("Delete CPU Use for Project");
+        XYSeries transactionTimeSeries = new XYSeries("Total Transaction vs Sample Time");
 
         int object_count = NUM_OBJECTS / 10;
         for (int count = object_count; count <= NUM_OBJECTS; count += object_count) {
@@ -44,6 +45,7 @@ public class ProjectPerformanceTest {
             createCpuLoadSeries.add(count, performanceMetrics.getCreateCpuUsage());
             updateCpuLoadSeries.add(count, performanceMetrics.getUpdateCpuUsage());
             deleteCpuLoadSeries.add(count, performanceMetrics.getDeleteCpuUsage());
+            transactionTimeSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionTime());
             printMetrics("Project", count, performanceMetrics);
         }
 
@@ -56,6 +58,7 @@ public class ProjectPerformanceTest {
         createAndSaveChart(createCpuLoadSeries, "CPU Use (%)", "Create CPU Use vs Number of Objects", "create_cpu_chart_project.png", "Project");
         createAndSaveChart(updateCpuLoadSeries, "CPU Use (%)", "Update CPU Use vs Number of Objects", "update_cpu_chart_project.png", "Project");
         createAndSaveChart(deleteCpuLoadSeries, "CPU Use (%)", "Delete CPU Use vs Number of Objects", "delete_cpu_chart_project.png", "Project");
+        createAndSaveChart(transactionTimeSeries, "Sample Time (ms)", "Transaction Time vs Sample Time", "transaction_time_vs_sample_time_chart.png", "Project");
     }
 
     private static PerformanceMetrics performProjectExperiment(int count) throws Exception {
@@ -66,6 +69,8 @@ public class ProjectPerformanceTest {
 
         CreateResult createResult = testCreateProjects(httpClient, count);
         List<String> createdProjectIds = createResult.getCreatedIds();
+
+        long sampleStartTime = System.currentTimeMillis();
 
         // Memory and CPU metrics after creating categories
         long usedMemory = runtime.totalMemory() - runtime.freeMemory();
@@ -90,6 +95,10 @@ public class ProjectPerformanceTest {
         double deleteMemoryUsage = (usedMemory) / (1024.0 * 1024.0); // convert to MB
         double deleteCpuUsage = osBean.getProcessCpuLoad() * 100;
 
+        long sampleEndTime = System.currentTimeMillis();
+        long totalTransactionTime = createTime + updateTime + deleteTime;
+        long sampleTime = sampleEndTime - sampleStartTime;
+
         httpClient.close();
 
         return new PerformanceMetrics(
@@ -101,7 +110,9 @@ public class ProjectPerformanceTest {
                 deleteMemoryUsage,
                 createCpuUsage,
                 updateCpuUsage,
-                deleteCpuUsage
+                deleteCpuUsage,
+                totalTransactionTime,
+                sampleTime
         );
     }
 

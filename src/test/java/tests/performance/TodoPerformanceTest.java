@@ -31,6 +31,7 @@ public class TodoPerformanceTest {
         XYSeries createCpuLoadSeries = new XYSeries("Create CPU Use for Todo");
         XYSeries updateCpuLoadSeries = new XYSeries("Update CPU Use for Todo");
         XYSeries deleteCpuLoadSeries = new XYSeries("Delete CPU Use for Todo");
+        XYSeries transactionTimeSeries = new XYSeries("Total Transaction vs Sample Time");
 
         int object_count = NUM_OBJECTS / 10;
         for (int count = object_count; count <= NUM_OBJECTS; count += object_count) {
@@ -44,6 +45,7 @@ public class TodoPerformanceTest {
             createCpuLoadSeries.add(count, performanceMetrics.getCreateCpuUsage());
             updateCpuLoadSeries.add(count, performanceMetrics.getUpdateCpuUsage());
             deleteCpuLoadSeries.add(count, performanceMetrics.getDeleteCpuUsage());
+            transactionTimeSeries.add(performanceMetrics.getSampleTime(), performanceMetrics.getTotalTransactionTime());
             printMetrics("Todo", count, performanceMetrics);
         }
 
@@ -56,12 +58,15 @@ public class TodoPerformanceTest {
         createAndSaveChart(createCpuLoadSeries, "CPU Use (%)", "Create CPU Use vs Number of Objects", "create_cpu_chart_todo.png", "Todo");
         createAndSaveChart(updateCpuLoadSeries, "CPU Use (%)", "Update CPU Use vs Number of Objects", "update_cpu_chart_todo.png", "Todo");
         createAndSaveChart(deleteCpuLoadSeries, "CPU Use (%)", "Delete CPU Use vs Number of Objects", "delete_cpu_chart_todo.png", "Todo");
+        createAndSaveChart(transactionTimeSeries, "Sample Time (ms)", "Transaction Time vs Sample Time", "transaction_time_vs_sample_time_chart.png", "Todo");
     }
 
     private static PerformanceMetrics performTodoExperiment(int count) throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
         Runtime runtime = Runtime.getRuntime();
+
+        long sampleStartTime = System.currentTimeMillis();
 
         CreateResult createResult = testCreateTodos(httpClient, count);
         List<String> createdTodoIds = createResult.getCreatedIds();
@@ -89,6 +94,10 @@ public class TodoPerformanceTest {
         double deleteMemoryUsage = (usedMemory) / (1024.0 * 1024.0); // convert to MB
         double deleteCpuUsage = osBean.getProcessCpuLoad() * 100;
 
+        long sampleEndTime = System.currentTimeMillis();
+        long totalTransactionTime = createTime + updateTime + deleteTime;
+        long sampleTime = sampleEndTime - sampleStartTime;
+
         httpClient.close();
 
         return new PerformanceMetrics(
@@ -100,7 +109,9 @@ public class TodoPerformanceTest {
                 deleteMemoryUsage,
                 createCpuUsage,
                 updateCpuUsage,
-                deleteCpuUsage
+                deleteCpuUsage,
+                totalTransactionTime,
+                sampleTime
         );
     }
 
